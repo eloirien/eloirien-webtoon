@@ -15,7 +15,7 @@
             user-select: none;
         }
 
-        /* THE FIX: Click zone now covers the entire viewport background */
+        /* THE FIX: Full-screen click zone background */
         #global-click-zone {
             min-height: 100vh;
             width: 100%;
@@ -31,11 +31,11 @@
             z-index: 50;
         }
         
-        /* Initial states: pushed off-screen */
+        /* Fixed initial positions */
         .top-ui { transform: translateY(-100%); }
         .bottom-ui { transform: translateY(100%); }
 
-        /* Active state: brought into view */
+        /* The 'summoned' state */
         .ui-active {
             transform: translateY(0) !important;
             opacity: 1 !important;
@@ -46,10 +46,19 @@
             width: 100%;
             max-width: 700px; 
             margin: 0 auto;
-            line-height: 0;
+            line-height: 0; /* Prevents gaps between panels */
         }
 
-        /* Placeholder style for testing */
+        /* Art Protection: Ghost Layer */
+        .panel-container { position: relative; width: 100%; }
+        .ghost-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 5;
+            background: transparent;
+        }
+
+        /* Placeholder style for testing paths */
         .placeholder-panel {
             width: 100%;
             aspect-ratio: 2/3;
@@ -80,9 +89,14 @@
         </nav>
 
         <main class="webtoon-container">
-            <div class="placeholder-panel">Panel 01</div>
-            <div class="placeholder-panel">Panel 02</div>
-            <div class="placeholder-panel">Panel 03</div>
+            <div class="panel-container">
+                <div class="placeholder-panel">Panel 01</div>
+                <div class="ghost-layer"></div>
+            </div>
+            <div class="panel-container">
+                <div class="placeholder-panel">Panel 02</div>
+                <div class="ghost-layer"></div>
+            </div>
         </main>
 
         <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4">
@@ -114,7 +128,7 @@
             }
         }
 
-        // Standard Protection
+        // Global Art Protection
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
     </script>
