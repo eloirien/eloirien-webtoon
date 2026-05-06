@@ -15,18 +15,23 @@
         
         /* Fixed: The nav now floats over the hero without pushing it down */
         .nav-container {
-            position: absolute;
+            position: fixed; /* THE FIX: This makes it follow the scroll */
             top: 0;
             width: 100%;
             z-index: 1000;
             display: flex;
             justify-content: center;
-            padding-top: 2rem;
+            padding-top: 2rem; 
             padding-left: 15px;
             padding-right: 15px;
+            pointer-events: none; /* Allows clicks to pass through the container... */
         }
         
         .nav-pill {
+
+            pointer-events: auto; /* ...but ensures the actual pill is clickable! */
+            background-color: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
             background-color: rgba(13, 13, 13, 0.95);
             backdrop-filter: blur(15px);
             padding: 6px 16px !important;
@@ -291,8 +296,8 @@
         </div>
     </section>
 
-    <!-- Fixed: Tab bar sticks to top without gap -->
-    <div class="border-b border-gray-800 bg-black/90 backdrop-blur-md sticky top-0 z-40">
+    <!-- Adjust the 'top' value to account for the floating pill height -->
+    <div class="border-b border-gray-800 bg-black/90 backdrop-blur-md sticky top-[80px] md:top-[90px] z-40">
         <div class="max-w-screen-xl mx-auto flex justify-center">
             <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
             <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
