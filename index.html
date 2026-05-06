@@ -4,71 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eloirien | Silverstring</title>
-       <!-- Load Tailwind CSS -->
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0d0d0d;
             color: #E0E0E0;
+            margin: 0;
         }
         
         /* The Top Navigation Wrapper */
         .nav-container {
             position: sticky; 
-            top: 0;           /* Stick to the very top edge */
+            top: 0;
             width: 100%;
             z-index: 1000;
             display: flex;
             justify-content: center;
-            padding-top: 2rem; /* THIS IS THE FIX: Creates the gap above the pill without moving the background */
+            padding-top: 2rem;
             padding-left: 15px;
             padding-right: 15px;
-            /* Remove margin-top if it's still there */
         }
         
+        /* THE PILL ENFORCER: Prevents the mobile circle glitch */
         .nav-pill {
-            background-color: rgba(13, 13, 13, 0.9);
+            background-color: rgba(13, 13, 13, 0.95);
             backdrop-filter: blur(15px);
-            padding: 8px 16px;
+            padding: 6px 16px !important;
             border-radius: 9999px !important;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between;
+            gap: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            
-            /* The Fix: Prevents it from becoming a circle */
-            width: auto !important;
-            height: auto !important; 
+            width: fit-content !important; 
+            height: 42px !important; 
             max-width: 95%;
-            flex-wrap: nowrap; /* Forces everything to stay in one line */
+            flex-wrap: nowrap;
+            margin: 0 auto;
         }
         
-        /* Adjusting the gap and padding for bigger screens */
         @media (min-width: 768px) {
             .nav-pill {
-                max-width: 95%;
-                width: auto;
-                border-radius: 9999px !important; /* Forces it to stay a pill shape */
-                flex-wrap: nowrap; /* Prevents items from jumping to new lines */
                 gap: 20px;
-                padding: 10px 28px;
+                padding: 10px 28px !important;
+                height: 50px !important;
             }
         }
         
         .nav-link {
+            color: #9ca3af;
+            text-transform: lowercase;
             font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
             white-space: nowrap;
+            transition: color 0.3s;
         }
+
+        .nav-link:hover { color: #3b82f6; }
         
         @media (min-width: 768px) {
-            .nav-link {
-                font-size: 13px; /* Larger for desktop */
-            }
+            .nav-link { font-size: 13px; }
+        }
 
-        /* Language Dropdown Styling */
-       /* Custom Language Dropdown */
+        /* Custom Language Dropdown */
         .custom-lang-dropdown {
             position: relative;
             display: inline-block;
@@ -89,15 +92,14 @@
             white-space: nowrap;
         }
         
-        /* Fix for the 'Exploding Circle' and escaping flags */
         .lang-menu {
             position: absolute;
-            top: 45px; /* Moves it safely below the pill */
+            top: 45px;
             right: 0;
             background-color: #1a1a1a;
             border: 1px solid #2d2d2d;
             border-radius: 12px;
-            width: 180px; /* Wider so text doesn't wrap weirdly */
+            width: 170px;
             display: none;
             flex-direction: column;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -112,13 +114,11 @@
             align-items: center;
             gap: 10px;
             border-bottom: 1px solid #1f1f1f;
+            cursor: pointer;
+            color: #E0E0E0;
         }
         
-        .lang-item:hover {
-            background-color: #2d2d2d;
-            color: white;
-        }
-
+        .lang-item:hover { background-color: #2d2d2d; color: #3b82f6; }
         .lang-item:last-child { border-bottom: none; }
         
         .flag-icon {
@@ -128,21 +128,8 @@
             border-radius: 2px;
         }
         
-        /* Show menu logic */
-        .custom-lang-dropdown:hover .lang-menu {
-            display: flex;
-        }
-        
-        /* Footer Styling */
-        .footer-text {
-            font-size: 11px;
-            color: #4b5563; /* Gray-600 */
-            letter-spacing: 0.1em;
-            text-align: center;
-            padding: 4rem 0 2rem 0;
-        }
+        .custom-lang-dropdown:hover .lang-menu { display: flex; }
             
-        /* Container that holds everything */
         .hero-wrapper {
             position: relative;
             background-color: #0d0d0d;
@@ -150,7 +137,6 @@
             width: 100%;
         }
         
-        /* 1. Blurred Atmosphere Layer */
         .hero-blur-bg {
             position: absolute;
             top: 0;
@@ -164,32 +150,27 @@
             z-index: 1;
         }
         
-        /* 2. The Contracted Banner (Stays at its ratio) */
         .hero-stage-fixed {
             position: relative;
             z-index: 2;
             width: 90%;
             max-width: 1100px;
             margin: 2rem auto;
-            /* Match your 1200x600 art exactly */
             aspect-ratio: 2 / 1; 
             background-image: url('images/cover.webp');
-            /* Use 'cover' to ensure every pixel of the frame is filled */
             background-size: cover; 
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 16px;
-            /* Set background to transparent so no 'ghost' colors appear */
             background-color: transparent; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
                 
-        /* 3. Floating Branding Section */
        .hero-branding-bar {
             position: relative;
             z-index: 10;
-            margin-top: 1.5rem;   /* Space below the banner */
-            margin-bottom: 3rem; /* THIS FIXES THE OVERLAP: Space before the tabs start */
+            margin-top: 1.5rem;   
+            margin-bottom: 3rem; 
             display: flex;
             justify-content: center;
             padding: 0 20px;
@@ -198,15 +179,11 @@
        .branding-pill {
             background-color: rgba(13, 13, 13, 0.85);
             backdrop-filter: blur(12px);
-            
-            /* This makes it follow the banner width (2:1 feel) without the weird height */
             width: 100%;
-            max-width: 1200px; /* Wider to match the cinematic banner */
-            padding: 20px 20px; /* Equal breathing room top and bottom */
-            
-            border-radius: 40px; /* Smooth corners from your edit */
+            max-width: 1200px; 
+            padding: 20px 20px; 
+            border-radius: 40px; 
             border: 1px solid rgba(255, 255, 255, 0.1);
-            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -215,7 +192,7 @@
         }
         
         .genre-tag-outline {
-            border: 1px solid rgba(255, 255, 255, 0.6); /* White outline from your edit */
+            border: 1px solid rgba(255, 255, 255, 0.6); 
             border-radius: 8px;
             padding: 4px 16px;
             color: white;
@@ -223,12 +200,6 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-        }
-        
-        .tab-active {
-            border-bottom: 4px solid #3b82f6;
-            color: #60a5fa;
-            font-weight: bold;
         }
         
         .episode-card {
@@ -242,71 +213,56 @@
             border-color: #3b82f6;
         }
         
-        /* Add this inside your <style> tags */
         .synopsis-style {
-        font-size: 0.95rem; /* Slightly smaller text */
-        line-height: 1.5;   /* Tighter line spacing */
-        color: #9ca3af;     /* A slightly dimmer grey to save visual weight */
-        text-align: left;   /* Left align is often more compact than justified */
+            font-size: 0.95rem; 
+            line-height: 1.5;   
+            color: #9ca3af;     
+            text-align: left;   
         }
 
-        .mt-12 {
-        margin-top: 2rem !important; /* Reduces the gap we added earlier */
-        }
-        
         h1, h2, h3, button, .font-bold {
             font-family: 'Inter', sans-serif !important;
-            letter-spacing: 0.02em; /* Gives the royal titles a bit of breathing room */
+            letter-spacing: 0.02em; 
         }
     </style>
 </head>
 <body>
-        <nav class="nav-container">
-            <div class="nav-pill">
-                <!-- Identity -->
-                <span class="text-white font-bold tracking-[0.2em] text-[9px] md:text-xs uppercase flex-shrink-0">
-                    E L O I R I E N
-                </span>
-                
-                <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
-                
-                <!-- Navigation Links: Made extra compact for mobile -->
-                <div class="flex items-center space-x-2">
-                    <a href="#webcomics" class="nav-link text-gray-400">comics</a>
-                    <a href="#about" class="nav-link text-gray-400">about</a>
+    <!-- Top Navigation Pill -->
+    <nav class="nav-container">
+        <div class="nav-pill">
+            <span class="text-white font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase flex-shrink-0">
+                E L O I R I E N
+            </span>
+            
+            <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
+            
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <a href="#webcomics" class="nav-link">comics</a>
+                <a href="#about" class="nav-link">about</a>
+            </div>
+    
+            <div class="custom-lang-dropdown">
+                <div class="lang-trigger">
+                    🌐 <span class="hidden md:inline">EN</span>
                 </div>
-        
-                <!-- Language Pill -->
-                <div class="custom-lang-dropdown">
-                    <div class="lang-trigger">
-                        🌐 <span class="hidden md:inline">EN</span>
-                    </div>
-                    <div class="lang-menu">
-                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
-                    </div>
+                <div class="lang-menu">
+                    <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                    <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                    <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                    <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
     
     <!-- Cinematic Hero Section -->
     <section class="hero-wrapper">
         <div class="hero-blur-bg"></div>
         <div class="hero-stage-fixed"></div>
     
-        <!-- The Stacked Branding Capsule -->
-        <!-- The Branding Capsule (Now following 2:1 ratio and sticking below) -->
         <div class="hero-branding-bar">
             <div class="branding-pill">
-                <!-- Logo (.png) -->
-                <img src="images/logo.png" 
-                     alt="Silverstring" 
-                     class="w-full max-w-[250px] md:max-w-[400px] h-auto object-contain"
-                     style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));">
-        
-                <!-- Genre Tags -->
+                <img src="images/logo.png" alt="Silverstring" class="w-full max-w-[250px] md:max-w-[400px] h-auto object-contain" style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));">
                 <div class="flex items-center space-x-3">
                     <span class="genre-tag-outline text-[10px]">Fantasy</span>
                     <span class="genre-tag-outline text-[10px]">Drama</span>
@@ -317,108 +273,90 @@
     </section>
 
     <!-- Content Tabs -->
-    <!-- Tab Navigation: Centered and sleek -->
-                <div class="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-[80px] z-40">
-                    <div class="max-w-screen-xl mx-auto flex justify-center">
-                        <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
-                        <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
-                        <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
-                    </div>
-                </div>
+    <div class="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-[80px] z-40">
+        <div class="max-w-screen-xl mx-auto flex justify-center">
+            <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
+            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
+            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
+        </div>
+    </div>
         
-            <!-- Main Content Container -->
-                    <main class="max-w-screen-xl mx-auto px-6 py-12">
-            <!-- INFO TAB (Default view) -->
-            <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
-                <!-- Vertical Cover -->
-                <div class="w-64 md:w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-800">
-                    <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto">
-                </div>
-        
-                <!-- Synopsis & Creator (Centered) -->
-                <div class="max-w-2xl text-center space-y-8">
-                    <div>
-                        <p class="synopsis-style text-sm leading-snug">
-                            Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
-                            <br><br>
-                            <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2">
-                                "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
-                            </em>
-                        </p>
-                    </div>
-                    
-                    <!-- Your Styled Creator Box -->
-                    <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left">
-                        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Creator</h3>
-                        <div class="flex items-center space-x-4">
-                            <img src="images/profile.webp" alt="Eloirien" class="w-12 h-12 rounded-full border border-gray-700">
-                            <div>
-                                <p class="font-bold text-white">Eloirien</p>
-                                <p class="text-xs text-blue-400">@Eloirien</p>
-                            </div>
+    <!-- Main Content Container -->
+    <main class="max-w-screen-xl mx-auto px-6 py-12">
+        <!-- INFO TAB -->
+        <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
+            <div class="w-64 md:w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-800">
+                <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto">
+            </div>
+            <div class="max-w-2xl text-center space-y-8">
+                <p class="synopsis-style text-sm leading-snug">
+                    Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
+                    <br><br>
+                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left">
+                        "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
+                    </em>
+                </p>
+                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Creator</h3>
+                    <div class="flex items-center space-x-4">
+                        <img src="images/profile.webp" alt="Eloirien" class="w-12 h-12 rounded-full border border-gray-700">
+                        <div>
+                            <p class="font-bold text-white">Eloirien</p>
+                            <p class="text-xs text-blue-400">@Eloirien</p>
                         </div>
                     </div>
                 </div>
-            </section>
-        
-            <!-- EPISODES TAB (Hidden by default) -->
-            <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
-                <!-- Prologue: Storm Card -->
-                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
-                    <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    <div class="ml-4 flex-grow">
-                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
-                        <p class="text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
-                    </div>
-                    <a href="reader.html" class="text-blue-500 font-bold text-xs md:text-sm hover:text-blue-400">READ</a>
-                </div>
-        
-                <!-- Prologue: The King Card -->
-                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
-                    <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
-                        <span class="text-gray-600 font-bold text-xs">EP 02</span>
-                    </div>
-                    <div class="ml-4 flex-grow">
-                        <h4 class="text-sm md:text-base font-bold text-gray-400">Prologue: The King</h4>
-                        <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
-                    </div>
-                    <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs px-3 py-1.5 rounded-md">Get Notified</button>
-                </div>
-            </section>
-        
-            <!-- GALLERY TAB (Hidden by default) -->
-            <section id="content-gallery" class="tab-content hidden text-center">
-                <p class="text-gray-500">The royal gallery is currently under preparation...</p>
-            </section>
-        </main>
-
-        <!-- COPYRIGHT -->
-        <footer class="mt-20 pb-10">
-            <div class="h-[1px] w-32 mx-auto bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-6"></div>
-            <p class="text-center text-[10px] uppercase tracking-[0.2em] text-gray-600">
-                © 2026 Eloirien. All Rights Reserved.
-            </p>
-        </footer>
+            </div>
+        </section>
     
+        <!-- EPISODES TAB -->
+        <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
+            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                <div class="ml-4 flex-grow">
+                    <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
+                </div>
+                <a href="reader.html" class="text-blue-500 font-bold text-xs md:text-sm hover:text-blue-400">READ</a>
+            </div>
+            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
+                <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
+                    <span class="text-gray-600 font-bold text-xs">EP 02</span>
+                </div>
+                <div class="ml-4 flex-grow">
+                    <h4 class="text-sm md:text-base font-bold text-gray-400">Prologue: The King</h4>
+                    <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
+                </div>
+                <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs px-3 py-1.5 rounded-md">Get Notified</button>
+            </div>
+        </section>
+    
+        <!-- GALLERY TAB -->
+        <section id="content-gallery" class="tab-content hidden text-center">
+            <p class="text-gray-500">The royal gallery is currently under preparation...</p>
+        </section>
+    </main>
+
+    <!-- COPYRIGHT FOOTER -->
+    <footer class="mt-20 pb-10">
+        <div class="h-[1px] w-32 mx-auto bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-6"></div>
+        <p class="text-center text-[10px] uppercase tracking-[0.2em] text-gray-600">
+            © 2026 Eloirien. All Rights Reserved.
+        </p>
+    </footer>
+
     <script>
         function switchTab(tabName) {
-    // 1. Hide all content sections
-    document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
-    
-    // 2. Show the selected content
-    document.getElementById('content-' + tabName).classList.remove('hidden');
-    
-    // 3. Reset all button styles
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('border-blue-600', 'text-white');
-        btn.classList.add('border-transparent', 'text-gray-500');
-    });
-    
-    // 4. Highlight active button
-    const activeTab = document.getElementById('tab-' + tabName);
-    activeTab.classList.add('border-blue-600', 'text-white');
-    activeTab.classList.remove('border-transparent', 'text-gray-500');
-    }
+            document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-600', 'text-white');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('border-blue-600', 'text-white');
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+        }
     </script>
 </body>
 </html>
