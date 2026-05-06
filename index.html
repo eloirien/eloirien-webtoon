@@ -12,18 +12,17 @@
             background-color: #0d0d0d;
             color: #E0E0E0;
         }
-        .hero-banner {
+        
+        /* Container that holds everything */
+        .hero-wrapper {
             position: relative;
-            height: 70vh; /* Slightly taller for more impact */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
             background-color: #0d0d0d;
+            overflow: hidden;
+            width: 100%;
         }
         
-        /* The Blurred Background Layer */
-        .hero-bg-blur {
+        /* 1. Blurred Atmosphere Layer */
+        .hero-blur-bg {
             position: absolute;
             top: 0;
             left: 0;
@@ -32,35 +31,47 @@
             background-image: url('images/cover.webp');
             background-size: cover;
             background-position: center;
-            filter: blur(10px) brightness(0.4); /* Makes it semi-transparent and soft */
+            filter: blur(25px) brightness(0.3);
             z-index: 1;
         }
         
-        /* The Sharp Centered "Stage" */
-        .hero-stage {
+        /* 2. The Contracted Banner (Stays at its ratio) */
+        .hero-stage-fixed {
             position: relative;
             z-index: 2;
             width: 90%;
-            max-width: 1000px; /* Stays centered and resized */
-            height: 80%;
+            max-width: 1100px;
+            margin: 2rem auto; /* Space for the floating titles below */
+            aspect-ratio: 16 / 9; /* Change this if your art is 4:3 or 21:9 */
             background-image: url('images/cover.webp');
-            background-size: cover;
+            background-size: contain; /* Ensures the whole image is visible */
+            background-repeat: no-repeat;
             background-position: center;
-            border-radius: 24px; /* Round edges */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
-        }
+        
+        /* 3. Floating Branding Section */
+        .hero-branding {
+            position: relative;
+            z-index: 3;
+            margin-top: -60px; /* Pulls it UP so it 'floats' over the bottom of the art */
+            text-align: center;
+            padding-bottom: 3rem;
+         }
+        
         .tab-active {
             border-bottom: 4px solid #3b82f6;
             color: #60a5fa;
             font-weight: bold;
         }
+        
         .episode-card {
             background-color: #1a1a1a;
             border: 1px solid #2d2d2d;
             transition: transform 0.2s;
         }
+        
         .episode-card:hover {
             transform: scale(1.02);
             border-color: #3b82f6;
@@ -87,30 +98,32 @@
 <body>
 
     <!-- Cinematic Hero Section -->
-    <section class="hero-banner">
-        <!-- The Atmosphere -->
-        <div class="hero-bg-blur"></div>
-    
-        <!-- The Stage -->
-        <div class="hero-stage flex items-end">
-            <div class="container mx-auto px-6 pb-12">
-                <!-- Your Logo with the Blue Glow -->
-                <div class="mb-4">
-                    <img src="images/logo.png" 
-                         alt="Silverstring" 
-                         class="w-full max-w-[280px] md:max-w-[450px] h-auto object-contain"
-                         style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6));">
-                </div>
-    
-                <!-- Genre Tags -->
-                <div class="flex items-center space-x-2 mb-6">
-                    <span class="bg-gray-300 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Fantasy</span>
-                    <span class="bg-gray-300 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Drama</span>
-                    <span class="bg-gray-300 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Action</span>
-                </div>
-    
+    <section class="hero-wrapper">
+    <!-- The Blurred Atmosphere -->
+    <div class="hero-blur-bg"></div>
+
+    <!-- The Centered Art Stage -->
+    <div class="hero-stage-fixed"></div>
+
+    <!-- The Floating Logo & Genre (Below art, but in front of blur) -->
+    <div class="hero-branding">
+        <div class="container mx-auto px-6">
+            <!-- Logo (.png) -->
+            <div class="inline-block mb-4">
+                <img src="images/logo.png" 
+                     alt="Silverstring" 
+                     class="w-full max-w-[300px] md:max-w-[500px] h-auto object-contain"
+                     style="filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4));">
+            </div>
+
+            <!-- Genre Tags -->
+            <div class="flex justify-center items-center space-x-2">
+                <span class="bg-blue-600/20 text-blue-400 border border-blue-600/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Fantasy</span>
+                <span class="bg-blue-600/20 text-blue-400 border border-blue-600/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Drama</span>
+                <span class="bg-blue-600/20 text-blue-400 border border-blue-600/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Action</span>
             </div>
         </div>
+    </div>
     </section>
 
     <!-- Content Tabs -->
