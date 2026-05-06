@@ -94,17 +94,27 @@
         
         .lang-menu {
             position: absolute;
-            top: 45px;
+            /* Use margin to create the visual gap */
+            margin-top: 10px; 
+            /* Use padding to create the invisible bridge */
+            padding-top: 20px; 
+            
+            top: 30px; /* Adjust top to keep it close to the pill */
             right: 0;
-            background-color: #1a1a1a;
-            border: 1px solid #2d2d2d;
-            border-radius: 12px;
-            width: 170px;
+            background-color: transparent; /* Make the bridge area invisible */
             display: none;
             flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            z-index: 1001;
+            z-index: 2000;
+        }
+
+        .lang-menu-content {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
         }
         
         .lang-item {
@@ -249,17 +259,21 @@
             </div>
     
             <div class="custom-lang-dropdown">
-                <div class="lang-trigger">
-                    🌐 <span class="hidden md:inline">EN</span>
+                <div class="lang-trigger text-[10px] flex items-center gap-1 cursor-pointer">
+                    🌐 <span class="uppercase">EN</span>
                 </div>
+                <!-- The Bridge Layer -->
                 <div class="lang-menu">
-                    <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
-                    <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                    <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                    <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
+                    <!-- The Actual Content Layer -->
+                    <div class="lang-menu-content">
+                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="w-4"> English</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="w-4"> Bahasa Indonesia</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="w-4"> 日本語</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="w-4"> 한국어</div>
+                    </div>
                 </div>
             </div>
-        </div>
+                        
     </nav>
     
     <!-- Cinematic Hero Section -->
