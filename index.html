@@ -32,13 +32,19 @@
             backdrop-filter: blur(20px) saturate(180%);
             padding: 6px 16px !important;
             border-radius: 9999px !important;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            /* THE FIX: A more opaque white outline for better separation */
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            
+            /* THE FIX: Soft outer shadow for depth when floating */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 
+                        0 0 15px rgba(255, 255, 255, 0.05); 
+            
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
             justify-content: space-between;
             gap: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             width: fit-content !important; 
             height: 42px !important; 
             max-width: 95%;
