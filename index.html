@@ -64,7 +64,40 @@
             .nav-link {
                 font-size: 13px; /* Larger for desktop */
             }
+
+        /* Language Dropdown Styling */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
         
+        .lang-select {
+            background-color: rgba(31, 41, 55, 0.5);
+            color: #3b82f6; /* Blue-400 */
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            appearance: none; /* Removes default browser styling */
+            text-align: center;
+        }
+        
+        .lang-select:hover {
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Footer Styling */
+        .footer-text {
+            font-size: 11px;
+            color: #4b5563; /* Gray-600 */
+            letter-spacing: 0.1em;
+            text-align: center;
+            padding: 4rem 0 2rem 0;
+        }
+            
         /* Container that holds everything */
         .hero-wrapper {
             position: relative;
@@ -186,21 +219,28 @@
 <body>
         <nav class="nav-container">
             <div class="nav-pill">
-                <!-- Identity with better readability -->
                 <span class="text-white font-bold tracking-[0.3em] text-[10px] md:text-xs uppercase flex-shrink-0">
                     E L O I R I E N
                 </span>
                 
-                <!-- Divider -->
                 <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
                 
-                <!-- Links -->
                 <div class="flex items-center space-x-2 md:space-x-4">
                     <a href="#webcomics" class="nav-link">webcomics</a>
                     <span class="text-gray-800 text-[8px]">•</span>
                     <a href="#illustrations" class="nav-link">illustrations</a>
                     <span class="text-gray-800 text-[8px]">•</span>
                     <a href="#about" class="nav-link">about</a>
+                </div>
+        
+                <!-- NEW: Language Dropdown -->
+                <div class="lang-dropdown ml-2">
+                    <select class="lang-select uppercase">
+                        <option value="en">EN</option>
+                        <option value="id">ID</option>
+                        <option value="jp">JP</option>
+                        <option value="kr">KR</option>
+                    </select>
                 </div>
             </div>
         </nav>
@@ -306,6 +346,12 @@
             </section>
         </main>
 
+        <!-- COPYRIGHT -->
+        <footer class="footer-text uppercase">
+            <div class="h-[1px] w-24 bg-gray-800 mx-auto mb-6"></div>
+            © 2026 Eloirien. All Rights Reserved.
+        </footer>
+    
     <script>
         function switchTab(tabName) {
     // 1. Hide all content sections
