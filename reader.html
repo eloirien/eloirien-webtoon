@@ -6,115 +6,99 @@
     <title>Silverstring | Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
+        body, html {
+            height: 100%;
+            margin: 0;
             background-color: #0a0a0a;
             color: #d1d5db;
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            user-select: none; 
-            overflow-x: hidden;
+            user-select: none;
         }
 
-        /* The 'Click Zone' covers the whole viewport */
+        /* THE FIX: Click zone now covers the entire viewport background */
         #global-click-zone {
-            min-h-screen: 100vh;
+            min-height: 100vh;
             width: 100%;
             cursor: pointer;
+            position: relative;
+            z-index: 10;
         }
 
         .immersive-ui {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
             opacity: 0;
             pointer-events: none;
+            z-index: 50;
         }
         
+        /* Initial states: pushed off-screen */
         .top-ui { transform: translateY(-100%); }
         .bottom-ui { transform: translateY(100%); }
 
+        /* Active state: brought into view */
         .ui-active {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
+            transform: translateY(0) !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
 
         .webtoon-container {
             width: 100%;
-            max-width: 800px; 
+            max-width: 700px; 
             margin: 0 auto;
+            line-height: 0;
         }
 
-        .panel-container {
-            position: relative;
+        /* Placeholder style for testing */
+        .placeholder-panel {
             width: 100%;
-            line-height: 0; 
+            aspect-ratio: 2/3;
+            background: linear-gradient(45deg, #1a1a1a, #0f0f0f);
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
         }
 
-        .panel-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-            -webkit-user-drag: none;
-        }
-
-        /* Art Protection: Ghost Layer */
-        .ghost-layer {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 5;
-            background: transparent;
-        }
-
-        #back-to-top {
-            transition: all 0.3s ease;
-            bottom: 100px;
-        }
+        img { width: 100%; display: block; -webkit-user-drag: none; }
     </style>
 </head>
-<body>
+<body class="overflow-x-hidden">
 
     <div id="global-click-zone" onclick="toggleUI()">
 
-        <nav id="top-nav" class="immersive-ui top-ui fixed top-0 left-0 w-full bg-black/90 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center z-50">
-            <a href="index.html" class="text-blue-400 font-bold hover:text-blue-300 flex items-center text-xs tracking-widest" onclick="event.stopPropagation();">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="mr-2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                EXIT
-            </a>
+        <nav id="top-nav" class="immersive-ui top-ui fixed top-0 left-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center">
+            <a href="index.html" class="text-blue-400 font-bold text-xs tracking-widest" onclick="event.stopPropagation();">EXIT</a>
             <div class="text-center">
-                <h1 class="text-[10px] uppercase tracking-tighter text-gray-500 font-bold">Silverstring</h1>
-                <p class="text-[11px] text-white uppercase tracking-[0.2em]">Prologue: Storm</p>
+                <p class="text-[10px] text-white uppercase tracking-[0.2em]">Prologue: Storm</p>
             </div>
-            <div class="w-12"></div>
+            <div class="w-8"></div>
         </nav>
 
-        <main class="webtoon-container relative z-0">
-            <div class="panel-container">
-                <img src="images/panel_01.webp" alt="Panel 1">
-                <div class="ghost-layer"></div>
-            </div>
-            <div class="panel-container">
-                <img src="images/panel_02.webp" alt="Panel 2">
-                <div class="ghost-layer"></div>
-            </div>
-            <div class="panel-container">
-                <img src="images/panel_03.webp" alt="Panel 3">
-                <div class="ghost-layer"></div>
-            </div>
+        <main class="webtoon-container">
+            <div class="placeholder-panel">Panel 01</div>
+            <div class="placeholder-panel">Panel 02</div>
+            <div class="placeholder-panel">Panel 03</div>
         </main>
 
-        <nav id="bottom-nav" class="immersive-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4 translate-y-full">
+        <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4">
             <div class="max-w-md mx-auto flex items-center justify-between">
                 <button class="text-[10px] font-bold text-gray-600 uppercase" onclick="event.stopPropagation();">Prev</button>
-                <span class="text-xs font-bold text-white uppercase tracking-widest">Chapter 01</span>
+                <div class="text-center">
+                    <span class="text-[9px] text-gray-500 uppercase font-bold block">Chapter</span>
+                    <span class="text-xs font-bold text-white tracking-widest">01</span>
+                </div>
                 <button class="px-6 py-2 bg-blue-600 rounded-md text-[10px] font-bold text-white uppercase" onclick="event.stopPropagation();">Next</button>
             </div>
         </nav>
 
-    </div> <button id="back-to-top" onclick="scrollToTop(event)" class="fixed right-6 opacity-0 translate-y-10 bg-blue-600/80 backdrop-blur-md p-3 rounded-full border border-blue-400 z-40">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
-    </button>
+    </div>
 
     <script>
-        
         let uiVisible = false;
         const topNav = document.getElementById('top-nav');
         const bottomNav = document.getElementById('bottom-nav');
@@ -129,21 +113,8 @@
                 bottomNav.classList.remove('ui-active');
             }
         }
-    
-        window.onscroll = function() {
-            if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-                backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
-            } else {
-                backToTopBtn.classList.add('opacity-0', 'translate-y-10');
-            }
-        };
 
-        function scrollToTop(e) {
-            e.stopPropagation(); 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Global Art Protection
+        // Standard Protection
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
     </script>
