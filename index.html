@@ -13,14 +13,15 @@
             margin: 0;
         }
         
-       .nav-container {
+        /* Fixed: The nav now floats over the hero without pushing it down */
+        .nav-container {
             position: absolute;
             top: 0;
             width: 100%;
             z-index: 1000;
             display: flex;
             justify-content: center;
-            padding-top: 2rem; /* Keep the gap above the pill */
+            padding-top: 2rem;
             padding-left: 15px;
             padding-right: 15px;
         }
@@ -69,8 +70,6 @@
 
         .custom-lang-dropdown {
             position: relative;
-            display: inline-block;
-            height: 100%;
             display: flex;
             align-items: center;
         }
@@ -92,13 +91,13 @@
         
         .lang-menu {
             position: absolute;
-            top: 100%; /* Starts exactly at the bottom of the trigger area */
+            top: 100%;
             right: 0;
-            padding-top: 15px; /* THE BRIDGE: Keeps menu open while mouse crosses the gap */
+            padding-top: 15px;
             display: none;
             flex-direction: column;
             z-index: 2000;
-            width: 175px;
+            width: 200px;
         }
 
         .lang-menu-content {
@@ -133,15 +132,16 @@
             border-radius: 2px;
         }
         
-        /* THE TRIGGER: Shows the bridge and menu when hovering the parent */
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
             
-       .hero-wrapper {
+        /* Fixed: Hero section now starts at the very top */
+        .hero-wrapper {
             position: relative;
             background-color: #0d0d0d;
             overflow: hidden;
             width: 100%;
-            margin-top: 0; /* Ensure no gap */
+            padding-top: 0;
+            margin-top: 0;
         }
         
         .hero-blur-bg {
@@ -159,7 +159,7 @@
             z-index: 2;
             width: 90%;
             max-width: 1100px;
-            margin: 2rem auto;
+            margin: 8rem auto 2rem auto; /* Adjusted top margin for nav space */
             aspect-ratio: 2 / 1; 
             background-image: url('images/cover.webp');
             background-size: cover; 
@@ -234,6 +234,7 @@
     </style>
 </head>
 <body>
+    <!-- Top Navigation -->
     <nav class="nav-container">
         <div class="nav-pill">
             <span class="text-white font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase flex-shrink-0">
@@ -245,8 +246,8 @@
                 <a href="#about" class="nav-link">about</a>
             </div>
             <div class="custom-lang-dropdown">
-                <div class="lang-trigger">
-                    🌐 <span class="hidden md:inline">EN</span>
+                <div class="lang-trigger text-[10px] flex items-center gap-1 cursor-pointer">
+                    🌐 <span class="uppercase">EN</span>
                 </div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
@@ -275,7 +276,8 @@
         </div>
     </section>
 
-    <div class="border-b border-gray-800 bg-black/80 backdrop-blur-md sticky top-0 z-40">
+    <!-- Fixed: Tab bar sticks to top without gap -->
+    <div class="border-b border-gray-800 bg-black/90 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-screen-xl mx-auto flex justify-center">
             <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
             <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
@@ -284,6 +286,7 @@
     </div>
         
     <main class="max-w-screen-xl mx-auto px-6 py-12">
+        <!-- INFO -->
         <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
             <div class="w-64 md:w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-800">
                 <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto">
@@ -309,8 +312,9 @@
             </div>
         </section>
 
-        <!--FIRST EPISODE (EP-1)-->
+        <!-- EPISODES -->
         <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
+            <!-- EP 01 -->
             <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
                 <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
                 <div class="ml-4 flex-grow">
@@ -321,96 +325,56 @@
             </div>
 
             <!-- EP 02 -->
-                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
-                    <!-- THUMBNAIL PATH -->
-                    <img src="images/ep2-thumb.webp" alt="Prologue: The King" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    
-                    <div class="ml-4 flex-grow">
-                        <!-- TITLE-->
-                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: The King</h4>
-                        <!-- DATE -->
-                        <p class="text-[10px] md:text-xs text-gray-500">Nov 29, 2025</p>
-                    </div>
-                    
-                    <!-- READER PAGE-->
-                    <a href="reader_ep_number.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
-                        Read
-                    </a>
+            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                <img src="images/ep2-thumb.webp" alt="Prologue: The King" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                <div class="ml-4 flex-grow">
+                    <h4 class="text-sm md:text-base font-bold text-white">Prologue: The King</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500">Nov 29, 2025</p>
                 </div>
+                <a href="reader_ep2.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+            </div>
 
             <!-- EP 03 -->
-                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
-                    <!-- THUMBNAIL PATH -->
-                    <img src="images/ep3-thumb.webp" alt="Prologue: The Cup" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    
-                    <div class="ml-4 flex-grow">
-                        <!-- TITLE-->
-                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: The Cup</h4>
-                        <!-- DATE -->
-                        <p class="text-[10px] md:text-xs text-gray-500">Jan 4, 2026</p>
-                    </div>
-                    
-                    <!-- READER PAGE-->
-                    <a href="reader_ep_number.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
-                        Read
-                    </a>
+            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                <img src="images/ep3-thumb.webp" alt="Prologue: The Cup" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                <div class="ml-4 flex-grow">
+                    <h4 class="text-sm md:text-base font-bold text-white">Prologue: The Cup</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500">Jan 4, 2026</p>
                 </div>
+                <a href="reader_ep3.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+            </div>
 
             <!-- EP 04 -->
-                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
-                    <!-- THUMBNAIL PATH -->
-                    <img src="images/ep4-thumb.webp" alt="01 - Who (Part 1)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    
-                    <div class="ml-4 flex-grow">
-                        <!-- TITLE-->
-                        <h4 class="text-sm md:text-base font-bold text-white">01 - Who (Part 1)</h4>
-                        <!-- DATE -->
-                        <p class="text-[10px] md:text-xs text-gray-500">Feb 7, 2026</p>
-                    </div>
-                    
-                    <!-- READER PAGE-->
-                    <a href="reader_ep_number.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
-                        Read
-                    </a>
+            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                <img src="images/ep4-thumb.webp" alt="01 - Who (Part 1)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                <div class="ml-4 flex-grow">
+                    <h4 class="text-sm md:text-base font-bold text-white">01 - Who (Part 1)</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500">Feb 7, 2026</p>
                 </div>
+                <a href="reader_ep4.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+            </div>
 
             <!-- EP 05 -->
-                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
-                    <!-- THUMBNAIL PATH -->
-                    <img src="images/ep5-thumb.webp" alt="01 - Who (Part 2)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    
-                    <div class="ml-4 flex-grow">
-                        <!-- TITLE-->
-                        <h4 class="text-sm md:text-base font-bold text-white">01 - Who (Part 2)</h4>
-                        <!-- DATE -->
-                        <p class="text-[10px] md:text-xs text-gray-500">Mar 8, 2026</p>
-                    </div>
-                    
-                    <!-- READER PAGE-->
-                    <a href="reader_ep_number.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
-                        Read
-                    </a>
+            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                <img src="images/ep5-thumb.webp" alt="01 - Who (Part 2)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                <div class="ml-4 flex-grow">
+                    <h4 class="text-sm md:text-base font-bold text-white">01 - Who (Part 2)</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500">Mar 8, 2026</p>
                 </div>
+                <a href="reader_ep5.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+            </div>
 
-             <!-- EP 06 -->
-                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
-                    <!-- THUMBNAIL PATH -->
-                    <img src="images/ep6-thumb.webp" alt="02 - Friend (Part 1)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    
-                    <div class="ml-4 flex-grow">
-                        <!-- TITLE-->
-                        <h4 class="text-sm md:text-base font-bold text-white">02 - Friend (Part 1)</h4>
-                        <!-- DATE -->
-                        <p class="text-[10px] md:text-xs text-gray-500">Apr 23, 2026</p>
-                    </div>
-                    
-                    <!-- READER PAGE-->
-                    <a href="reader_ep_number.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
-                        Read
-                    </a>
+            <!-- EP 06 -->
+            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                <img src="images/ep6-thumb.webp" alt="02 - Friend (Part 1)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                <div class="ml-4 flex-grow">
+                    <h4 class="text-sm md:text-base font-bold text-white">02 - Friend (Part 1)</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500">Apr 23, 2026</p>
                 </div>
+                <a href="reader_ep6.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+            </div>
             
-            <!-- COMING SOON EPISODE -->
+            <!-- COMING SOON -->
             <div class="episode-card coming-soon w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
                 <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
                     <span class="text-gray-600 font-bold text-xs">EP 07</span>
@@ -421,7 +385,6 @@
                 </div>
                 <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center">Notify</button>
             </div>
-            
         </section>
     
         <section id="content-gallery" class="tab-content hidden text-center">
