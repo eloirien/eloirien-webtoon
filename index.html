@@ -208,9 +208,16 @@
             transition: transform 0.2s;
         }
         
+        /* Hover for released episodes (Blue) */
         .episode-card:hover {
             transform: scale(1.02);
             border-color: #3b82f6;
+            cursor: pointer;
+        }
+        
+        /* Hover for unreleased episodes (Gold/Amber) */
+        .episode-card.coming-soon:hover {
+            border-color: #d97706; /* Matches the amber-600 button */
         }
         
         .synopsis-style {
@@ -311,21 +318,21 @@
     
         <!-- EPISODES TAB -->
         <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
-            <!-- Prologue: Storm Card -->
+            <!-- Prologue: Storm Card (Released) -->
             <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
                 <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
                 <div class="ml-4 flex-grow">
                     <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
                     <p class="text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
                 </div>
-                <!-- Updated Blue Button -->
-                <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs px-5 py-2 rounded-md transition-colors uppercase tracking-wider">
+                <!-- Blue Button: Centered text and matched size -->
+                <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
                     Read
                 </a>
             </div>
         
-            <!-- Prologue: The King Card -->
-            <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
+            <!-- Prologue: The King Card (Unreleased) -->
+            <div class="episode-card coming-soon w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
                 <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
                     <span class="text-gray-600 font-bold text-xs">EP 02</span>
                 </div>
@@ -333,9 +340,9 @@
                     <h4 class="text-sm md:text-base font-bold text-gray-400">Prologue: The King</h4>
                     <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
                 </div>
-                <!-- Amber Button (for consistency) -->
-                <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs px-3 py-1.5 rounded-md uppercase tracking-wider">
-                    Get Notified
+                <!-- Amber Button: Centered text and matched size -->
+                <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center">
+                    Notify
                 </button>
             </div>
         </section>
