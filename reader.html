@@ -3,74 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading: Silverstring</title>
-    <!-- Load Tailwind CSS -->
+    <title>Silverstring | Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             background-color: #0a0a0a;
             color: #d1d5db;
             font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
         }
-        /* The vertical scroll experience typical of webtoons */
-        .webtoon-container img {
+
+        /* Full immersion: UI is hidden by default */
+        .immersive-ui {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        
+        .ui-hidden {
+            transform: translateY(-100%); /* Top bar slides up */
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ui-hidden-bottom {
+            transform: translateY(100%); /* Bottom bar slides down */
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Webtoon scroll experience */
+        .panel-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .panel-container img {
             display: block;
             width: 100%;
             height: auto;
-            margin: 0 auto;
+            -webkit-user-drag: none;
+            user-select: none;
         }
 
-        .comic-page {
-            /* Prevents the 'Save Image' popup on many mobile browsers */
-            -webkit-touch-callout: none;
-            /* Prevents the user from highlighting or selecting the image */
-            user-select: none;
-            /* Prevents ghost-dragging the image to the desktop */
-            -webkit-user-drag: none;
-            pointer-events: none; /* Makes the image 'invisible' to mouse clicks */
+        /* Art Protection: Ghost Layer */
+        .ghost-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            background: transparent;
         }
-        
+
+        /* Back to Top Button */
+        #back-to-top {
+            transition: all 0.3s ease;
+            bottom: 100px; /* Sits above the bottom nav */
+        }
     </style>
 </head>
-<body>
+<body onclick="toggleUI()">
 
-    <!-- Simple Navigation Header -->
-    <nav class="sticky top-0 bg-black/80 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center z-50">
-        <a href="index.html" class="text-blue-400 font-bold hover:text-blue-300 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            Back to Series Info
+    <nav id="top-nav" class="immersive-ui fixed top-0 left-0 w-full bg-black/90 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center z-50">
+        <a href="index.html" class="text-blue-400 font-bold hover:text-blue-300 flex items-center text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            EXIT
         </a>
-        <span class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Prologue: Storm</span>
+        <div class="text-center">
+            <h1 class="text-xs uppercase tracking-tighter text-gray-500 font-bold">Silverstring</h1>
+            <p class="text-[10px] text-white uppercase tracking-widest">Prologue: Storm</p>
+        </div>
+        <div class="w-10"></div> </nav>
+
+    <main class="max-w-2xl mx-auto pt-0">
+        <div class="panel-container">
+            <img src="images/panel_01.webp" alt="Panel 1">
+            <div class="ghost-layer"></div>
+        </div>
+        <div class="panel-container">
+            <img src="images/panel_02.webp" alt="Panel 2">
+            <div class="ghost-layer"></div>
+        </div>
+        </main>
+
+    <button id="back-to-top" onclick="scrollToTop(event)" class="fixed right-6 opacity-0 translate-y-10 bg-blue-600/80 backdrop-blur-md p-3 rounded-full border border-blue-400 z-40">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+
+    <nav id="bottom-nav" class="immersive-ui fixed bottom-0 left-0 w-full bg-black/90 backdrop-blur-md border-t border-gray-800 p-4 z-50">
+        <div class="max-w-2xl mx-auto flex items-center justify-between">
+            <button class="px-4 py-2 bg-gray-800 rounded-md text-xs font-bold text-gray-400 cursor-not-allowed">PREV</button>
+            
+            <div class="flex flex-col items-center">
+                <span class="text-[10px] text-gray-500 uppercase font-bold">Chapter</span>
+                <span class="text-sm font-bold text-white">01</span>
+            </div>
+
+            <button class="px-4 py-2 bg-blue-600 rounded-md text-xs font-bold text-white hover:bg-blue-500">NEXT</button>
+        </div>
     </nav>
 
-    <!-- Main Reader Area -->
-    <main class="max-w-2xl mx-auto webtoon-container">
-        <!-- Replace 'your-panel-X.webp' with your actual filenames inside the images folder -->
-        <img src="images/panel_01.webp" alt="Storm - Panel 1">
-        <img src="images/panel_02.webp" alt="Storm - Panel 2">
-        <img src="images/panel_03.webp" alt="Storm - Panel 3">
-        
-        <!-- Add more <img> tags as you upload more panels to your GitHub images folder -->
-    </main>
-
-    <!-- Footer Navigation -->
-    <footer class="p-12 text-center bg-gray-900 border-t border-gray-800">
-        <p class="mb-6 italic text-gray-500">Next episode is available.</p>
-        <div class="flex justify-center space-x-4">
-            <a href="index.html" class="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">Series Info</a>
-            <button class="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 transition">Next Chapter</button>
-        </div>
-        <p class="mt-8 text-xs text-gray-600">© 2026 Eloirien. All Rights Reserved.</p>
-    </footer>
-
     <script>
-        document.addEventListener('dragstart', function(e) {
-                        if (e.target.nodeName === 'IMG') {
-                            e.preventDefault();
-                        }
-                    }, false);
-        
+        let uiVisible = true;
+        const topNav = document.getElementById('top-nav');
+        const bottomNav = document.getElementById('bottom-nav');
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        // Toggle UI visibility
+        function toggleUI() {
+            uiVisible = !uiVisible;
+            if (uiVisible) {
+                topNav.classList.remove('ui-hidden');
+                bottomNav.classList.remove('ui-hidden-bottom');
+            } else {
+                topNav.classList.add('ui-hidden');
+                bottomNav.classList.add('ui-hidden-bottom');
+            }
+        }
+
+        // Back to top logic
+        window.onscroll = function() {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'translate-y-10');
+            }
+        };
+
+        function scrollToTop(e) {
+            e.stopPropagation(); // Prevents triggering the UI toggle
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Global protection
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
     </script>
-    
 </body>
 </html>
