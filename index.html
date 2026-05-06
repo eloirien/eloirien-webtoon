@@ -59,22 +59,35 @@
         .hero-branding-bar {
             position: relative;
             z-index: 10;
-            margin-top: -40px; /* Pulls it up to overlap the banner */
+            margin-top: -60px; /* Overlaps the banner slightly */
             display: flex;
             justify-content: center;
             padding: 0 20px;
         }
         
         .branding-pill {
-            background-color: rgba(13, 13, 13, 0.85); /* Deep dark with transparency */
-            backdrop-filter: blur(10px); /* Glassmorphism effect */
-            padding: 12px 32px;
-            border-radius: 9999px; /* The pill shape */
+            background-color: rgba(13, 13, 13, 0.8); /* Semi-transparent dark */
+            backdrop-filter: blur(12px); /* Softens the background art */
+            padding: 24px 40px; /* More vertical breathing room */
+            border-radius: 40px; /* Smooth, large rounded corners like your edit */
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
+            flex-direction: column; /* Stacks items vertically */
             align-items: center;
-            gap: 24px; /* Space between logo and genres */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            gap: 16px; /* Space between logo and genres */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            width: fit-content;
+        }
+        
+        .genre-tag-outline {
+            border: 1px solid rgba(255, 255, 255, 0.6); /* White outline from your edit */
+            border-radius: 8px;
+            padding: 4px 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         
         .tab-active {
@@ -118,26 +131,21 @@
     <section class="hero-wrapper">
         <div class="hero-blur-bg"></div>
         <div class="hero-stage-fixed"></div>
-
-    <!-- The New Floating Branding Bar -->
+    
+        <!-- The Stacked Branding Capsule -->
         <div class="hero-branding-bar">
             <div class="branding-pill">
-                <!-- Logo Section -->
+                <!-- Logo (Top) -->
                 <img src="images/logo.png" 
                      alt="Silverstring" 
-                     class="h-8 md:h-10 w-auto object-contain"
-                     style="filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));">
+                     class="w-full max-w-[280px] md:max-w-[400px] h-auto object-contain"
+                     style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));">
     
-                <!-- Vertical Divider (Optional, for that look) -->
-                <div class="h-6 w-[1px] bg-gray-700"></div>
-    
-                <!-- Genre Tags Section -->
+                <!-- Genre Tags (Bottom) -->
                 <div class="flex items-center space-x-3">
-                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Fantasy</span>
-                    <span class="text-gray-500 text-[10px]">•</span>
-                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Drama</span>
-                    <span class="text-gray-500 text-[10px]">•</span>
-                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Action</span>
+                    <span class="genre-tag-outline">Fantasy</span>
+                    <span class="genre-tag-outline">Drama</span>
+                    <span class="genre-tag-outline">Action</span>
                 </div>
             </div>
         </div>
