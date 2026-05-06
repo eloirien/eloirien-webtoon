@@ -28,37 +28,40 @@
         .nav-pill {
             background-color: rgba(13, 13, 13, 0.9);
             backdrop-filter: blur(15px);
-            padding: 10px 20px;
+            padding: 10px 16px; /* Slightly tighter padding for mobile */
             border-radius: 9999px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            gap: 12px; /* Tighter gap for mobile compatibility */
+            gap: 8px; /* Tighter gap for mobile */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             
-            /* Mobile Logic: Let it shrink without cropping the text */
-            max-width: 100%; 
-            white-space: nowrap; 
-            overflow-x: auto; /* Adds a subtle swipe if the screen is tiny */
+            /* Crucial for the cropping fix */
+            max-width: 95%; /* Ensures it never touches the screen edges */
+            margin: 0 auto;
         }
         
-        /* Hide scrollbar for the pill on mobile */
-        .nav-pill::-webkit-scrollbar {
-            display: none;
+        /* Adjusting the gap and padding for bigger screens */
+        @media (min-width: 768px) {
+            .nav-pill {
+                gap: 20px;
+                padding: 10px 28px;
+            }
         }
         
         .nav-link {
-            color: #9ca3af; /* Gray-400 */
+            color: #9ca3af;
             text-transform: lowercase;
-            font-size: 13px;
+            font-size: 11px; /* Smaller for mobile */
             font-weight: 500;
             letter-spacing: 0.05em;
-            transition: color 0.3s ease;
+            white-space: nowrap; /* Prevents text from wrapping to a second line */
         }
         
-        .nav-link:hover {
-            color: #3b82f6; /* Blue-500 highlight on hover */
-        }
+        @media (min-width: 768px) {
+            .nav-link {
+                font-size: 13px; /* Larger for desktop */
+            }
         
         /* Container that holds everything */
         .hero-wrapper {
@@ -180,23 +183,25 @@
 </head>
 <body>
         <nav class="nav-container">
-        <div class="nav-pill">
-            <!-- Identity -->
-            <span class="text-white font-bold tracking-widest text-xs md:text-sm uppercase flex-shrink-0"> E l o i r i e n </span>
-            
-            <!-- Divider -->
-            <div class="h-4 w-[1px] bg-gray-700 flex-shrink-0"></div>
-            
-            <!-- Links: Use text-xs for mobile, sm for desktop -->
-            <div class="flex items-center space-x-3 text-[11px] md:text-sm">
-                <a href="#webcomics" class="nav-link">webcomics</a>
-                <span class="text-gray-700 text-[8px]">•</span>
-                <a href="#illustrations" class="nav-link">illustrations</a>
-                <span class="text-gray-700 text-[8px]">•</span>
-                <a href="#about" class="nav-link">about</a>
+            <div class="nav-pill">
+                <!-- Identity with better readability -->
+                <span class="text-white font-bold tracking-[0.3em] text-[10px] md:text-xs uppercase flex-shrink-0">
+                    E L O I R I E N
+                </span>
+                
+                <!-- Divider -->
+                <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
+                
+                <!-- Links -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <a href="#webcomics" class="nav-link">webcomics</a>
+                    <span class="text-gray-800 text-[8px]">•</span>
+                    <a href="#illustrations" class="nav-link">illustrations</a>
+                    <span class="text-gray-800 text-[8px]">•</span>
+                    <a href="#about" class="nav-link">about</a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
     
     <!-- Cinematic Hero Section -->
     <section class="hero-wrapper">
