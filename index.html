@@ -332,6 +332,28 @@
             </div>
         </section>
 
+        <!-- EPISODES HEADER: Shortcuts & Sorting -->
+        <div class="w-full max-w-2xl flex items-center justify-between mb-6 px-2">
+            <div class="flex gap-2">
+                <a href="ep1/index_en.html" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+                    First Episode
+                </a>
+                <a href="ep6/index_en.html" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+                    Newest Episode
+                </a>
+            </div>
+            
+            <!-- Sorting Toggle Button -->
+            <button onclick="toggleSort()" class="w-8 h-8 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center hover:border-blue-500 transition-all group">
+                <span id="sort-icon" class="text-gray-400 group-hover:text-blue-500 text-sm">⇅</span>
+            </button>
+        </div>
+        
+        <!-- Add an ID to your episode list container so the script can find it -->
+        <div id="episode-list" class="flex flex-col items-center space-y-6 w-full">
+            <!-- Paste all your episode-card divs here -->
+        </div>
+        
         <!-- EPISODES -->
         <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
             <!-- EP 01 -->
@@ -432,6 +454,22 @@
             activeTab.classList.add('border-blue-600', 'text-white');
             activeTab.classList.remove('border-transparent', 'text-gray-500');
         }
+        
+        let isNewestFirst = false;
+        
+        function toggleSort() {
+            const list = document.getElementById('episode-list');
+            const items = Array.from(list.children);
+            
+            // Reverse the array and re-append to the list
+            items.reverse().forEach(item => list.appendChild(item));
+            
+            // Toggle icon state
+            isNewestFirst = !isNewestFirst;
+            const icon = document.getElementById('sort-icon');
+            icon.style.transform = isNewestFirst ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+        
     </script>
 </body>
 </html>
