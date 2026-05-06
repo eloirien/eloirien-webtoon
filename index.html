@@ -15,14 +15,16 @@
         
         /* The Top Navigation Wrapper */
         .nav-container {
-            position: sticky; /* Logic: Stay in place until scroll hits the top */
-            top: 20px;       /* When sticking, stay 20px from the very top */
-            margin-top: 2rem; /* Gap ABOVE the banner so it doesn't overlap Archius/Alice */
+            position: sticky; 
+            top: 0;           /* Stick to the very top edge */
             width: 100%;
             z-index: 1000;
             display: flex;
             justify-content: center;
-            padding: 0 15px; /* Prevention: Keeps the pill from hitting screen edges on mobile */
+            padding-top: 2rem; /* THIS IS THE FIX: Creates the gap above the pill without moving the background */
+            padding-left: 15px;
+            padding-right: 15px;
+            /* Remove margin-top if it's still there */
         }
         
         .nav-pill {
