@@ -82,7 +82,7 @@
     <!-- Main Content Container -->
     <main class="container mx-auto px-6 py-12 flex flex-col md:flex-row gap-12">
 
-<!-- Right: Comic Info/Synopsis -->
+    <!-- Right: Comic Info/Synopsis -->
         <aside class="w-full md:w-1/3 flex flex-col items-center space-y-6">
 
         <!-- The Vertical Cover (Smaller & Centered) -->
@@ -102,18 +102,21 @@
             </div>
         </div>
 
-            <div class="mt-12 bg-gray-900/50 p-6 rounded-xl border border-gray-800">
-                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Creator</h3>
-                <div class="flex items-center space-x-3">
-                   <img src="images/profile.webp" 
-                             alt="Eloirien" 
-                             class="w-12 h-12 rounded-full object-cover aspect-square border border-gray-700">
-                        <div>
-                        <p class="font-bold text-white">Eloirien</p>
-                        <p class="text-xs text-blue-400">@Eloirien</p>
-                    </div>
+            <!-- Creator Box: Updated to match synopsis width -->
+        <div class="w-full mt-8 bg-gray-900/50 p-5 rounded-xl border border-gray-800">
+            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Creator</h3>
+            <div class="flex items-center space-x-4">
+                <!-- Perfect Circle Profile -->
+                <img src="images/profile.webp" 
+                     alt="Eloirien" 
+                     class="w-12 h-12 rounded-full object-cover aspect-square border border-gray-700">
+                <div>
+                    <p class="font-bold text-white text-base">Eloirien</p>
+                    <p class="text-xs text-blue-400">@Eloirien</p>
                 </div>
             </div>
+        </div>
+            
         </aside>
         
         <!-- Left: Episode List -->
