@@ -46,6 +46,10 @@
         /* Adjusting the gap and padding for bigger screens */
         @media (min-width: 768px) {
             .nav-pill {
+                max-width: 95%;
+                width: auto;
+                border-radius: 9999px !important; /* Forces it to stay a pill shape */
+                flex-wrap: nowrap; /* Prevents items from jumping to new lines */
                 gap: 20px;
                 padding: 10px 28px;
             }
@@ -73,55 +77,50 @@
         }
         
         .lang-trigger {
-            background-color: rgba(31, 41, 55, 0.5);
+            background-color: rgba(31, 41, 55, 0.6);
             border: 1px solid rgba(59, 130, 246, 0.3);
             color: #3b82f6;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
+            gap: 4px;
+            white-space: nowrap;
         }
         
-        .lang-trigger:hover {
-            background-color: rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
-        }
-        
+        /* Fix for the 'Exploding Circle' and escaping flags */
         .lang-menu {
             position: absolute;
             top: 120%;
             right: 0;
-            background-color: #1a1a1a;
+            background-color: #121212;
             border: 1px solid #2d2d2d;
             border-radius: 12px;
-            width: 160px;
-            display: none; /* Controlled by JS or Hover */
+            width: 170px;
+            display: none; 
             flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             z-index: 1001;
         }
         
         .lang-item {
-            padding: 10px 15px;
+            padding: 12px;
             font-size: 12px;
-            color: #9ca3af;
             display: flex;
             align-items: center;
             gap: 10px;
-            cursor: pointer;
-            transition: background 0.2s;
+            border-bottom: 1px solid #1f1f1f;
         }
         
         .lang-item:hover {
             background-color: #2d2d2d;
             color: white;
         }
+
+        .lang-item:last-child { border-bottom: none; }
         
         .flag-icon {
             width: 18px;
@@ -130,7 +129,7 @@
             border-radius: 2px;
         }
         
-        /* Show menu on hover (simplest logic) */
+        /* Show menu logic */
         .custom-lang-dropdown:hover .lang-menu {
             display: flex;
         }
@@ -265,40 +264,32 @@
 <body>
         <nav class="nav-container">
             <div class="nav-pill">
-                <span class="text-white font-bold tracking-[0.3em] text-[10px] md:text-xs uppercase flex-shrink-0">
+                <!-- Brand - Locked size so it doesn't shrink -->
+                <span class="text-white font-bold tracking-[0.2em] text-[9px] md:text-xs uppercase flex-shrink-0">
                     E L O I R I E N
                 </span>
                 
-                <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
+                <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0 mx-1"></div>
                 
-                <div class="flex items-center space-x-2 md:space-x-4">
-                    <a href="#webcomics" class="nav-link">webcomics</a>
-                    <span class="text-gray-800 text-[8px]">•</span>
-                    <a href="#illustrations" class="nav-link">illustrations</a>
-                    <span class="text-gray-800 text-[8px]">•</span>
+                <!-- Links - Hidden on very small screens or made tiny -->
+                <div class="flex items-center space-x-2 text-[10px] md:text-sm">
+                    <a href="#webcomics" class="nav-link">comics</a>
                     <a href="#about" class="nav-link">about</a>
                 </div>
         
-                <!-- Custom Language Selector -->
-                <div class="custom-lang-dropdown ml-2">
+                <!-- Language Pill -->
+                <div class="custom-lang-dropdown ml-1">
                     <div class="lang-trigger">
                         🌐 EN
                     </div>
                     <div class="lang-menu">
-                        <div class="lang-item">
-                            <img src="https://flagcdn.com/us.svg" class="flag-icon"> English
-                        </div>
-                        <div class="lang-item">
-                            <img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia
-                        </div>
-                        <div class="lang-item">
-                            <img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語
-                        </div>
-                        <div class="lang-item">
-                            <img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어
-                        </div>
+                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="w-4 h-3"> English</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="w-4 h-3"> Bahasa Indonesia</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="w-4 h-3"> 日本語</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="w-4 h-3"> 한국어</div>
                     </div>
                 </div>
+            </div>
         </nav>
     
     <!-- Cinematic Hero Section -->
