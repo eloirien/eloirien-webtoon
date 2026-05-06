@@ -232,16 +232,16 @@
 
     <!-- Content Tabs -->
     <!-- Tab Navigation: Centered and sleek -->
-        <div class="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-[80px] z-40">
-            <div class="max-w-screen-xl mx-auto flex justify-center">
-                <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
-                <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
-                <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
-            </div>
-        </div>
-
-    <!-- Main Content Container -->
-            <main class="max-w-screen-xl mx-auto px-6 py-12">
+                <div class="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-[80px] z-40">
+                    <div class="max-w-screen-xl mx-auto flex justify-center">
+                        <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
+                        <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
+                        <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
+                    </div>
+                </div>
+        
+            <!-- Main Content Container -->
+                    <main class="max-w-screen-xl mx-auto px-6 py-12">
             <!-- INFO TAB (Default view) -->
             <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
                 <!-- Vertical Cover -->
@@ -252,13 +252,13 @@
                 <!-- Synopsis & Creator (Centered) -->
                 <div class="max-w-2xl text-center space-y-8">
                     <div>
-                           <p class="synopsis-style text-sm leading-snug">
-                        Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
-                        <br><br>
-                        <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2">
-                            "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
-                        </em>
-                            </p>
+                        <p class="synopsis-style text-sm leading-snug">
+                            Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
+                            <br><br>
+                            <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2">
+                                "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
+                            </em>
+                        </p>
                     </div>
                     
                     <!-- Your Styled Creator Box -->
@@ -276,8 +276,28 @@
             </section>
         
             <!-- EPISODES TAB (Hidden by default) -->
-            <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-4">
-                <!-- Episode cards go here -->
+            <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
+                <!-- Prologue: Storm Card -->
+                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                    <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
+                        <p class="text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
+                    </div>
+                    <a href="reader.html" class="text-blue-500 font-bold text-xs md:text-sm hover:text-blue-400">READ</a>
+                </div>
+        
+                <!-- Prologue: The King Card -->
+                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
+                    <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
+                        <span class="text-gray-600 font-bold text-xs">EP 02</span>
+                    </div>
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-gray-400">Prologue: The King</h4>
+                        <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
+                    </div>
+                    <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs px-3 py-1.5 rounded-md">Get Notified</button>
+                </div>
             </section>
         
             <!-- GALLERY TAB (Hidden by default) -->
