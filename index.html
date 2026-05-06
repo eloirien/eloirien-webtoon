@@ -258,7 +258,29 @@
             font-family: 'Inter', sans-serif !important;
             letter-spacing: 0.02em; 
         }
+
+         .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid #2d2d2d;
+            background-color: #1a1a1a;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+    
+        img {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
     </style>
+    
 </head>
 <body>
     <nav class="nav-container">
@@ -431,9 +453,23 @@
             </div>
         </section>
     
-        <section id="content-gallery" class="tab-content hidden text-center">
-            <p class="text-gray-500">The royal gallery is currently under preparation...</p>
+        <section id="content-gallery" class="tab-content hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            
+            <div class="gallery-item aspect-square">
+                <img src="images/gallery/childhood_bond.webp" alt="Archie and Alice Childhood" class="w-full h-full object-cover">
+                
+                <div class="absolute inset-0 z-10 w-full h-full cursor-default" style="background: rgba(0,0,0,0);"></div>
+                
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-20">
+                    <p class="text-xs font-bold text-white uppercase tracking-widest">The Binary Star Beginnings</p>
+                </div>
+            </div>
+    
+            </div>
+        <p class="text-gray-500 mt-12 text-sm italic">The royal archives are being digitized. More records coming soon.</p>
         </section>
+        
     </main>
 
     <footer class="mt-20 pb-10">
@@ -464,6 +500,21 @@
             const icon = document.getElementById('sort-icon');
             icon.style.transform = isNewestFirst ? 'rotate(180deg)' : 'rotate(0deg)';
         }
+
+                // THE SENTRY: Disables right-click and dragging globally
+            document.addEventListener('contextmenu', function(e) {
+                // Disable save menu on images
+                if (e.target.nodeName === 'IMG' || e.target.parentElement.classList.contains('gallery-item')) {
+                    e.preventDefault();
+                }
+            }, false);
+        
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.nodeName === 'IMG') {
+                    e.preventDefault();
+                }
+            }, false);
+        
     </script>
 </body>
 </html>
