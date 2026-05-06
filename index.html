@@ -32,6 +32,22 @@
             transform: scale(1.02);
             border-color: #3b82f6;
         }
+        /* Add this inside your <style> tags */
+        .synopsis-style {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #d1d5db; /* A soft moon-grey */
+            text-align: justify;
+            letter-spacing: 0.015em;
+        }
+
+        .synopsis-style em {
+            color: #94a3b8; /* Slightly darker for the scripture quote */
+            display: block;
+            margin-top: 1rem;
+            border-left: 2px solid #3b82f6; /* A blue "logic" line for the quote */
+            padding-left: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -105,10 +121,13 @@
         <aside class="w-full md:w-1/3 space-y-8">
             <div>
                 <h2 class="text-2xl font-bold text-white mb-4">Synopsis</h2>
-                <p class="text-gray-400 leading-relaxed">
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-4">Synopsis</h2>
+                <p class="synopsis-style">
                     Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?  
-                    <br><br><em>For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places.</em>
-                </p>
+                    <br><br>
+                    <em>For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places.</em>
+                        </p>
             </div>
 
             <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
