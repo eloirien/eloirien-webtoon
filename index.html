@@ -31,7 +31,7 @@
             background-image: url('images/cover.webp');
             background-size: cover;
             background-position: center;
-            filter: blur(25px) brightness(0.3);
+            filter: blur(10px) brightness(0.3);
             z-index: 1;
         }
         
@@ -59,24 +59,30 @@
         .hero-branding-bar {
             position: relative;
             z-index: 10;
-            margin-top: -60px; /* Overlaps the banner slightly */
+            margin-top: 1.5rem; /* Replaces the negative margin with a clean gap below the art */
             display: flex;
             justify-content: center;
             padding: 0 20px;
         }
         
         .branding-pill {
-            background-color: rgba(13, 13, 13, 0.8); /* Semi-transparent dark */
-            backdrop-filter: blur(12px); /* Softens the background art */
-            padding: 24px 40px; /* More vertical breathing room */
-            border-radius: 40px; /* Smooth, large rounded corners like your edit */
+            background-color: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(12px);
+            
+            /* Forces the 2:1 ratio appearance */
+            width: 90%;
+            max-width: 600px; /* Wide but contained */
+            height: 300px; /* Exactly half of the max-width to hit 2:1 */
+            
+            border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            
             display: flex;
-            flex-direction: column; /* Stacks items vertically */
+            flex-direction: column;
             align-items: center;
-            gap: 16px; /* Space between logo and genres */
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            width: fit-content;
+            justify-content: center; /* Centers the content perfectly inside the 2:1 box */
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         
         .genre-tag-outline {
@@ -133,19 +139,20 @@
         <div class="hero-stage-fixed"></div>
     
         <!-- The Stacked Branding Capsule -->
+        <!-- The Branding Capsule (Now following 2:1 ratio and sticking below) -->
         <div class="hero-branding-bar">
             <div class="branding-pill">
-                <!-- Logo (Top) -->
+                <!-- Logo (.png) -->
                 <img src="images/logo.png" 
                      alt="Silverstring" 
-                     class="w-full max-w-[280px] md:max-w-[400px] h-auto object-contain"
+                     class="w-full max-w-[250px] md:max-w-[400px] h-auto object-contain"
                      style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));">
-    
-                <!-- Genre Tags (Bottom) -->
+        
+                <!-- Genre Tags -->
                 <div class="flex items-center space-x-3">
-                    <span class="genre-tag-outline">Fantasy</span>
-                    <span class="genre-tag-outline">Drama</span>
-                    <span class="genre-tag-outline">Action</span>
+                    <span class="genre-tag-outline text-[10px]">Fantasy</span>
+                    <span class="genre-tag-outline text-[10px]">Drama</span>
+                    <span class="genre-tag-outline text-[10px]">Action</span>
                 </div>
             </div>
         </div>
