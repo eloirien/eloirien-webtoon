@@ -317,16 +317,37 @@
                 </div>
                 <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
             </div>
+
+            <!-- Simply duplicate this block for every new episode -->
+                <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
+                    <!-- 1. Change the thumbnail path -->
+                    <img src="images/ep2-thumb.webp" alt="Prologue: The King" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    
+                    <div class="ml-4 flex-grow">
+                        <!-- 2. Change the Title -->
+                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: The King</h4>
+                        <!-- 3. Change the Date -->
+                        <p class="text-[10px] md:text-xs text-gray-500">Nov 29, 2025</p>
+                    </div>
+                    
+                    <!-- 4. Change the link to the actual reader page -->
+                    <a href="reader_ep_number.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
+                        Read
+                    </a>
+                </div>
+            
+            <!-- COMING SOON EPISODE -->
             <div class="episode-card coming-soon w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
                 <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
-                    <span class="text-gray-600 font-bold text-xs">EP 02</span>
+                    <span class="text-gray-600 font-bold text-xs">EP 07</span>
                 </div>
                 <div class="ml-4 flex-grow">
-                    <h4 class="text-sm md:text-base font-bold text-gray-400">Prologue: The King</h4>
+                    <h4 class="text-sm md:text-base font-bold text-gray-400">02 - Friend (Part 2)</h4>
                     <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
                 </div>
                 <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center">Notify</button>
             </div>
+            
         </section>
     
         <section id="content-gallery" class="tab-content hidden text-center">
