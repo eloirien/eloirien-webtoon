@@ -1,5 +1,5 @@
 # eloirien-webtoon
-Comics
+
 🌟 Eloirien
 This repository contains the source code for the Eloirien webtoon platform.
 
