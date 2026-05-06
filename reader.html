@@ -101,16 +101,11 @@
             </div>
         </main>
 
-        <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/90 backdrop-blur-md border-t border-gray-800 p-4 z-50">
-            <div class="max-w-2xl mx-auto flex items-center justify-between">
-                <button class="px-5 py-2 bg-gray-800/50 rounded-md text-[10px] font-bold text-gray-500 uppercase tracking-widest cursor-not-allowed" onclick="event.stopPropagation();">Prev</button>
-                
-                <div class="text-center">
-                    <span class="text-[9px] text-gray-500 uppercase font-bold tracking-tighter block">Chapter</span>
-                    <span class="text-xs font-bold text-white tracking-widest">01</span>
-                </div>
-
-                <button class="px-5 py-2 bg-blue-600 rounded-md text-[10px] font-bold text-white uppercase tracking-widest hover:bg-blue-500" onclick="event.stopPropagation();">Next</button>
+        <nav id="bottom-nav" class="immersive-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4 translate-y-full">
+            <div class="max-w-md mx-auto flex items-center justify-between">
+                <button class="text-[10px] font-bold text-gray-600 uppercase" onclick="event.stopPropagation();">Prev</button>
+                <span class="text-xs font-bold text-white uppercase tracking-widest">Chapter 01</span>
+                <button class="px-6 py-2 bg-blue-600 rounded-md text-[10px] font-bold text-white uppercase" onclick="event.stopPropagation();">Next</button>
             </div>
         </nav>
 
@@ -119,10 +114,10 @@
     </button>
 
     <script>
-        let uiVisible = false; 
+        
+        let uiVisible = false;
         const topNav = document.getElementById('top-nav');
         const bottomNav = document.getElementById('bottom-nav');
-        const backToTopBtn = document.getElementById('back-to-top');
 
         function toggleUI() {
             uiVisible = !uiVisible;
@@ -134,7 +129,7 @@
                 bottomNav.classList.remove('ui-active');
             }
         }
-
+    
         window.onscroll = function() {
             if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
                 backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
