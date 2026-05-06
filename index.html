@@ -66,27 +66,73 @@
             }
 
         /* Language Dropdown Styling */
-        .lang-dropdown {
+       /* Custom Language Dropdown */
+        .custom-lang-dropdown {
             position: relative;
             display: inline-block;
         }
         
-        .lang-select {
+        .lang-trigger {
             background-color: rgba(31, 41, 55, 0.5);
-            color: #3b82f6; /* Blue-400 */
             border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 6px;
-            padding: 2px 8px;
-            font-size: 10px;
+            color: #3b82f6;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
-            appearance: none; /* Removes default browser styling */
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
         }
         
-        .lang-select:hover {
+        .lang-trigger:hover {
+            background-color: rgba(59, 130, 246, 0.2);
             border-color: #3b82f6;
-            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .lang-menu {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background-color: #1a1a1a;
+            border: 1px solid #2d2d2d;
+            border-radius: 12px;
+            width: 160px;
+            display: none; /* Controlled by JS or Hover */
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+        
+        .lang-item {
+            padding: 10px 15px;
+            font-size: 12px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .lang-item:hover {
+            background-color: #2d2d2d;
+            color: white;
+        }
+        
+        .flag-icon {
+            width: 18px;
+            height: 12px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        
+        /* Show menu on hover (simplest logic) */
+        .custom-lang-dropdown:hover .lang-menu {
+            display: flex;
         }
         
         /* Footer Styling */
@@ -233,16 +279,26 @@
                     <a href="#about" class="nav-link">about</a>
                 </div>
         
-                <!-- NEW: Language Dropdown -->
-                <div class="lang-dropdown ml-2">
-                    <select class="lang-select uppercase">
-                        <option value="en">EN</option>
-                        <option value="id">ID</option>
-                        <option value="jp">JP</option>
-                        <option value="kr">KR</option>
-                    </select>
+                <!-- Custom Language Selector -->
+                <div class="custom-lang-dropdown ml-2">
+                    <div class="lang-trigger">
+                        🌐 EN
+                    </div>
+                    <div class="lang-menu">
+                        <div class="lang-item">
+                            <img src="https://flagcdn.com/us.svg" class="flag-icon"> English
+                        </div>
+                        <div class="lang-item">
+                            <img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia
+                        </div>
+                        <div class="lang-item">
+                            <img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語
+                        </div>
+                        <div class="lang-item">
+                            <img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어
+                        </div>
+                    </div>
                 </div>
-            </div>
         </nav>
     
     <!-- Cinematic Hero Section -->
@@ -347,9 +403,11 @@
         </main>
 
         <!-- COPYRIGHT -->
-        <footer class="footer-text uppercase">
-            <div class="h-[1px] w-24 bg-gray-800 mx-auto mb-6"></div>
-            © 2026 Eloirien. All Rights Reserved.
+        <footer class="mt-20 pb-10">
+            <div class="h-[1px] w-32 mx-auto bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-6"></div>
+            <p class="text-center text-[10px] uppercase tracking-[0.2em] text-gray-600">
+                © 2026 Eloirien. All Rights Reserved.
+            </p>
         </footer>
     
     <script>
