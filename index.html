@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silverstring</title>
+    <title>Eloirien | Silverstring</title>
        <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -30,17 +30,19 @@
         .nav-pill {
             background-color: rgba(13, 13, 13, 0.9);
             backdrop-filter: blur(15px);
-            padding: 10px 16px; /* Slightly tighter padding for mobile */
-            border-radius: 9999px;
+            padding: 8px 16px;
+            border-radius: 9999px !important;
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            gap: 8px; /* Tighter gap for mobile */
+            gap: 8px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             
-            /* Crucial for the cropping fix */
-            max-width: 95%; /* Ensures it never touches the screen edges */
-            margin: 0 auto;
+            /* The Fix: Prevents it from becoming a circle */
+            width: auto !important;
+            height: auto !important; 
+            max-width: 95%;
+            flex-wrap: nowrap; /* Forces everything to stay in one line */
         }
         
         /* Adjusting the gap and padding for bigger screens */
@@ -56,12 +58,8 @@
         }
         
         .nav-link {
-            color: #9ca3af;
-            text-transform: lowercase;
-            font-size: 11px; /* Smaller for mobile */
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            white-space: nowrap; /* Prevents text from wrapping to a second line */
+            font-size: 10px;
+            white-space: nowrap;
         }
         
         @media (min-width: 768px) {
@@ -94,16 +92,17 @@
         /* Fix for the 'Exploding Circle' and escaping flags */
         .lang-menu {
             position: absolute;
-            top: 120%;
+            top: 45px; /* Moves it safely below the pill */
             right: 0;
-            background-color: #121212;
+            background-color: #1a1a1a;
             border: 1px solid #2d2d2d;
             border-radius: 12px;
-            width: 170px;
-            display: none; 
+            width: 180px; /* Wider so text doesn't wrap weirdly */
+            display: none;
             flex-direction: column;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             z-index: 1001;
+            overflow: hidden;
         }
         
         .lang-item {
@@ -264,29 +263,29 @@
 <body>
         <nav class="nav-container">
             <div class="nav-pill">
-                <!-- Brand - Locked size so it doesn't shrink -->
+                <!-- Identity -->
                 <span class="text-white font-bold tracking-[0.2em] text-[9px] md:text-xs uppercase flex-shrink-0">
                     E L O I R I E N
                 </span>
                 
-                <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0 mx-1"></div>
+                <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
                 
-                <!-- Links - Hidden on very small screens or made tiny -->
-                <div class="flex items-center space-x-2 text-[10px] md:text-sm">
-                    <a href="#webcomics" class="nav-link">comics</a>
-                    <a href="#about" class="nav-link">about</a>
+                <!-- Navigation Links: Made extra compact for mobile -->
+                <div class="flex items-center space-x-2">
+                    <a href="#webcomics" class="nav-link text-gray-400">comics</a>
+                    <a href="#about" class="nav-link text-gray-400">about</a>
                 </div>
         
                 <!-- Language Pill -->
-                <div class="custom-lang-dropdown ml-1">
+                <div class="custom-lang-dropdown">
                     <div class="lang-trigger">
-                        🌐 EN
+                        🌐 <span class="hidden md:inline">EN</span>
                     </div>
                     <div class="lang-menu">
-                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="w-4 h-3"> English</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="w-4 h-3"> Bahasa Indonesia</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="w-4 h-3"> 日本語</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="w-4 h-3"> 한국어</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
                 </div>
             </div>
