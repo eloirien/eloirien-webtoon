@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eloirien | Silverstring</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -14,7 +13,6 @@
             margin: 0;
         }
         
-        /* The Top Navigation Wrapper */
         .nav-container {
             position: sticky; 
             top: 0;
@@ -27,7 +25,6 @@
             padding-right: 15px;
         }
         
-        /* THE PILL ENFORCER: Prevents the mobile circle glitch */
         .nav-pill {
             background-color: rgba(13, 13, 13, 0.95);
             backdrop-filter: blur(15px);
@@ -64,17 +61,18 @@
             white-space: nowrap;
             transition: color 0.3s;
         }
-
         .nav-link:hover { color: #3b82f6; }
         
         @media (min-width: 768px) {
             .nav-link { font-size: 13px; }
         }
 
-        /* Custom Language Dropdown */
         .custom-lang-dropdown {
             position: relative;
             display: inline-block;
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
         
         .lang-trigger {
@@ -94,14 +92,9 @@
         
         .lang-menu {
             position: absolute;
-            /* Use margin to create the visual gap */
-            margin-top: 10px; 
-            /* Use padding to create the invisible bridge */
-            padding-top: 20px; 
-            
-            top: 30px; /* Adjust top to keep it close to the pill */
+            top: 100%; /* Starts exactly at the bottom of the trigger area */
             right: 0;
-            background-color: transparent; /* Make the bridge area invisible */
+            padding-top: 15px; /* THE BRIDGE: Keeps menu open while mouse crosses the gap */
             display: none;
             flex-direction: column;
             z-index: 2000;
@@ -126,6 +119,7 @@
             border-bottom: 1px solid #1f1f1f;
             cursor: pointer;
             color: #E0E0E0;
+            white-space: nowrap;
         }
         
         .lang-item:hover { background-color: #2d2d2d; color: #3b82f6; }
@@ -138,6 +132,7 @@
             border-radius: 2px;
         }
         
+        /* THE TRIGGER: Shows the bridge and menu when hovering the parent */
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
             
         .hero-wrapper {
@@ -149,10 +144,7 @@
         
         .hero-blur-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('images/cover.webp');
             background-size: cover;
             background-position: center;
@@ -172,7 +164,6 @@
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 16px;
-            background-color: transparent; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
                 
@@ -209,7 +200,6 @@
             font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
         
         .episode-card {
@@ -218,16 +208,14 @@
             transition: transform 0.2s;
         }
         
-        /* Hover for released episodes (Blue) */
         .episode-card:hover {
             transform: scale(1.02);
             border-color: #3b82f6;
             cursor: pointer;
         }
         
-        /* Hover for unreleased episodes (Gold/Amber) */
         .episode-card.coming-soon:hover {
-            border-color: #d97706; /* Matches the amber-600 button */
+            border-color: #d97706; 
         }
         
         .synopsis-style {
@@ -244,43 +232,35 @@
     </style>
 </head>
 <body>
-    <!-- Top Navigation Pill -->
     <nav class="nav-container">
         <div class="nav-pill">
             <span class="text-white font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase flex-shrink-0">
                 E L O I R I E N
             </span>
-            
             <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
-            
             <div class="flex items-center space-x-3 md:space-x-4">
                 <a href="#webcomics" class="nav-link">comics</a>
                 <a href="#about" class="nav-link">about</a>
             </div>
-    
             <div class="custom-lang-dropdown">
-                <div class="lang-trigger text-[10px] flex items-center gap-1 cursor-pointer">
-                    🌐 <span class="uppercase">EN</span>
+                <div class="lang-trigger">
+                    🌐 <span class="hidden md:inline">EN</span>
                 </div>
-                <!-- The Bridge Layer -->
                 <div class="lang-menu">
-                    <!-- The Actual Content Layer -->
                     <div class="lang-menu-content">
-                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="w-4"> English</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="w-4"> Bahasa Indonesia</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="w-4"> 日本語</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="w-4"> 한국어</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
                 </div>
             </div>
-                        
+        </div>
     </nav>
     
-    <!-- Cinematic Hero Section -->
     <section class="hero-wrapper">
         <div class="hero-blur-bg"></div>
         <div class="hero-stage-fixed"></div>
-    
         <div class="hero-branding-bar">
             <div class="branding-pill">
                 <img src="images/logo.png" alt="Silverstring" class="w-full max-w-[250px] md:max-w-[400px] h-auto object-contain" style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));">
@@ -293,7 +273,6 @@
         </div>
     </section>
 
-    <!-- Content Tabs -->
     <div class="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-[80px] z-40">
         <div class="max-w-screen-xl mx-auto flex justify-center">
             <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
@@ -302,9 +281,7 @@
         </div>
     </div>
         
-    <!-- Main Content Container -->
     <main class="max-w-screen-xl mx-auto px-6 py-12">
-        <!-- INFO TAB -->
         <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
             <div class="w-64 md:w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-800">
                 <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto">
@@ -330,22 +307,15 @@
             </div>
         </section>
     
-        <!-- EPISODES TAB -->
         <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
-            <!-- Prologue: Storm Card (Released) -->
             <div class="episode-card w-full max-w-2xl flex items-center p-4 rounded-xl">
                 <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
                 <div class="ml-4 flex-grow">
                     <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
                     <p class="text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
                 </div>
-                <!-- Blue Button: Centered text and matched size -->
-                <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">
-                    Read
-                </a>
+                <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
             </div>
-        
-            <!-- Prologue: The King Card (Unreleased) -->
             <div class="episode-card coming-soon w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
                 <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
                     <span class="text-gray-600 font-bold text-xs">EP 02</span>
@@ -354,25 +324,18 @@
                     <h4 class="text-sm md:text-base font-bold text-gray-400">Prologue: The King</h4>
                     <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
                 </div>
-                <!-- Amber Button: Centered text and matched size -->
-                <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center">
-                    Notify
-                </button>
+                <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center">Notify</button>
             </div>
         </section>
     
-        <!-- GALLERY TAB -->
         <section id="content-gallery" class="tab-content hidden text-center">
             <p class="text-gray-500">The royal gallery is currently under preparation...</p>
         </section>
     </main>
 
-    <!-- COPYRIGHT FOOTER -->
     <footer class="mt-20 pb-10">
         <div class="h-[1px] w-32 mx-auto bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-6"></div>
-        <p class="text-center text-[10px] uppercase tracking-[0.2em] text-gray-600">
-            © 2026 Eloirien. All Rights Reserved.
-        </p>
+        <p class="text-center text-[10px] uppercase tracking-[0.2em] text-gray-600">© 2026 Eloirien. All Rights Reserved.</p>
     </footer>
 
     <script>
