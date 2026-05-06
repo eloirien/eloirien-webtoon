@@ -15,27 +15,36 @@
         
         /* The Top Navigation Wrapper */
         .nav-container {
-            position: fixed;
-            top: 20px; /* Floats it slightly from the top */
-            left: 0;
+            position: sticky; /* Logic: Stay in place until scroll hits the top */
+            top: 20px;       /* When sticking, stay 20px from the very top */
+            margin-top: 2rem; /* Gap ABOVE the banner so it doesn't overlap Archius/Alice */
             width: 100%;
             z-index: 1000;
             display: flex;
             justify-content: center;
-            pointer-events: none; /* Allows clicking through the empty space around the pill */
+            padding: 0 15px; /* Prevention: Keeps the pill from hitting screen edges on mobile */
         }
         
         .nav-pill {
-            background-color: rgba(13, 13, 13, 0.85);
+            background-color: rgba(13, 13, 13, 0.9);
             backdrop-filter: blur(15px);
-            padding: 20px 40px;
+            padding: 10px 20px;
             border-radius: 9999px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 12px; /* Tighter gap for mobile compatibility */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            pointer-events: auto; /* Re-enables clicking on the pill itself */
+            
+            /* Mobile Logic: Let it shrink without cropping the text */
+            max-width: 100%; 
+            white-space: nowrap; 
+            overflow-x: auto; /* Adds a subtle swipe if the screen is tiny */
+        }
+        
+        /* Hide scrollbar for the pill on mobile */
+        .nav-pill::-webkit-scrollbar {
+            display: none;
         }
         
         .nav-link {
@@ -170,16 +179,16 @@
     </style>
 </head>
 <body>
-    <nav class="nav-container">
+        <nav class="nav-container">
         <div class="nav-pill">
-            <!-- Your Identity -->
-            <span class="text-white font-bold tracking-widest text-sm uppercase"> E l o i r i e n </span>
+            <!-- Identity -->
+            <span class="text-white font-bold tracking-widest text-xs md:text-sm uppercase flex-shrink-0"> E l o i r i e n </span>
             
-            <!-- Divider Line -->
-            <div class="h-4 w-[1px] bg-gray-700"></div>
+            <!-- Divider -->
+            <div class="h-4 w-[1px] bg-gray-700 flex-shrink-0"></div>
             
-            <!-- Navigation Links -->
-            <div class="flex items-center space-x-4">
+            <!-- Links: Use text-xs for mobile, sm for desktop -->
+            <div class="flex items-center space-x-3 text-[11px] md:text-sm">
                 <a href="#webcomics" class="nav-link">webcomics</a>
                 <span class="text-gray-700 text-[8px]">•</span>
                 <a href="#illustrations" class="nav-link">illustrations</a>
