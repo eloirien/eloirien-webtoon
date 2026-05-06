@@ -231,93 +231,80 @@
     </section>
 
     <!-- Content Tabs -->
-    <div class="border-b border-gray-800 sticky top-0 bg-black z-10">
-        <div class="container mx-auto px-6 flex space-x-8">
-            <button id="tab-episodes" onclick="switchTab('episodes')" class="tab-active py-4">EPISODES</button>
-            <button id="tab-gallery" onclick="switchTab('gallery')" class="py-4 text-gray-400">GALLERY</button>
+    <!-- Tab Navigation: Centered and sleek -->
+        <div class="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-[80px] z-40">
+            <div class="max-w-screen-xl mx-auto flex justify-center">
+                <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
+                <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
+                <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
+            </div>
         </div>
-    </div>
 
     <!-- Main Content Container -->
-    <main class="container mx-auto px-6 py-12 flex flex-col md:flex-row gap-12">
-
-    <!-- Right: Comic Info/Synopsis -->
-<aside class="w-full md:w-1/3 flex flex-col items-center md:items-start space-y-6">
-
-        <!-- The Vertical Cover (Smaller & Centered) -->
-        <div class="w-48 md:w-64 rounded-lg overflow-hidden shadow-xl border border-gray-800 mx-auto">
-        <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto object-cover">
-    </div>
-            
-        <div class="w-full">
-                    <p class="synopsis-style text-sm leading-snug">
-                    Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
-                    <br><br>
-                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2">
-                        "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
-                    </em>
-                </p>
-            </div>
-        </div>
-
-            <!-- Creator Box: Updated to match synopsis width -->
-        <div class="w-full mt-8 bg-gray-900/50 p-5 rounded-xl border border-gray-800">
-            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Creator</h3>
-            <div class="flex items-center space-x-4">
-                <!-- Perfect Circle Profile -->
-                <img src="images/profile.webp" 
-                     alt="Eloirien" 
-                     class="w-12 h-12 rounded-full object-cover aspect-square border border-gray-700">
-                <div>
-                    <p class="font-bold text-white text-base">Eloirien</p>
-                    <p class="text-xs text-blue-400">@Eloirien</p>
+            <main class="max-w-screen-xl mx-auto px-6 py-12">
+            <!-- INFO TAB (Default view) -->
+            <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
+                <!-- Vertical Cover -->
+                <div class="w-64 md:w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-800">
+                    <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto">
                 </div>
-            </div>
-        </div>
-            
-        </aside>
         
-        <!-- Left: Episode List -->
-        <div id="view-episodes" class="w-full md:w-2/3 space-y-4">
-            <!-- Episode 1 (Free) -->
-            <div class="episode-card p-4 rounded-xl flex items-center justify-between cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <div class="w-24 h-16 bg-gray-800 rounded overflow-hidden">
-                        <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-full h-full object-cover">
-                    </div>
+                <!-- Synopsis & Creator (Centered) -->
+                <div class="max-w-2xl text-center space-y-8">
                     <div>
-                        <h3 class="font-bold">Prologue: Storm</h3>
-                        <p class="text-xs text-gray-500">Nov 1, 2025</p>
+                           <p class="synopsis-style text-sm leading-snug">
+                        Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
+                        <br><br>
+                        <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2">
+                            "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
+                        </em>
+                            </p>
                     </div>
-                </div>
-                <button class="text-blue-400 font-bold px-4">READ</button>
-            </div>
-
-            <!-- Episode 2 (Premium Lock) -->
-            <div class="episode-card p-4 rounded-xl flex items-center justify-between opacity-80 border-amber-900/30">
-                <div class="flex items-center space-x-4">
-                    <div class="w-24 h-16 bg-gray-800 rounded overflow-hidden relative">
-                        <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    
+                    <!-- Your Styled Creator Box -->
+                    <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left">
+                        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Creator</h3>
+                        <div class="flex items-center space-x-4">
+                            <img src="images/profile.webp" alt="Eloirien" class="w-12 h-12 rounded-full border border-gray-700">
+                            <div>
+                                <p class="font-bold text-white">Eloirien</p>
+                                <p class="text-xs text-blue-400">@Eloirien</p>
+                            </div>
                         </div>
-                        <img src="https://placehold.co/100x70/1a1a1a/E0E0E0?text=EP+02" class="object-cover">
-                    </div>
-                    <div>
-                        <h3 class="font-bold">Prologue: The King</h3>
-                        <p class="text-xs text-amber-500 font-semibold">coming soon</p>
                     </div>
                 </div>
-                <button class="bg-amber-500 text-black text-xs font-black px-4 py-2 rounded">Get Notified</button>
-            </div>
-        </div>
-
-    </main>
+            </section>
+        
+            <!-- EPISODES TAB (Hidden by default) -->
+            <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-4">
+                <!-- Episode cards go here -->
+            </section>
+        
+            <!-- GALLERY TAB (Hidden by default) -->
+            <section id="content-gallery" class="tab-content hidden text-center">
+                <p class="text-gray-500">The royal gallery is currently under preparation...</p>
+            </section>
+        </main>
 
     <script>
-        function switchTab(tab) {
-            document.getElementById('tab-episodes').classList.toggle('tab-active', tab === 'episodes');
-            document.getElementById('tab-gallery').classList.toggle('tab-active', tab === 'gallery');
-        }
+        function switchTab(tabName) {
+    // 1. Hide all content sections
+    document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
+    
+    // 2. Show the selected content
+    document.getElementById('content-' + tabName).classList.remove('hidden');
+    
+    // 3. Reset all button styles
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('border-blue-600', 'text-white');
+        btn.classList.add('border-transparent', 'text-gray-500');
+    });
+    
+    // 4. Highlight active button
+    const activeTab = document.getElementById('tab-' + tabName);
+    activeTab.classList.add('border-blue-600', 'text-white');
+    activeTab.classList.remove('border-transparent', 'text-gray-500');
+    }
     </script>
 </body>
 </html>
