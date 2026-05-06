@@ -13,14 +13,14 @@
             margin: 0;
         }
         
-        .nav-container {
-            position: sticky; 
+       .nav-container {
+            position: absolute;
             top: 0;
             width: 100%;
             z-index: 1000;
             display: flex;
             justify-content: center;
-            padding-top: 2rem;
+            padding-top: 2rem; /* Keep the gap above the pill */
             padding-left: 15px;
             padding-right: 15px;
         }
@@ -136,11 +136,12 @@
         /* THE TRIGGER: Shows the bridge and menu when hovering the parent */
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
             
-        .hero-wrapper {
+       .hero-wrapper {
             position: relative;
             background-color: #0d0d0d;
             overflow: hidden;
             width: 100%;
+            margin-top: 0; /* Ensure no gap */
         }
         
         .hero-blur-bg {
@@ -274,7 +275,7 @@
         </div>
     </section>
 
-    <div class="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-[80px] z-40">
+    <div class="border-b border-gray-800 bg-black/80 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-screen-xl mx-auto flex justify-center">
             <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
             <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
