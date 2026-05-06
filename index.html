@@ -13,6 +13,44 @@
             color: #E0E0E0;
         }
         
+        /* The Top Navigation Wrapper */
+        .nav-container {
+            position: fixed;
+            top: 20px; /* Floats it slightly from the top */
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            pointer-events: none; /* Allows clicking through the empty space around the pill */
+        }
+        
+        .nav-pill {
+            background-color: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 10px 24px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            pointer-events: auto; /* Re-enables clicking on the pill itself */
+        }
+        
+        .nav-link {
+            color: #9ca3af; /* Gray-400 */
+            text-transform: lowercase;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #3b82f6; /* Blue-500 highlight on hover */
+        }
+        
         /* Container that holds everything */
         .hero-wrapper {
             position: relative;
@@ -56,10 +94,11 @@
         }
                 
         /* 3. Floating Branding Section */
-        .hero-branding-bar {
+       .hero-branding-bar {
             position: relative;
             z-index: 10;
-            margin-top: 1.5rem; /* Replaces the negative margin with a clean gap below the art */
+            margin-top: 1.5rem;   /* Space below the banner */
+            margin-bottom: 3rem; /* THIS FIXES THE OVERLAP: Space before the tabs start */
             display: flex;
             justify-content: center;
             padding: 0 20px;
@@ -131,7 +170,25 @@
     </style>
 </head>
 <body>
-
+    <nav class="nav-container">
+        <div class="nav-pill">
+            <!-- Your Identity -->
+            <span class="text-white font-bold tracking-widest text-sm uppercase">Eloirien</span>
+            
+            <!-- Divider Line -->
+            <div class="h-4 w-[1px] bg-gray-700"></div>
+            
+            <!-- Navigation Links -->
+            <div class="flex items-center space-x-4">
+                <a href="#webcomics" class="nav-link">webcomics</a>
+                <span class="text-gray-700 text-[8px]">•</span>
+                <a href="#illustrations" class="nav-link">illustrations</a>
+                <span class="text-gray-700 text-[8px]">•</span>
+                <a href="#about" class="nav-link">about</a>
+            </div>
+        </div>
+    </nav>
+    
     <!-- Cinematic Hero Section -->
     <section class="hero-wrapper">
         <div class="hero-blur-bg"></div>
