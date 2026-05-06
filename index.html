@@ -13,10 +13,43 @@
             color: #E0E0E0;
         }
         .hero-banner {
-            background-image: linear-gradient(to bottom, rgba(13, 13, 13, 0.2), #0d0d0d), url('images/cover.webp');
+            position: relative;
+            height: 70vh; /* Slightly taller for more impact */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #0d0d0d;
+        }
+        
+        /* The Blurred Background Layer */
+        .hero-bg-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/cover.webp');
             background-size: cover;
             background-position: center;
-            height: 60vh;
+            filter: blur(15px) brightness(0.4); /* Makes it semi-transparent and soft */
+            z-index: 1;
+        }
+        
+        /* The Sharp Centered "Stage" */
+        .hero-stage {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 1000px; /* Stays centered and resized */
+            height: 80%;
+            background-image: url('images/cover.webp');
+            background-size: cover;
+            background-position: center;
+            border-radius: 24px; /* Round edges */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
         }
         .tab-active {
             border-bottom: 4px solid #3b82f6;
@@ -54,26 +87,33 @@
 <body>
 
     <!-- Cinematic Hero Section -->
-    <section class="hero-banner flex items-end">
-        <div class="container mx-auto px-6 pb-12">
-    <!-- LOGO -->        
-        <div class="mb-4">
-        <img src="images/logo.png" 
-         alt="Silverstring" 
-         class="w-full max-w-[300px] md:max-w-[500px] h-auto object-contain drop-shadow-2xl"
-         style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));">
-        </div>
-    <!-- GENRE -->        
-            <div class="flex items-center space-x-4 mb-6">
-                <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Fantasy</span>
-                <span class="bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Drama</span>
-                <span class="bg-slate-800 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Action</span>
-            </div>
-            <div class="flex space-x-2">
-               <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition inline-block text-center">
-    READ FIRST CHAPTER
-</a>
-                <button class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg transition">ADD TO LIBRARY</button>
+    <section class="hero-banner">
+        <!-- The Atmosphere -->
+        <div class="hero-bg-blur"></div>
+    
+        <!-- The Stage -->
+        <div class="hero-stage flex items-end">
+            <div class="container mx-auto px-6 pb-12">
+                <!-- Your Logo with the Blue Glow -->
+                <div class="mb-4">
+                    <img src="images/logo.webp" 
+                         alt="Silverstring" 
+                         class="w-full max-w-[280px] md:max-w-[450px] h-auto object-contain"
+                         style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6));">
+                </div>
+    
+                <!-- Genre Tags -->
+                <div class="flex items-center space-x-2 mb-6">
+                    <span class="bg-gray-700 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Fantasy</span>
+                    <span class="bg-gray-700 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Drama</span>
+                    <span class="bg-gray-700 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Action</span>
+                </div>
+    
+                <!-- Action Buttons -->
+                <div class="flex space-x-4">
+                    <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold py-3 px-8 rounded-lg shadow-lg transition">READ FIRST CHAPTER</a>
+                    <button class="bg-gray-800/80 hover:bg-gray-700 text-white text-sm font-bold py-3 px-8 rounded-lg transition backdrop-blur-sm">ADD TO LIBRARY</button>
+                </div>
             </div>
         </div>
     </section>
