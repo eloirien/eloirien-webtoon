@@ -52,13 +52,26 @@
         }
         
         /* 3. Floating Branding Section */
-        .hero-branding {
+        .hero-branding-bar {
             position: relative;
-            z-index: 3;
-            margin-top: -60px; /* Pulls it UP so it 'floats' over the bottom of the art */
-            text-align: center;
-            padding-bottom: 3rem;
-         }
+            z-index: 10;
+            margin-top: -40px; /* Pulls it up to overlap the banner */
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+        }
+        
+        .branding-pill {
+            background-color: rgba(13, 13, 13, 0.85); /* Deep dark with transparency */
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            padding: 12px 32px;
+            border-radius: 9999px; /* The pill shape */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 24px; /* Space between logo and genres */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
         
         .tab-active {
             border-bottom: 4px solid #3b82f6;
@@ -99,31 +112,31 @@
 
     <!-- Cinematic Hero Section -->
     <section class="hero-wrapper">
-    <!-- The Blurred Atmosphere -->
-    <div class="hero-blur-bg"></div>
+        <div class="hero-blur-bg"></div>
+        <div class="hero-stage-fixed"></div>
 
-    <!-- The Centered Art Stage -->
-    <div class="hero-stage-fixed"></div>
-
-    <!-- The Floating Logo & Genre (Below art, but in front of blur) -->
-    <div class="hero-branding">
-        <div class="container mx-auto px-6">
-            <!-- Logo (.png) -->
-            <div class="inline-block mb-4">
+    <!-- The New Floating Branding Bar -->
+        <div class="hero-branding-bar">
+            <div class="branding-pill">
+                <!-- Logo Section -->
                 <img src="images/logo.png" 
                      alt="Silverstring" 
-                     class="w-full max-w-[300px] md:max-w-[500px] h-auto object-contain"
-                     style="filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4));">
-            </div>
-
-            <!-- Genre Tags -->
-            <div class="flex justify-center items-center space-x-2">
-                <span class="bg-blue-600/20 text-blue-400 border border-blue-600/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Fantasy</span>
-                <span class="bg-blue-600/20 text-blue-400 border border-blue-600/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Drama</span>
-                <span class="bg-blue-600/20 text-blue-400 border border-blue-600/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Action</span>
+                     class="h-8 md:h-10 w-auto object-contain"
+                     style="filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));">
+    
+                <!-- Vertical Divider (Optional, for that 'Hive' look) -->
+                <div class="h-6 w-[1px] bg-gray-700"></div>
+    
+                <!-- Genre Tags Section -->
+                <div class="flex items-center space-x-3">
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Fantasy</span>
+                    <span class="text-gray-500 text-[10px]">•</span>
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Drama</span>
+                    <span class="text-gray-500 text-[10px]">•</span>
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Action</span>
+                </div>
             </div>
         </div>
-    </div>
     </section>
 
     <!-- Content Tabs -->
