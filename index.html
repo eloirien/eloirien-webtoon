@@ -209,6 +209,13 @@
             font-weight: bold;
             text-transform: uppercase;
         }
+               
+        .main-scroll-area {
+            height: 70vh; /* Takes up 70% of the screen height */
+            overflow-y: auto; /* Enables vertical scrolling */
+            scrollbar-width: thin; /* Keeps it 'Quiet Luxury' and slim */
+            scrollbar-color: #3b82f6 transparent;
+        }
         
         .episode-card {
             background-color: #1a1a1a;
@@ -295,7 +302,7 @@
         </div>
     </section>
 
-    <div class="border-b border-gray-800 bg-black/90 backdrop-blur-md sticky top-[74px] md:top-[90px] z-40">
+    <div class="border-b border-gray-800 bg-black/90 backdrop-blur-md z-40">
     <div class="max-w-screen-xl mx-auto flex justify-center">
             <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
             <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
@@ -303,7 +310,7 @@
         </div>
     </div>
         
-    <main class="max-w-screen-xl mx-auto px-6 py-12">
+    <main class="main-scroll-area max-w-screen-xl mx-auto px-6 py-12">
         <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
             <div class="w-64 md:w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-800">
                 <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto">
