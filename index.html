@@ -219,6 +219,21 @@
         .episode-card.coming-soon:hover {
             border-color: #d97706; 
         }
+
+        /* Golden Glow for the Notify button on hover */
+        .coming-soon button:hover {
+            background-color: #fbbf24; /* Lighter golden amber */
+            box-shadow: 0 0 15px rgba(217, 119, 6, 0.6); /* Golden glow effect */
+            color: #000; /* Keeps text sharp */
+            transform: translateY(-1px); /* Slight lift effect */
+            transition: all 0.3s ease;
+        }
+        
+        /* Ensure the button itself is fully opaque even if the card is dimmed */
+        .coming-soon button {
+            opacity: 1 !important; 
+            transition: all 0.3s ease;
+        }
         
         .synopsis-style {
             font-size: 0.95rem; 
@@ -374,8 +389,8 @@
                 <a href="reader_ep6.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
             </div>
             
-            <!-- COMING SOON -->
-            <div class="episode-card coming-soon w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60">
+           <!-- COMING SOON -->
+            <div class="episode-card coming-soon w-full max-w-2xl flex items-center p-4 rounded-xl opacity-60 hover:opacity-100 transition-opacity">
                 <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
                     <span class="text-gray-600 font-bold text-xs">EP 07</span>
                 </div>
@@ -383,7 +398,10 @@
                     <h4 class="text-sm md:text-base font-bold text-gray-400">02 - Friend (Part 2)</h4>
                     <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
                 </div>
-                <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center">Notify</button>
+                <!-- The Golden Glow Button -->
+                <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center transition-all">
+                    Notify
+                </button>
             </div>
         </section>
     
