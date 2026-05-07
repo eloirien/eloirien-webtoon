@@ -20,37 +20,45 @@
 
         /* Centered Article Room */
         .article-room { 
+            width: 95%; /* Use percentage for mobile flexibility */
             max-width: 800px; 
-            margin: 8rem auto 4rem auto; 
+            margin: 6rem auto 2rem auto; 
             background: rgba(20, 20, 20, 0.7); 
             backdrop-filter: blur(20px); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 40px; 
-            padding: 5rem 4rem; 
+            border-radius: 24px; /* Slightly smaller radius for mobile */
+            padding: 3rem 1.5rem; /* Reduced padding for mobile */
             position: relative; 
-            z-index: 10; 
+            z-index: 10;
         }
 
         .section-divider { height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent); margin: 4rem 0; }
         
-        /* Glowing Comic Card */
+        //* Desktop Padding Restore */
+        @media (min-width: 768px) {
+        .article-room { padding: 5rem 4rem; margin-top: 8rem; border-radius: 40px; }
+        }
+        
+        /* Responsive Comic Card */
         .comic-card { 
             background: rgba(30, 30, 30, 0.4); 
             border: 1px solid rgba(255, 255, 255, 0.05); 
             border-radius: 24px; 
-            padding: 2rem; 
+            padding: 1.5rem; 
             display: flex; 
+            flex-direction: column; /* Stack vertically on mobile */
             align-items: center; 
-            gap: 2.5rem; 
+            text-align: center;
+            gap: 1.5rem; 
             transition: all 0.3s ease; 
         }
-        .comic-card:hover { 
-            border-color: #3b82f6; 
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); 
-            transform: translateY(-5px); 
+    
+        /* Side-by-side for Desktop */
+        @media (min-width: 768px) {
+        .comic-card { flex-direction: row; text-align: left; align-items: center; gap: 2.5rem; padding: 2rem; }
         }
+    
         .comic-thumb { width: 140px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); flex-shrink: 0; }
-        .genre-tag { border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 6px; padding: 4px 12px; color: white; font-size: 8px; font-weight: bold; text-transform: uppercase; }
 
         /* Language Dropdown */
         .custom-lang-dropdown { position: relative; display: flex; align-items: center; }
@@ -92,12 +100,11 @@
 
     <main class="article-room shadow-2xl">
         <h2 id="page-title" class="text-center text-xs font-black text-white uppercase tracking-[0.4em] mb-12">Archived Records</h2>
-
+    
         <a href="index.html" class="comic-card">
             <img src="images/vertical-cover.webp" alt="Silverstring" class="comic-thumb">
-            <div class="flex flex-col gap-4 items-start">
-                <img src="images/logo.png" alt="Silverstring Logo" class="w-48">
-                <div class="flex gap-2">
+            <div class="flex flex-col gap-4 items-center md:items-start"> <img src="images/logo.png" alt="Silverstring Logo" class="w-48 mx-auto md:mx-0">
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
                     <span id="genre-fantasy" class="genre-tag">Fantasy</span>
                     <span id="genre-drama" class="genre-tag">Drama</span>
                     <span id="genre-action" class="genre-tag">Action</span>
@@ -105,16 +112,15 @@
                 <p id="status-silverstring" class="text-[9px] text-blue-400 font-bold uppercase tracking-widest">Main Story In Progress</p>
             </div>
         </a>
-
+    
         <div class="section-divider"></div>
-
+    
         <div class="comic-card opacity-80 cursor-default">
             <div class="comic-thumb bg-zinc-800 aspect-[3/4] flex items-center justify-center border border-zinc-700">
-                <span id="label-specials-thumb" class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest text-center px-2">Specials</span>
+                <span id="label-specials-thumb" class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Specials</span>
             </div>
-            <div class="flex flex-col gap-4 items-start">
-                <h3 id="label-specials-title" class="text-2xl font-black text-white uppercase tracking-tighter">Silverstring Specials</h3>
-                <div class="flex gap-2">
+            <div class="flex flex-col gap-4 items-center md:items-start"> <h3 id="label-specials-title" class="text-2xl font-black text-white uppercase tracking-tighter">Silverstring Specials</h3>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
                     <span id="genre-spec-fantasy" class="genre-tag">Fantasy</span>
                     <span id="genre-slice" class="genre-tag">Slice of Life</span>
                 </div>
