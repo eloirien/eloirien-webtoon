@@ -8,7 +8,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
         
-        /* Navigation Pill */
+        /* Navigation Pill - All Lowercase for Links */
         .nav-container { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding-top: 2rem; padding-left: 15px; padding-right: 15px; pointer-events: none; }
         .nav-pill { pointer-events: auto; background-color: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px) saturate(180%); padding: 6px 16px; border-radius: 9999px; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 12px; height: 42px; margin: 0 auto; }
         .nav-link { color: #9ca3af; text-transform: lowercase; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; transition: color 0.3s; cursor: pointer; }
@@ -32,6 +32,8 @@
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
+        .logo-placeholder { width: 100%; max-width: 200px; height: auto; margin-bottom: 1rem; }
+
         img { -webkit-user-drag: none; user-select: none; }
     </style>
 </head>
@@ -43,8 +45,8 @@
         <div class="nav-pill">
             <span class="text-white font-bold tracking-[0.2em] text-[10px] uppercase">E L O I R I E N</span>
             <div class="h-4 w-[1px] bg-gray-800"></div>
-            <a href="index.html" class="nav-link nav-link-home uppercase tracking-widest">Home</a>
-            <a href="comics.html" class="nav-link nav-link-comics uppercase tracking-widest">Comics</a>
+            <a href="index.html" class="nav-link nav-link-home">home</a>
+            <a href="comics.html" class="nav-link nav-link-comics">comics</a>
             
             <div class="custom-lang-dropdown">
                 <div class="lang-trigger text-[10px]">🌐 <span id="current-lang-label" class="uppercase">EN</span></div>
@@ -62,7 +64,7 @@
 
     <main class="article-room shadow-2xl">
         <section class="flex flex-col items-center text-center space-y-6">
-            <img src="1000020767.jpg" class="w-32 h-32 rounded-full border-2 border-blue-500/50 object-cover shadow-lg">
+            <img src="images/profile.webp" class="w-32 h-32 rounded-full border-2 border-blue-500/50 object-cover shadow-lg">
             <div>
                 <h2 class="text-2xl font-black text-white uppercase tracking-tighter">Eloirien</h2>
                 <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">Illustrator & Comic Artist</p>
@@ -74,7 +76,7 @@
         <div class="section-divider"></div>
 
         <section class="space-y-4">
-            <h3 id="title-silverstring" class="text-xs font-black text-blue-500 uppercase tracking-[0.3em]">Silverstring</h3>
+            <img src="images/logo.png" alt="Silverstring" class="logo-placeholder">
             <div id="text-silverstring" class="text-sm text-gray-400 leading-relaxed">
                 </div>
         </section>
@@ -82,7 +84,7 @@
         <div class="section-divider"></div>
 
         <section class="space-y-4">
-            <h3 id="title-bethlehem" class="text-xs font-black text-white uppercase tracking-[0.3em]">Project Bethlehem</h3>
+            <img src="images/bethlehem-logo.png" alt="Project Bethlehem" class="logo-placeholder">
             <div id="text-bethlehem" class="text-sm text-gray-400 leading-relaxed">
                 </div>
         </section>
@@ -95,28 +97,28 @@
     <script>
         const aboutContent = {
             EN: {
-                navHome: "Home", navComics: "Comics",
+                navHome: "home", navComics: "comics",
                 creator: "Dey, known as Eloirien, is a professional illustrator based in Indonesia with years of experience in the webtoon industry. Specializing in cinematic aesthetics and sustainable creative workflows.",
-                silverstring: "Silverstring is an original high-fantasy webtoon following the intertwined destinies of Princess Alicia and Crown Prince Archius in the Kingdom of Luminus. A world of logic, steel, and divine blessing.",
-                bethlehem: "Project Bethlehem serves as the creative umbrella for the independent intellectual properties developed by Eloirien, focusing on storytelling that balances profit with sustainable and ethical value."
+                silverstring: "Silverstring is an original high-fantasy webtoon following the intertwined destinies of Princess Alicia and Crown Prince Archius in the Kingdom of Luminus.",
+                bethlehem: "Project Bethlehem serves as the creative umbrella for the independent intellectual properties developed by Eloirien."
             },
             ID: {
-                navHome: "Beranda", navComics: "Komik",
-                creator: "Dey, yang dikenal sebagai Eloirien, adalah ilustrator profesional asal Indonesia dengan pengalaman bertahun-tahun di industri webtoon. Spesialis dalam estetika sinematik dan alur kerja kreatif yang berkelanjutan.",
-                silverstring: "Silverstring adalah webtoon fantasi orisinal yang mengikuti takdir Alicia dan Archius di Kerajaan Luminus. Sebuah dunia yang dibangun di atas logika, baja, dan berkat ilahi.",
-                bethlehem: "Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien, berfokus pada penceritaan yang menyeimbangkan profit dengan nilai etis."
+                navHome: "home", navComics: "komik",
+                creator: "Dey, yang dikenal sebagai Eloirien, adalah ilustrator profesional asal Indonesia dengan pengalaman bertahun-tahun di industri webtoon.",
+                silverstring: "Silverstring adalah webtoon fantasi orisinal yang mengikuti takdir Alicia dan Archius di Kerajaan Luminus.",
+                bethlehem: "Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien."
             },
             JP: {
                 navHome: "ホーム", navComics: "コミック",
-                creator: "インドネシアを拠点に活動するプロのイラストレーター、Eloirien（Dey）。ウェブトゥーン業界での豊富な経験を持ち、シネマティックな美学と持続可能な制作フローを追求しています。",
-                silverstring: "『シルバーストリング』は、ルミナス王国のアリシア王女とアルキウス王太子の運命を描くオリジナル・ファンタジー。論理、鋼、そして神聖な祝福の世界。",
-                bethlehem: "プロジェクト・ベツレヘムは、Eloirienが展開するインディーIPのクリエイティブ・アンブレラ。持続可能性と倫理的価値を重視したストーリーテリングを目指しています。"
+                creator: "インドネシアを拠点に活動するプロのイラストレーター、Eloirien（Dey）。ウェブトゥーン業界での豊富な経験を持ちます。",
+                silverstring: "『シルバーストリング』は、ルミナス王国のアリシア王女とアルキウス王太子の運命を描くオリジナル・ファンタジー。",
+                bethlehem: "プロジェクト・ベツレヘムは、Eloirienが展開するインディーIPのクリエイティブ・アンブレラ。"
             },
             KR: {
                 navHome: "홈", navComics: "코믹스",
-                creator: "Eloirien(Dey)은 인도네시아의 프로 일러스트레이터로, 웹툰 업계에서 다년간의 경험을 쌓았습니다. 시네마틱한 미학과 지속 가능한 크리에이티브 워크플로우를 전문으로 합니다.",
-                silverstring: "실버스링은 루미누스 왕국의 알리시아 공주와 아르키우스 왕세자의 운명을 다룬 오리지널 판타지 웹툰입니다. 논리와 강철, 그리고 신성한 축복의 세계.",
-                bethlehem: "프로젝트 베들레헴은 Eloirien이 개발하는 독립 IP의 크리에이티브 우산으로, 수익과 지속 가능한 윤리적 가치의 균형을 맞춘 스토리텔링에 집중합니다."
+                creator: "Eloirien(Dey)은 인도네시아의 프로 일러스트레이터로, 웹툰 업계에서 다년간의 경험을 쌓았습니다.",
+                silverstring: "실버스링은 루미누스 왕국의 알리시아 공주와 아르키우스 왕세자의 운명을 다룬 오리지널 판타지 웹툰입니다.",
+                bethlehem: "프로젝트 베들레헴은 Eloirien이 개발하는 독립 IP의 크리에이티브 우산입니다."
             }
         };
 
