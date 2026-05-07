@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comics | Eloirien</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
+        
+        /* Navigation Pill - Uppercase & 25px Blur */
+        .nav-container { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding-top: 2rem; padding-left: 15px; padding-right: 15px; pointer-events: none; }
+        .nav-pill { pointer-events: auto; background-color: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px) saturate(180%); padding: 6px 16px; border-radius: 9999px; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 12px; height: 42px; margin: 0 auto; }
+        .nav-link { color: #9ca3af; text-transform: uppercase; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; transition: color 0.3s; cursor: pointer; }
+        .nav-link:hover { color: #3b82f6; }
+
+        /* Infinity Blur Background - 25px */
+        .bg-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/cover.webp'); background-size: cover; background-position: center; filter: blur(25px) brightness(0.2); transform: scale(1.1); }
+
+        /* Centered Article Room */
+        .article-room { 
+            max-width: 800px; 
+            margin: 8rem auto 4rem auto; 
+            background: rgba(20, 20, 20, 0.7); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 40px; 
+            padding: 5rem 4rem; 
+            position: relative; 
+            z-index: 10; 
+        }
+
+        .section-divider { height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent); margin: 4rem 0; }
+        
+        /* Glowing Comic Card */
+        .comic-card { 
+            background: rgba(30, 30, 30, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 24px; 
+            padding: 2rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 2.5rem; 
+            transition: all 0.3s ease; 
+        }
+        .comic-card:hover { 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); 
+            transform: translateY(-5px); 
+        }
+        .comic-thumb { width: 140px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); flex-shrink: 0; }
+        .genre-tag { border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 6px; padding: 4px 12px; color: white; font-size: 8px; font-weight: bold; text-transform: uppercase; }
+
+        /* Language Dropdown */
+        .custom-lang-dropdown { position: relative; display: flex; align-items: center; }
+        .lang-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
+        .lang-menu { position: absolute; top: 100%; right: 0; padding-top: 15px; display: none; flex-direction: column; z-index: 2000; width: 180px; }
+        .lang-menu-content { background-color: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.9); }
+        .lang-item { padding: 12px; font-size: 11px; display: flex; align-items: center; gap: 10px; cursor: pointer; color: #E0E0E0; border-bottom: 1px solid #1f1f1f; transition: background 0.2s; }
+        .lang-item:hover { background-color: #2d2d2d; color: #3b82f6; }
+        .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
+        .custom-lang-dropdown:hover .lang-menu { display: flex; }
+
+        img { -webkit-user-drag: none; user-select: none; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-wrapper"><div class="bg-blur"></div></div>
+
+    <nav class="nav-container">
+        <div class="nav-pill">
+            <span class="text-white font-bold tracking-[0.2em] text-[10px] uppercase">E L O I R I E N</span>
+            <div class="h-4 w-[1px] bg-gray-800"></div>
+            <a href="index.html" class="nav-link">home</a>
+            <a href="about.html" class="nav-link">about</a>
+            
+            <div class="custom-lang-dropdown">
+                <div class="lang-trigger text-[10px]">🌐 <span id="current-lang-label" class="uppercase">EN</span></div>
+                <div class="lang-menu">
+                    <div class="lang-menu-content">
+                        <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="article-room shadow-2xl">
+        <h2 id="page-title" class="text-center text-xs font-black text-white uppercase tracking-[0.4em] mb-12">Archived Records</h2>
+
+        <a href="index.html" class="comic-card">
+            <img src="images/vertical-cover.webp" alt="Silverstring" class="comic-thumb">
+            <div class="flex flex-col gap-4 items-start">
+                <img src="images/logo.png" alt="Silverstring Logo" class="w-48">
+                <div class="flex gap-2">
+                    <span id="genre-fantasy" class="genre-tag">Fantasy</span>
+                    <span id="genre-drama" class="genre-tag">Drama</span>
+                    <span id="genre-action" class="genre-tag">Action</span>
+                </div>
+                <p id="status-silverstring" class="text-[9px] text-blue-400 font-bold uppercase tracking-widest">Main Story In Progress</p>
+            </div>
+        </a>
+
+        <div class="section-divider"></div>
+
+        <div class="comic-card opacity-80 cursor-default">
+            <div class="comic-thumb bg-zinc-800 aspect-[3/4] flex items-center justify-center border border-zinc-700">
+                <span id="label-specials-thumb" class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest text-center px-2">Specials</span>
+            </div>
+            <div class="flex flex-col gap-4 items-start">
+                <h3 id="label-specials-title" class="text-2xl font-black text-white uppercase tracking-tighter">Silverstring Specials</h3>
+                <div class="flex gap-2">
+                    <span id="genre-spec-fantasy" class="genre-tag">Fantasy</span>
+                    <span id="genre-slice" class="genre-tag">Slice of Life</span>
+                </div>
+                <p id="status-specials" class="text-[9px] text-gray-500 font-bold uppercase tracking-widest">Awaiting Transmission...</p>
+            </div>
+        </div>
+
+        <footer class="mt-12 pt-8 border-t border-gray-800 text-center">
+            <p class="text-[10px] text-gray-600 uppercase tracking-widest">Copyright 2026 © Eloirien. All Rights Reserved.</p>
+        </footer>
+    </main>
+
+    <script>
+        const comicsContent = {
+            EN: {
+                pageTitle: "Archived Records",
+                silverStatus: "Main Story In Progress",
+                specialsTitle: "Silverstring Specials",
+                specialsStatus: "Awaiting Transmission...",
+                genres: ["Fantasy", "Drama", "Action", "Slice of Life"],
+                labels: { thumb: "Specials" }
+            },
+            ID: {
+                pageTitle: "Arsip Rekaman",
+                silverStatus: "Cerita Utama Sedang Berjalan",
+                specialsTitle: "Silverstring Spesial",
+                specialsStatus: "Menunggu Transmisi...",
+                genres: ["Fantasi", "Drama", "Aksi", "Slice of Life"],
+                labels: { thumb: "Spesial" }
+            },
+            JP: {
+                pageTitle: "アーカイブされた記録",
+                silverStatus: "本編連載中",
+                specialsTitle: "シルバーストリング・スペシャル",
+                specialsStatus: "データ待機中...",
+                genres: ["ファンタジー", "ドラマ", "アクション", "日常"],
+                labels: { thumb: "スペシャル" }
+            },
+            KR: {
+                pageTitle: "보관된 기록",
+                silverStatus: "본편 연재 중",
+                specialsTitle: "실버스링 스페셜",
+                specialsStatus: "데이터 대기 중...",
+                genres: ["판타지", "드라마", "액션", "일상"],
+                labels: { thumb: "스페셜" }
+            }
+        };
+
+        function setLanguage(lang) {
+            const dict = comicsContent[lang] || comicsContent.EN;
+            document.getElementById('current-lang-label').innerText = lang;
+            document.getElementById('page-title').innerText = dict.pageTitle;
+            
+            // Silverstring Card
+            document.getElementById('status-silverstring').innerText = dict.silverStatus;
+            document.getElementById('genre-fantasy').innerText = dict.genres[0];
+            document.getElementById('genre-drama').innerText = dict.genres[1];
+            document.getElementById('genre-action').innerText = dict.genres[2];
+
+            // Specials Card
+            document.getElementById('label-specials-thumb').innerText = dict.labels.thumb;
+            document.getElementById('label-specials-title').innerText = dict.specialsTitle;
+            document.getElementById('genre-spec-fantasy').innerText = dict.genres[0];
+            document.getElementById('genre-slice').innerText = dict.genres[3];
+            document.getElementById('status-specials').innerText = dict.specialsStatus;
+
+            window.location.hash = lang;
+        }
+
+        window.onload = () => {
+            const initialLang = window.location.hash.replace('#', '') || 'EN';
+            setLanguage(initialLang);
+        };
+
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+</body>
+</html>
