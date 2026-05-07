@@ -34,6 +34,57 @@
         /* Content Areas */
         .episode-card { background-color: #1a1a1a; border: 1px solid #2d2d2d; transition: all 0.2s; width: 100%; max-width: 42rem; }
         .episode-card:hover { transform: scale(1.01); border-color: #3b82f6; }
+
+        /* Blue Button Glow & Pulse */
+        .btn-read {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .btn-read:hover {
+            background-color: #2563eb; /* Slightly deeper blue */
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 5px rgba(59, 130, 246, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        /* Golden Notification Button Style */
+        .btn-notify {
+            background-color: #d4af37; /* Royal Gold */
+            color: #000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Hover Effects for Coming Soon Card */
+        .card-coming-soon:hover {
+            border-color: #d4af37 !important;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .card-coming-soon:hover .btn-notify {
+            background-color: #f1c40f; 
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
+            transform: translateY(-1px);
+        }
+        
+        /* Golden Notification Button Style */
+        .btn-notify {
+            background-color: #d4af37; /* Royal Gold */
+            color: #000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Hover Effects for the Coming Soon Card */
+        .card-coming-soon:hover {
+            border-color: #d4af37 !important;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 10px rgba(212, 175, 55, 0.1);
+            transform: scale(1.01);
+        }
+        
+        .card-coming-soon:hover .btn-notify {
+            background-color: #f1c40f; /* Brighter Gold on hover */
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
+            transform: translateY(-1px);
+        }
         
         img { -webkit-user-drag: none; user-select: none; }
     </style>
@@ -177,27 +228,32 @@
             const container = document.getElementById('episode-list-container');
             container.innerHTML = '';
             dict.episodes.forEach(ep => {
-                container.innerHTML += `
-                    <div class="episode-card flex items-center p-4 rounded-xl">
-                        <img src="${ep.thumb}" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                        <div class="ml-4 flex-grow">
-                            <h4 class="text-sm font-bold text-white">${ep.title}</h4>
-                            <p class="text-[10px] text-gray-500">${ep.date}</p>
-                        </div>
-                        <a href="${ep.link}" class="bg-blue-600 text-white text-[10px] px-6 py-2 rounded font-bold uppercase">Read</a>
-                    </div>`;
-            });
-            
             container.innerHTML += `
-                <div class="episode-card flex items-center p-4 rounded-xl opacity-50">
-                    <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center">
-                        <span class="text-[10px] font-bold text-zinc-600">EP 07</span>
-                    </div>
+                <div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="${ep.thumb}" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
                     <div class="ml-4 flex-grow">
-                        <h4 class="text-sm font-bold text-zinc-500">02 - Friend (Part 2)</h4>
-                        <p class="text-[10px] text-amber-500 font-bold uppercase">${dict.comingSoon}</p>
+                        <h4 class="text-sm font-bold text-white">${ep.title}</h4>
+                        <p class="text-[10px] text-gray-500">${ep.date}</p>
                     </div>
+                    <a href="${ep.link}" class="btn-read bg-blue-600 text-white text-[10px] px-6 py-2 rounded font-bold uppercase">
+                        Read
+                    </a>
                 </div>`;
+        });
+            
+                container.innerHTML += `
+                    <div class="episode-card card-coming-soon flex items-center p-4 rounded-xl opacity-80 cursor-default">
+                        <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700">
+                            <span class="text-[10px] font-bold text-zinc-500 tracking-widest">EP 07</span>
+                        </div>
+                        <div class="ml-4 flex-grow">
+                            <h4 class="text-sm font-bold text-zinc-400">02 - Friend (Part 2)</h4>
+                            <p class="text-[10px] text-amber-500 font-bold uppercase tracking-widest">${dict.comingSoon}</p>
+                        </div>
+                        <button class="btn-notify text-[9px] px-4 py-2 rounded font-black uppercase tracking-tighter shadow-lg">
+                            Notify
+                        </button>
+                    </div>`;
         }
 
         function switchTab(tabName) {
