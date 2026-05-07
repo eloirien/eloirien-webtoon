@@ -8,7 +8,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
         
-        /* Navigation Pill - Uppercase & 25px Blur */
+        /* Navigation Pill */
         .nav-container { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding-top: 2rem; padding-left: 15px; padding-right: 15px; pointer-events: none; }
         .nav-pill { pointer-events: auto; background-color: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px) saturate(180%); padding: 6px 16px; border-radius: 9999px; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 12px; height: 42px; margin: 0 auto; }
         .nav-link { color: #9ca3af; text-transform: uppercase; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; transition: color 0.3s; cursor: pointer; }
@@ -18,47 +18,62 @@
         .bg-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
         .bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/cover.webp'); background-size: cover; background-position: center; filter: blur(25px) brightness(0.2); transform: scale(1.1); }
 
-        /* Centered Article Room */
+        /* Responsive Article Room */
         .article-room { 
-            width: 95%; /* Use percentage for mobile flexibility */
+            width: 95%; 
             max-width: 800px; 
             margin: 6rem auto 2rem auto; 
             background: rgba(20, 20, 20, 0.7); 
             backdrop-filter: blur(20px); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 24px; /* Slightly smaller radius for mobile */
-            padding: 3rem 1.5rem; /* Reduced padding for mobile */
+            border-radius: 24px; 
+            padding: 3rem 1.5rem; 
             position: relative; 
             z-index: 10;
         }
 
+        @media (min-width: 768px) {
+            .article-room { padding: 5rem 4rem; margin-top: 8rem; border-radius: 40px; }
+        }
+
         .section-divider { height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent); margin: 4rem 0; }
         
-        //* Desktop Padding Restore */
-        @media (min-width: 768px) {
-        .article-room { padding: 5rem 4rem; margin-top: 8rem; border-radius: 40px; }
-        }
-        
-        /* Responsive Comic Card */
+        /* RESTORED: Glowing Comic Card */
         .comic-card { 
             background: rgba(30, 30, 30, 0.4); 
             border: 1px solid rgba(255, 255, 255, 0.05); 
             border-radius: 24px; 
             padding: 1.5rem; 
             display: flex; 
-            flex-direction: column; /* Stack vertically on mobile */
+            flex-direction: column; 
             align-items: center; 
             text-align: center;
             gap: 1.5rem; 
             transition: all 0.3s ease; 
         }
-    
-        /* Side-by-side for Desktop */
+
+        .comic-card:hover { 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); 
+            transform: translateY(-5px); 
+        }
+
         @media (min-width: 768px) {
-        .comic-card { flex-direction: row; text-align: left; align-items: center; gap: 2.5rem; padding: 2rem; }
+            .comic-card { flex-direction: row; text-align: left; align-items: center; gap: 2.5rem; padding: 2rem; }
         }
     
         .comic-thumb { width: 140px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); flex-shrink: 0; }
+
+        /* RESTORED: Genre Tag Styling */
+        .genre-tag { 
+            border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 6px; 
+            padding: 4px 12px; 
+            color: white; 
+            font-size: 8px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+        }
 
         /* Language Dropdown */
         .custom-lang-dropdown { position: relative; display: flex; align-items: center; }
@@ -103,7 +118,8 @@
     
         <a href="index.html" class="comic-card">
             <img src="images/vertical-cover.webp" alt="Silverstring" class="comic-thumb">
-            <div class="flex flex-col gap-4 items-center md:items-start"> <img src="images/logo.png" alt="Silverstring Logo" class="w-48 mx-auto md:mx-0">
+            <div class="flex flex-col gap-4 items-center md:items-start"> 
+                <img src="images/logo.png" alt="Silverstring Logo" class="w-48 mx-auto md:mx-0">
                 <div class="flex flex-wrap justify-center md:justify-start gap-2">
                     <span id="genre-fantasy" class="genre-tag">Fantasy</span>
                     <span id="genre-drama" class="genre-tag">Drama</span>
@@ -119,7 +135,8 @@
             <div class="comic-thumb bg-zinc-800 aspect-[3/4] flex items-center justify-center border border-zinc-700">
                 <span id="label-specials-thumb" class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Specials</span>
             </div>
-            <div class="flex flex-col gap-4 items-center md:items-start"> <h3 id="label-specials-title" class="text-2xl font-black text-white uppercase tracking-tighter">Silverstring Specials</h3>
+            <div class="flex flex-col gap-4 items-center md:items-start"> 
+                <h3 id="label-specials-title" class="text-2xl font-black text-white uppercase tracking-tighter">Silverstring Specials</h3>
                 <div class="flex flex-wrap justify-center md:justify-start gap-2">
                     <span id="genre-spec-fantasy" class="genre-tag">Fantasy</span>
                     <span id="genre-slice" class="genre-tag">Slice of Life</span>
