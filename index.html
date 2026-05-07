@@ -290,20 +290,35 @@
             </span>
             <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
             <div class="flex items-center space-x-3 md:space-x-4">
-                <a href="#webcomics" class="nav-link">comics</a>
-                <a href="#about" class="nav-link">about</a>
+                <a href="#webcomics" class="nav-link nav-link-comics">comics</a>
+                <a href="#about" class="nav-link nav-link-about">about</a>
             </div>
+            
             <div class="custom-lang-dropdown">
                 <div class="lang-trigger text-[10px] flex items-center gap-1 cursor-pointer">
-                    🌐 <span class="uppercase">EN</span>
+                    🌐 <span id="current-lang-label" class="uppercase">EN</span>
                 </div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
-                        <div class="lang-item"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                        <div class="lang-item"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
+                        <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="max-w-screen-xl mx-auto flex justify-center">
+                <button onclick="switchTab('info')" id="tab-info" class="tab-btn tab-button active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
+                <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn tab-button px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
+                <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn tab-button px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
+            </div>
+            
+            <div class="ml-4 flex-grow">
+                <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
+                <p class="episode-date text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
+            </div>
+            
                 </div>
             </div>
         </div>
