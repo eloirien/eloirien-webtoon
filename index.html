@@ -133,31 +133,27 @@
             </div>
         </section>
 
-        <section id="content-episodes" class="tab-content hidden flex flex-col items-center">
-            <div class="flex flex-col items-center mt-8 px-4 w-full">
-            <div class="flex flex-row gap-2 sm:gap-4 justify-center w-full max-w-[450px]">
-                <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] rounded-full transition-all shadow-lg truncate">
+        <section id="content-episodes" class="tab-content hidden w-full">
+        <div class="flex flex-col items-center mt-12 px-4 w-full">
+            <div class="flex flex-row gap-3 justify-center w-full max-w-[400px]">
+                <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-lg truncate">
                     Read First
                 </button>
-                <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] rounded-full transition-all truncate">
+                <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">
                     Read Newest
                 </button>
             </div>
-        
-            <div class="mt-6">
+    
+            <div class="mt-6 flex justify-center">
                 <button id="main-flip-btn" onclick="toggleSort()" class="w-10 h-10 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800 flex items-center justify-center hover:border-blue-500 transition-all shadow-xl group">
                     <span id="sort-icon-hero" class="text-gray-400 text-sm group-hover:text-blue-400 transition-transform duration-300">⇅</span>
                 </button>
             </div>
         </div>
-        
-        <section id="episodes" class="max-w-5xl mx-auto px-6 py-20">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-[10px] text-blue-500 font-black uppercase tracking-[0.4em] mb-2">Library</h2>
-                    <p id="label-ep-count" class="text-2xl font-black text-white uppercase tracking-tighter">1 Episode</p>
-                </div>
+    
+        <div id="episode-list" class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
             </div>
+    </section>
         
             <div id="episode-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="episode-card group bg-zinc-900/40 border border-white/5 rounded-2xl p-4 flex gap-5 hover:border-blue-500/50 transition-all cursor-pointer" onclick="navigateEpisode(1)">
@@ -295,10 +291,17 @@
         }
 
         function toggleSort() {
-            isReversed = !isReversed;
-            const icon = document.getElementById('sort-icon');
-            icon.style.transform = isReversed ? 'rotate(180deg)' : 'rotate(0deg)';
-            setLanguage(document.getElementById('current-lang-label').innerText);
+        const list = document.getElementById('episode-list');
+        const cards = Array.from(list.children);
+        const icon = document.getElementById('sort-icon-hero'); // Corrected ID
+        
+        isDescending = !isDescending;
+        
+        // Reverse the DOM elements
+        cards.reverse().forEach(card => list.appendChild(card));
+        
+        // Visual flip animation
+        icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
         }
 
         window.onload = () => setLanguage('EN');
@@ -354,7 +357,7 @@
     <img id="lightbox-img" src="" alt="Full Size View">
     </div>
 
-        <footer class="w-full py-12 border-t border-gray-900 bg-black/50 backdrop-blur-md flex flex-col items-center">
+        <footer class="w-full py-16 border-t border-gray-900 bg-black/50 backdrop-blur-md flex flex-col items-center">
         <p class="text-[9px] text-gray-600 uppercase tracking-[0.4em]">Copyright 2026 © Eloirien. All Rights Reserved.</p>
         </footer>
     
