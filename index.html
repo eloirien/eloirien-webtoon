@@ -6,116 +6,591 @@
     <title>Eloirien | Silverstring</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d;
+            color: #E0E0E0;
+            margin: 0;
+        }
         
-        .nav-container { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding-top: 2rem; padding-left: 15px; padding-right: 15px; pointer-events: none; }
+        .nav-container {
+            position: fixed; 
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding-top: 2rem; 
+            padding-left: 15px;
+            padding-right: 15px;
+            pointer-events: none; 
+        }
         
-        .nav-pill { pointer-events: auto; background-color: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px) saturate(180%); padding: 6px 16px; border-radius: 9999px; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 12px; height: 42px; margin: 0 auto; }
+        .nav-pill {
+            pointer-events: auto; 
+            background-color: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            padding: 6px 16px !important;
+            border-radius: 9999px !important;
+            
+            /* THE FIX: A more opaque white outline for better separation */
+            border: 2px solid rgba(255, 255, 255, 0.25); 
+            
+            /* THE FIX: Soft outer shadow for depth when floating */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 
+                        0 0 25px rgba(255, 255, 255, 0.05); 
+            
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between;
+            gap: 12px;
+            width: fit-content !important; 
+            height: 42px !important; 
+            max-width: 95%;
+            flex-wrap: nowrap;
+            margin: 0 auto;
+        }
         
-        .nav-link { color: #9ca3af; text-transform: lowercase; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; transition: color 0.3s; cursor: pointer; }
+        @media (min-width: 768px) {
+            .nav-pill {
+                gap: 20px;
+                padding: 10px 28px !important;
+                height: 50px !important;
+            }
+        }
+        
+        .nav-link {
+            color: #9ca3af;
+            text-transform: lowercase;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            transition: color 0.3s;
+        }
         .nav-link:hover { color: #3b82f6; }
         
-        .custom-lang-dropdown { position: relative; display: flex; align-items: center; }
-        .lang-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
-        .lang-menu { position: absolute; top: 100%; right: 0; padding-top: 15px; display: none; flex-direction: column; z-index: 2000; width: 180px; }
-        .lang-menu-content { background-color: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.9); }
-        .lang-item { padding: 12px; font-size: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; color: #E0E0E0; border-bottom: 1px solid #1f1f1f; }
+        @media (min-width: 768px) {
+            .nav-link { font-size: 13px; }
+        }
+
+        .custom-lang-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lang-trigger {
+            background-color: rgba(31, 41, 55, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        
+        .lang-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            padding-top: 15px;
+            display: none;
+            flex-direction: column;
+            z-index: 2000;
+            width: 200px;
+        }
+
+        .lang-menu-content {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+        }
+        
+        .lang-item {
+            padding: 12px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #1f1f1f;
+            cursor: pointer;
+            color: #E0E0E0;
+            white-space: nowrap;
+        }
+        
         .lang-item:hover { background-color: #2d2d2d; color: #3b82f6; }
+        .lang-item:last-child { border-bottom: none; }
+        
+        .flag-icon {
+            width: 18px;
+            height: 12px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
+            
+        .hero-wrapper {
+            position: relative;
+            background-color: #0d0d0d;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .hero-blur-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('images/cover.webp');
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px) brightness(0.3);
+            z-index: 1;
+        }
+        
+        .hero-stage-fixed {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 1100px;
+            margin: 8rem auto 2rem auto; 
+            aspect-ratio: 2 / 1; 
+            background-image: url('images/cover.webp');
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+                
+       .hero-branding-bar {
+            position: relative;
+            z-index: 10;
+            margin-top: 1.5rem;   
+            margin-bottom: 3rem; 
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+        }
+        
+       .branding-pill {
+            background-color: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(12px);
+            width: 100%;
+            max-width: 1200px; 
+            padding: 20px 20px; 
+            border-radius: 40px; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .genre-tag-outline {
+            border: 1px solid rgba(255, 255, 255, 0.6); 
+            border-radius: 8px;
+            padding: 4px 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+               
+        .main-scroll-area {
+            height: 70vh; /* Takes up 70% of the screen height */
+            overflow-y: auto; /* Enables vertical scrolling */
+            scrollbar-width: thin; /* Keeps it 'Quiet Luxury' and slim */
+            scrollbar-color: #3b82f6 transparent;
+        }
+        
+        .episode-card {
+            background-color: #1a1a1a;
+            border: 1px solid #2d2d2d;
+            transition: transform 0.2s;
+            width: 100%;
+            max-width: 42rem; /* Matches max-w-2xl */
+        }
+        
+        .episode-card:hover {
+            transform: scale(1.02);
+            border-color: #3b82f6;
+            cursor: pointer;
+        }
+        
+        .episode-card.coming-soon:hover {
+            border-color: #d97706; 
+        }
 
-        .hero-wrapper { position: relative; background-color: #0d0d0d; overflow: hidden; width: 100%; }
-        .hero-blur-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/cover.webp'); background-size: cover; background-position: center; filter: blur(10px) brightness(0.3); z-index: 1; }
-        .hero-stage-fixed { position: relative; z-index: 2; width: 90%; max-width: 1100px; margin: 8rem auto 2.5rem auto; aspect-ratio: 2 / 1; background-image: url('images/cover.webp'); background-size: cover; background-position: center; border-radius: 16px; }
+        .coming-soon button:hover {
+            background-color: #fbbf24; 
+            box-shadow: 0 0 15px rgba(217, 119, 6, 0.6); 
+            color: #000; 
+            transform: translateY(-1px); 
+        }
+        
+        .coming-soon button {
+            opacity: 1 !important; 
+            transition: all 0.3s ease;
+        }
+        
+        .synopsis-style {
+            font-size: 0.95rem; 
+            line-height: 1.5;   
+            color: #9ca3af;     
+            text-align: left;   
+        }
 
-        .branding-pill { background-color: rgba(13, 13, 13, 0.85); backdrop-filter: blur(12px); width: 90%; max-width: 1200px; margin: -20px auto 40px auto; padding: 24px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; z-index: 10; }
+        h1, h2, h3, button, .font-bold {
+            font-family: 'Inter', sans-serif !important;
+            letter-spacing: 0.02em; 
+        }
 
-        .tab-btn { transition: all 0.3s ease; }
-        .episode-card { background-color: #1a1a1a; border: 1px solid #2d2d2d; transition: all 0.2s; }
-        .episode-card:hover { transform: translateY(-2px); border-color: #3b82f6; }
-
-        img { -webkit-user-drag: none; user-select: none; }
+         .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid #2d2d2d;
+            background-color: #1a1a1a;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+    
+        img {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
     </style>
+    
 </head>
 <body>
     <nav class="nav-container">
         <div class="nav-pill">
-            <span class="text-white font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase">E L O I R I E N</span>
-            <div class="h-4 w-[1px] bg-gray-800"></div>
-            <a onclick="switchTab('episodes')" class="nav-link nav-link-comics">comics</a>
-            <a onclick="switchTab('info')" class="nav-link nav-link-about">about</a>
+            <span class="text-white font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase flex-shrink-0">
+                E L O I R I E N
+            </span>
+            <div class="h-4 w-[1px] bg-gray-800 flex-shrink-0"></div>
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <a href="#webcomics" class="nav-link nav-link-comics">comics</a>
+                <a href="#about" class="nav-link nav-link-about">about</a>
+            </div>
+            
             <div class="custom-lang-dropdown">
-                <div class="lang-trigger"><span id="active-lang">EN</span></div>
+                <div class="lang-trigger text-[10px] flex items-center gap-1 cursor-pointer">
+                    🌐 <span id="current-lang-label" class="uppercase">EN</span>
+                </div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
-                        <div class="lang-item" onclick="setLanguage('EN')">English</div>
-                        <div class="lang-item" onclick="setLanguage('ID')">Bahasa Indonesia</div>
-                        <div class="lang-item" onclick="setLanguage('JP')">日本語</div>
-                        <div class="lang-item" onclick="setLanguage('KR')">한국어</div>
+                        <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
                 </div>
             </div>
-        </div>
+            
+            <div class="max-w-screen-xl mx-auto flex justify-center">
+                <button onclick="switchTab('info')" id="tab-info" class="tab-btn tab-button active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
+                <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn tab-button px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
+                <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn tab-button px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
+            </div>
+            
+            <div class="ml-4 flex-grow">
+                <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
+                <p class="episode-date text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
+            </div>
     </nav>
     
     <section class="hero-wrapper">
         <div class="hero-blur-bg"></div>
         <div class="hero-stage-fixed"></div>
-        <div class="branding-pill">
-            <img src="images/logo.png" alt="Silverstring" class="w-full max-w-[280px] md:max-w-[400px]">
-            <span class="series-status-tag text-[10px] font-bold text-blue-400 uppercase tracking-widest">Main Story in Progress</span>
+        <div class="hero-branding-bar">
+            <div class="branding-pill">
+                <img src="images/logo.png" alt="Silverstring" class="w-full max-w-[250px] md:max-w-[400px] h-auto object-contain" style="filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));">
+                <div class="flex items-center space-x-3">
+                    <span class="genre-tag-outline text-[10px]">Fantasy</span>
+                    <span class="genre-tag-outline text-[10px]">Drama</span>
+                    <span class="genre-tag-outline text-[10px]">Action</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <div class="sticky top-0 bg-black/90 backdrop-blur-md border-b border-gray-800 z-40">
-        <div class="max-w-screen-xl mx-auto flex justify-center">
-            <button onclick="switchTab('info')" id="tab-info" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-blue-600 text-white">INFO</button>
-            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500">EPISODES</button>
-            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500">GALLERY</button>
+    <div class="border-b border-gray-800 bg-black/90 backdrop-blur-md z-40">
+    <div class="max-w-screen-xl mx-auto flex justify-center">
+            <button onclick="switchTab('info')" id="tab-info" class="tab-btn active px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-blue-600 text-white">INFO</button>
+            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">EPISODES</button>
+            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn px-6 py-4 text-sm font-bold tracking-widest transition-all border-b-2 border-transparent text-gray-500 hover:text-white">GALLERY</button>
         </div>
     </div>
-
-    <main class="max-w-screen-xl mx-auto px-6 py-12">
-        <section id="content-info" class="tab-content flex flex-col items-center space-y-8">
-            <div class="w-64 rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
-                <img src="images/vertical-cover.webp" class="w-full h-auto">
+        
+    <main class="main-scroll-area max-w-screen-xl mx-auto px-6 py-12">
+        <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
+            <div class="w-64 md:w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-800">
+                <img src="images/vertical-cover.webp" alt="Silverstring Cover" class="w-full h-auto">
             </div>
-            <p class="max-w-2xl text-center text-sm text-gray-400 leading-relaxed synopsis-text">
-                Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom.
-            </p>
-        </section>
-
-        <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
-            <div id="episode-list" class="w-full max-w-2xl space-y-4">
-                <div class="episode-card flex items-center p-4 rounded-xl">
-                    <img src="images/ep1-thumb.webp" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    <div class="ml-4 flex-grow">
-                        <h4 class="text-sm font-bold text-white">Prologue: Storm</h4>
-                        <p class="episode-date text-[10px] text-gray-500">Nov 1, 2025</p>
+            <div class="max-w-2xl text-center space-y-8">
+                <p class="synopsis-style text-sm leading-snug">
+                    Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
+                    <br><br>
+                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left">
+                        "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
+                    </em>
+                </p>
+                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Creator</h3>
+                    <div class="flex items-center space-x-4">
+                        <img src="images/profile.webp" alt="Eloirien" class="w-12 h-12 rounded-full border border-gray-700">
+                        <div>
+                            <p class="font-bold text-white">Eloirien</p>
+                            <p class="text-xs text-blue-400">@Eloirien</p>
+                        </div>
                     </div>
-                    <a href="reader.html" class="bg-blue-600 text-white text-[10px] px-6 py-2 rounded font-bold uppercase">Read</a>
                 </div>
-                </div>
+            </div>
         </section>
 
-        <section id="content-gallery" class="tab-content hidden text-center">
-            <p class="text-gray-500 italic text-sm">Royal archives are being digitized...</p>
+        <section id="content-episodes" class="tab-content hidden flex flex-col items-center">
+            <!-- Action Bar -->
+            <div class="w-full max-w-2xl mx-auto flex items-center justify-between mb-6 px-2">
+                <div class="flex gap-2">
+                    <a href="ep1/index_en.html" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+                        First Episode
+                    </a>
+                    <a href="ep6/index_en.html" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+                        Newest Episode
+                    </a>
+                </div>
+                
+                <button onclick="toggleSort()" class="w-8 h-8 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center hover:border-blue-500 transition-all group">
+                    <span id="sort-icon" class="text-gray-400 group-hover:text-blue-500 text-sm">⇅</span>
+                </button>
+            </div>
+            
+            <!-- Dedicated Episode List for Script Logic -->
+            <div id="episode-list" class="flex flex-col items-center space-y-6 w-full">
+                <!-- EP 01 -->
+                <div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="images/ep1-thumb.webp" alt="Prologue: Storm" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: Storm</h4>
+                        <p class="text-[10px] md:text-xs text-gray-500">Nov 1, 2025</p>
+                    </div>
+                    <a href="reader.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+                </div>
+
+                <!-- EP 02 -->
+                <div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="images/ep2-thumb.webp" alt="Prologue: The King" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: The King</h4>
+                        <p class="text-[10px] md:text-xs text-gray-500">Nov 29, 2025</p>
+                    </div>
+                    <a href="reader_ep2.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+                </div>
+
+                <!-- EP 03 -->
+                <div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="images/ep3-thumb.webp" alt="Prologue: The Cup" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-white">Prologue: The Cup</h4>
+                        <p class="text-[10px] md:text-xs text-gray-500">Jan 4, 2026</p>
+                    </div>
+                    <a href="reader_ep3.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+                </div>
+
+                <!-- EP 04 -->
+                <div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="images/ep4-thumb.webp" alt="01 - Who (Part 1)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-white">01 - Who (Part 1)</h4>
+                        <p class="text-[10px] md:text-xs text-gray-500">Feb 7, 2026</p>
+                    </div>
+                    <a href="reader_ep4.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+                </div>
+
+                <!-- EP 05 -->
+                <div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="images/ep5-thumb.webp" alt="01 - Who (Part 2)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-white">01 - Who (Part 2)</h4>
+                        <p class="text-[10px] md:text-xs text-gray-500">Mar 8, 2026</p>
+                    </div>
+                    <a href="reader_ep5.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+                </div>
+
+                <!-- EP 06 -->
+                <div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="images/ep6-thumb.webp" alt="02 - Friend (Part 1)" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-white">02 - Friend (Part 1)</h4>
+                        <p class="text-[10px] md:text-xs text-gray-500">Apr 23, 2026</p>
+                    </div>
+                    <a href="reader_ep6.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md transition-colors uppercase tracking-wider text-center">Read</a>
+                </div>
+                
+               <!-- COMING SOON -->
+                <div class="episode-card coming-soon flex items-center p-4 rounded-xl opacity-60 hover:opacity-100 transition-opacity">
+                    <div class="w-24 h-14 md:w-32 md:h-20 bg-gray-800 flex items-center justify-center rounded-lg">
+                        <span class="text-gray-600 font-bold text-xs">EP 07</span>
+                    </div>
+                    <div class="ml-4 flex-grow">
+                        <h4 class="text-sm md:text-base font-bold text-gray-400">02 - Friend (Part 2)</h4>
+                        <p class="text-[10px] md:text-xs text-amber-500 font-medium">Coming soon</p>
+                    </div>
+                    <button class="bg-amber-600 text-black font-bold text-[10px] md:text-xs w-[110px] py-2 rounded-md uppercase tracking-wider text-center transition-all">
+                        Notify
+                    </button>
+                </div>
+            </div>
         </section>
+    
+        <section id="content-gallery" class="tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto px-4">
+                
+                <div class="gallery-item aspect-square">
+                    <img src="images/gallery/gallery-eden.webp" alt="Eden" class="w-full h-full object-cover">
+                    
+                    <div class="absolute inset-0 z-10 w-full h-full cursor-default" style="background: rgba(0,0,0,0);"></div>
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-20">
+                        <p class="text-xs font-bold text-white uppercase tracking-widest">Eden</p>
+                    </div>
+                </div>
+        
+                </div>
+            <p class="text-gray-500 mt-12 text-sm italic text-center">The royal archives are being digitized. More records coming soon.</p>
+        </section>
+        
     </main>
 
-    <script>
-        const siteContent = {
-            EN: { navComics: "comics", navAbout: "about", status: "Main Story in Progress", tabs: ["INFO", "EPISODES", "GALLERY"], epDate: "Nov 01, 2025" },
-            ID: { navComics: "komik", navAbout: "tentang", status: "Cerita Utama Berjalan", tabs: ["INFO", "EPISODE", "GALERI"], epDate: "01 Nov 2025" },
-            JP: { navComics: "コミック", navAbout: "概要", status: "翻訳進行中", tabs: ["情報", "エピソード", "ギャラリー"], epDate: "翻訳中" },
-            KR: { navComics: "코믹스", navAbout: "정보", status: "번역 진행 중", tabs: ["정보", "에피소드", "갤러리"], epDate: "번역 중" }
-        };
+    <footer class="mt-20 pb-10">
+        <div class="h-[1px] w-32 mx-auto bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-6"></div>
+        <p class="text-center text-[10px] uppercase tracking-[0.2em] text-gray-600">© 2026 Eloirien. All Rights Reserved.</p>
+    </footer>
 
-        function setLanguage(lang) {
-            const dict = siteContent[lang];
-            document.querySelector('.nav-link-comics').innerText = dict.navComics;
-            document.querySelector('.nav-link-about').innerText = dict.navAbout;
-            document.querySelector('.series-status-tag').innerText = dict.status;
-            document.getElementById('active-lang').innerText = lang;
-            
-            const tabBtns = document.querySelectorAll('.tab-button');
-            tabBtns[0].innerText = dict.tabs[0];
+    <script>
+
+        // THE IMPERIAL DICTIONARY: Centralized text for all 4 languages
+        const siteContent = {
+            EN: {
+                navComics: "comics",
+                navAbout: "about",
+                seriesTitle: "Silverstring",
+                seriesStatus: "Main Story in Progress",
+                tabs: ["INFO", "EPISODES", "GALLERY"],
+                epDate: "May 07, 2026"
+            },
+            ID: {
+                navComics: "komik",
+                navAbout: "tentang",
+                seriesTitle: "Silverstring",
+                seriesStatus: "Cerita Utama Sedang Berjalan",
+                tabs: ["INFO", "EPISODE", "GALERI"],
+                epDate: "07 Mei 2026"
+            },
+            JP: {
+                navComics: "コミック",
+                navAbout: "概要",
+                seriesTitle: "シルバーストリング",
+                seriesStatus: "翻訳進行中 (Translation in progress)",
+                tabs: ["情報", "エピソード", "ギャラリー"],
+                epDate: "翻訳中 (Translation in progress)"
+            },
+            KR: {
+                navComics: "코믹스",
+                navAbout: "정보",
+                seriesTitle: "실버스트링",
+                seriesStatus: "번역 진행 중 (Translation in progress)",
+                tabs: ["정보", "에피소드", "갤러리"],
+                epDate: "번역 중 (Translation in progress)"
+            }
+        };
+    
+        <script>
+          
+            function setLanguage(lang) {
+                const dict = siteContent[lang];
+                
+                // Update Navigation
+                if(document.querySelector('.nav-link-comics')) document.querySelector('.nav-link-comics').innerText = dict.navComics;
+                if(document.querySelector('.nav-link-about')) document.querySelector('.nav-link-about').innerText = dict.navAbout;
+        
+                // Update Tabs (uses the 'tab-button' class)
+                const tabButtons = document.querySelectorAll('.tab-button');
+                if(tabButtons.length >= 3) {
+                    tabButtons[0].innerText = dict.tabs[0];
+                    tabButtons[1].innerText = dict.tabs[1];
+                    tabButtons[2].innerText = dict.tabs[2];
+                }
+        
+                // Update ALL Episode Dates at once
+                const dateTags = document.querySelectorAll('.episode-date');
+                dateTags.forEach(tag => tag.innerText = dict.epDate);
+        
+                // Update the label in the navigation pill
+                document.getElementById('current-lang-label').innerText = lang;
+            }
+        
+            // Default to EN on first load
+            window.onload = () => setLanguage('EN');
+        
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-600', 'text-white');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('border-blue-600', 'text-white');
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+        }
+        
+        let isNewestFirst = false;
+        
+        function toggleSort() {
+            const list = document.getElementById('episode-list');
+            const items = Array.from(list.children);
+            items.reverse().forEach(item => list.appendChild(item));
+            isNewestFirst = !isNewestFirst;
+            const icon = document.getElementById('sort-icon');
+            icon.style.transform = isNewestFirst ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+                // THE SENTRY: Disables right-click and dragging globally
+            document.addEventListener('contextmenu', function(e) {
+                // Disable save menu on images
+                if (e.target.nodeName === 'IMG' || e.target.parentElement.classList.contains('gallery-item')) {
+                    e.preventDefault();
+                }
+            }, false);
+        
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.nodeName === 'IMG') {
+                    e.preventDefault();
+                }
+            }, false);
+        
+    </script>
+</body>
+</html>
