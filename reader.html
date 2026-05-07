@@ -6,61 +6,26 @@
     <title>Silverstring | Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            background-color: #0a0a0a;
-            color: #d1d5db;
-            font-family: 'Inter', sans-serif;
-            user-select: none;
-        }
-
-        #global-click-zone {
-            min-height: 100vh;
-            width: 100%;
-            cursor: pointer;
-            position: relative;
-            z-index: 10;
-        }
-
-        .immersive-ui {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 50;
-        }
+        body, html { height: 100%; margin: 0; background-color: #0a0a0a; color: #d1d5db; font-family: 'Inter', sans-serif; user-select: none; }
         
+        #global-click-zone { min-height: 100vh; width: 100%; cursor: pointer; position: relative; z-index: 10; }
+
+        .immersive-ui { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; opacity: 0; pointer-events: none; z-index: 50; }
         .top-ui { transform: translateY(-100%); }
         .bottom-ui { transform: translateY(100%); }
+        .ui-active { transform: translateY(0) !important; opacity: 1 !important; pointer-events: auto !important; }
 
-        .ui-active {
-            transform: translateY(0) !important;
-            opacity: 1 !important;
-            pointer-events: auto !important;
-        }
+        /* Episode List Drawer */
+        #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
+        #episode-drawer.open { transform: translateY(0); }
 
-        .webtoon-container {
-            width: 100%;
-            max-width: 800px; 
-            margin: 0 auto;
-            line-height: 0;
-        }
-
+        .webtoon-container { width: 100%; max-width: 800px; margin: 0 auto; line-height: 0; }
         .panel-container { position: relative; width: 100%; }
-        
-        .ghost-layer {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 5;
-            background: transparent;
-        }
+        .ghost-layer { position: absolute; inset: 0; z-index: 5; background: transparent; }
+        img { width: 100%; display: block; -webkit-user-drag: none; background-color: #0a0a0a; }
 
-        img { 
-            width: 100%; 
-            display: block; 
-            -webkit-user-drag: none; 
-            background-color: #0a0a0a;
-        }
+        /* Teleport Button style */
+        #back-to-top { transition: all 0.3s ease; bottom: 100px; }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -72,53 +37,82 @@
             <div class="text-center">
                 <p class="text-[10px] text-white uppercase tracking-[0.2em]">Prologue: Storm</p>
             </div>
-            <div class="w-8"></div>
+            <button onclick="toggleDrawer(event)" class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
         </nav>
 
-        <main id="reader-main" class="webtoon-container">
-            </main>
+        <main id="reader-main" class="webtoon-container"></main>
 
         <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4">
             <div class="max-w-md mx-auto flex items-center justify-between">
                 <button class="text-[10px] font-bold text-gray-600 uppercase" onclick="event.stopPropagation();">Prev</button>
-                <div class="text-center">
-                    <span class="text-[9px] text-gray-500 uppercase font-bold block">Chapter</span>
-                    <span class="text-xs font-bold text-white tracking-widest">01</span>
+                <div class="text-center cursor-pointer" onclick="toggleDrawer(event)">
+                    <span class="text-[9px] text-gray-500 uppercase font-bold block tracking-tighter">Episode</span>
+                    <span class="text-xs font-bold text-white tracking-widest">#1</span>
                 </div>
                 <button class="px-6 py-2 bg-blue-600 rounded-md text-[10px] font-bold text-white uppercase" onclick="event.stopPropagation();">Next</button>
             </div>
         </nav>
-
     </div>
+
+    <div id="episode-drawer" class="fixed bottom-0 left-0 w-full bg-zinc-900 border-t border-zinc-800 p-6 max-h-[50vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-white text-xs font-bold uppercase tracking-widest">Episode List</h3>
+            <button onclick="toggleDrawer(event)" class="text-gray-500 text-xs">CLOSE</button>
+        </div>
+        <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+            <div class="flex-shrink-0 w-32 group cursor-pointer opacity-50 hover:opacity-100">
+                <img src="images/ep1-thumb.webp" class="rounded border-2 border-transparent group-hover:border-blue-500 transition shadow-lg">
+                <p class="text-[9px] mt-2 text-gray-400 uppercase font-bold">Prologue: Storm</p>
+            </div>
+            </div>
+    </div>
+
+    <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 opacity-0 translate-y-10 bg-white p-3 rounded-full shadow-2xl z-40">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
 
     <script>
         const totalPages = 22;
         const readerMain = document.getElementById('reader-main');
 
-        // Logic to generate all 22 protected panels automatically
         for (let i = 1; i <= totalPages; i++) {
-            // Formats number to 01, 02, etc. to match your filenames
             const pageNum = i.toString().padStart(2, '0'); 
-            const panelHtml = `
+            readerMain.innerHTML += `
                 <div class="panel-container">
                     <img src="images/episodes/ep1/ep1_${pageNum}_ID.webp" alt="Page ${pageNum}" loading="lazy">
                     <div class="ghost-layer"></div>
-                </div>
-            `;
-            readerMain.innerHTML += panelHtml;
+                </div>`;
         }
 
         let uiVisible = false;
-        const topNav = document.getElementById('top-nav');
-        const bottomNav = document.getElementById('bottom-nav');
-
         function toggleUI() {
             uiVisible = !uiVisible;
-            topNav.classList.toggle('ui-active', uiVisible);
-            bottomNav.classList.toggle('ui-active', uiVisible);
+            document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
+            document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
         }
 
-        // Global Protection
+        function toggleDrawer(e) {
+            e.stopPropagation();
+            document.getElementById('episode-drawer').classList.toggle('open');
+        }
+
+        window.onscroll = function() {
+            const btn = document.getElementById('back-to-top');
+            if (window.scrollY > 800) {
+                btn.classList.remove('opacity-0', 'translate-y-10');
+            } else {
+                btn.classList.add('opacity-0', 'translate-y-10');
+            }
+        };
+
+        // THE FIX: Teleport straight to the beginning of the episode
+        function teleportToTop(e) {
+            e.stopPropagation(); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
     </script>
