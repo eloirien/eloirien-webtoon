@@ -6,51 +6,53 @@
     <title>Eloirien | Silverstring</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
         
-        /* Fixed Navigation Pill */
+        /* Navigation */
         .nav-container { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding-top: 2rem; padding-left: 15px; padding-right: 15px; pointer-events: none; }
         .nav-pill { pointer-events: auto; background-color: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px) saturate(180%); padding: 6px 16px; border-radius: 9999px; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 12px; height: 42px; margin: 0 auto; }
         .nav-link { color: #9ca3af; text-transform: lowercase; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; transition: color 0.3s; cursor: pointer; }
         .nav-link:hover { color: #3b82f6; }
 
-        /* Language Menu */
+        /* Language Dropdown */
         .custom-lang-dropdown { position: relative; display: flex; align-items: center; }
-        .lang-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
-        .lang-menu { position: absolute; top: 100%; right: 0; padding-top: 15px; display: none; flex-direction: column; z-index: 2000; width: 180px; }
-        .lang-menu-content { background-color: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; }
+        .lang-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .lang-menu { position: absolute; top: 100%; right: 0; padding-top: 15px; display: none; flex-direction: column; z-index: 2000; width: 200px; }
+        .lang-menu-content { background-color: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.9); }
         .lang-item { padding: 12px; font-size: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; color: #E0E0E0; border-bottom: 1px solid #1f1f1f; }
         .lang-item:hover { background-color: #2d2d2d; color: #3b82f6; }
+        .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
-        /* Hero Section */
+        /* Hero */
         .hero-wrapper { position: relative; background-color: #0d0d0d; overflow: hidden; width: 100%; }
         .hero-blur-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/cover.webp'); background-size: cover; filter: blur(10px) brightness(0.3); z-index: 1; }
         .hero-stage-fixed { position: relative; z-index: 2; width: 90%; max-width: 1100px; margin: 8rem auto 2.5rem auto; aspect-ratio: 2 / 1; background-image: url('images/cover.webp'); background-size: cover; border-radius: 16px; }
-
         .branding-pill { background-color: rgba(13, 13, 13, 0.85); backdrop-filter: blur(12px); width: 90%; max-width: 1200px; margin: -20px auto 40px auto; padding: 24px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; z-index: 10; }
 
         .episode-card { background-color: #1a1a1a; border: 1px solid #2d2d2d; transition: all 0.2s; width: 100%; max-width: 42rem; }
-        .episode-card:hover { transform: scale(1.02); border-color: #3b82f6; }
-
+        .episode-card:hover { transform: scale(1.01); border-color: #3b82f6; }
+        
         img { -webkit-user-drag: none; user-select: none; }
     </style>
 </head>
 <body>
+
     <nav class="nav-container">
         <div class="nav-pill">
             <span class="text-white font-bold tracking-[0.2em] text-[10px] uppercase">E L O I R I E N</span>
             <div class="h-4 w-[1px] bg-gray-800"></div>
-            <a onclick="switchTab('episodes')" class="nav-link nav-link-comics">comics</a>
-            <a onclick="switchTab('info')" class="nav-link nav-link-about">about</a>
+            <a href="comics.html" class="nav-link nav-link-comics">comics</a>
+            <a href="about.html" class="nav-link nav-link-about">about</a>
+            
             <div class="custom-lang-dropdown">
                 <div class="lang-trigger">🌐 <span id="current-lang-label">EN</span></div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
-                        <div class="lang-item" onclick="setLanguage('EN')">English</div>
-                        <div class="lang-item" onclick="setLanguage('ID')">Bahasa Indonesia</div>
-                        <div class="lang-item" onclick="setLanguage('JP')">日本語</div>
-                        <div class="lang-item" onclick="setLanguage('KR')">한국어</div>
+                        <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
                 </div>
             </div>
@@ -62,7 +64,7 @@
         <div class="hero-stage-fixed"></div>
         <div class="branding-pill">
             <img src="images/logo.png" alt="Silverstring" class="w-full max-w-[280px] md:max-w-[400px]">
-            <span class="series-status-tag text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em]">Main Story in Progress</span>
+            <span class="series-status-tag text-[10px] font-bold text-blue-400 uppercase tracking-widest">Main Story in Progress</span>
         </div>
     </section>
 
@@ -75,66 +77,70 @@
     </div>
 
     <main class="max-w-screen-xl mx-auto px-6 py-12">
-        <section id="content-info" class="tab-content flex flex-col items-center space-y-8">
-            <div class="w-64 rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
+        <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
+            <div class="w-64 md:w-80 rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
                 <img src="images/vertical-cover.webp" class="w-full h-auto">
             </div>
-            <p class="max-w-2xl text-center text-sm text-gray-400 leading-relaxed synopsis-text">
-                Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom.
-            </p>
-        </section>
-
-        <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-6">
-            <div id="episode-list" class="w-full flex flex-col items-center space-y-4">
-                <div class="episode-card flex items-center p-4 rounded-xl">
-                    <img src="images/ep1-thumb.webp" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    <div class="ml-4 flex-grow">
-                        <h4 class="text-sm font-bold text-white">Prologue: Storm</h4>
-                        <p class="episode-date text-[10px] text-gray-500">Nov 1, 2025</p>
+            <div class="max-w-2xl text-center space-y-8">
+                <div id="dynamic-synopsis"></div>
+                
+                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left flex items-center space-x-4">
+                    <img src="images/profile.webp" class="w-12 h-12 rounded-full border border-gray-700">
+                    <div>
+                        <p class="font-bold text-white uppercase text-xs tracking-widest">Eloirien</p>
+                        <p class="text-[10px] text-blue-400">Illustrator & Comic Artist</p>
                     </div>
-                    <a href="reader.html" class="bg-blue-600 text-white text-[10px] px-6 py-2 rounded font-bold uppercase">Read</a>
                 </div>
             </div>
         </section>
 
-        <section id="content-gallery" class="tab-content hidden text-center">
-            <p class="text-gray-500 italic text-sm">Royal archives are being digitized...</p>
+        <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-4">
+            <div id="episode-list-container" class="w-full flex flex-col items-center space-y-4"></div>
+        </section>
+
+        <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group">
+                <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition">
+                    <p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p>
+                </div>
+            </div>
         </section>
     </main>
 
+    <footer class="mt-20 pb-10 text-center">
+        <p class="text-[10px] uppercase tracking-[0.2em] text-gray-600">© 2026 Eloirien. All Rights Reserved.</p>
+    </footer>
+
     <script>
         const siteContent = {
-            EN: { navComics: "comics", navAbout: "about", status: "Main Story in Progress", tabs: ["INFO", "EPISODES", "GALLERY"], epDate: "May 07, 2026" },
-            ID: { navComics: "komik", navAbout: "tentang", status: "Cerita Utama Berjalan", tabs: ["INFO", "EPISODE", "GALERI"], epDate: "07 Mei 2026" },
-            JP: { navComics: "コミック", navAbout: "概要", status: "翻訳進行中", tabs: ["情報", "エピソード", "ギャラリー"], epDate: "翻訳中" },
-            KR: { navComics: "코믹스", navAbout: "정보", status: "번역 진행 중", tabs: ["정보", "에피소드", "갤러리"], epDate: "번역 중" }
-        };
-
-        function setLanguage(lang) {
-            const dict = siteContent[lang];
-            document.querySelector('.nav-link-comics').innerText = dict.navComics;
-            document.querySelector('.nav-link-about').innerText = dict.navAbout;
-            document.querySelector('.series-status-tag').innerText = dict.status;
-            document.getElementById('current-lang-label').innerText = lang;
-            
-            const tabBtns = document.querySelectorAll('.tab-button');
-            tabBtns.forEach((btn, i) => btn.innerText = dict.tabs[i]);
-            document.querySelectorAll('.episode-date').forEach(tag => tag.innerText = dict.epDate);
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            document.getElementById('content-' + tabName).classList.remove('hidden');
-            document.querySelectorAll('.tab-button').forEach(b => {
-                b.classList.remove('border-blue-600', 'text-white');
-                b.classList.add('border-transparent', 'text-gray-500');
-            });
-            document.getElementById('tab-' + tabName).classList.add('border-blue-600', 'text-white');
-            document.getElementById('tab-' + tabName).classList.remove('border-transparent', 'text-gray-500');
-        }
-
-        window.onload = () => setLanguage('EN');
-        document.addEventListener('contextmenu', e => e.preventDefault());
-    </script>
-</body>
-</html>
+            EN: {
+                navComics: "comics", navAbout: "about", status: "Main Story in Progress", tabs: ["INFO", "EPISODES", "GALLERY"],
+                // THE RESTORED SYNOPSIS (EN)
+                synopsisHTML: `
+                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">
+                        Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?
+                    </p>
+                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">
+                        "For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."
+                    </em>
+                `,
+                episodes: [
+                    { title: "Prologue: Storm", date: "Nov 01, 2025", thumb: "images/ep1-thumb.webp", link: "reader.html" },
+                    { title: "Prologue: The King", date: "Nov 29, 2025", thumb: "images/ep2-thumb.webp", link: "reader_ep2.html" },
+                    { title: "Prologue: The Cup", date: "Jan 04, 2026", thumb: "images/ep3-thumb.webp", link: "reader_ep3.html" },
+                    { title: "01 - Who (Part 1)", date: "Feb 07, 2026", thumb: "images/ep4-thumb.webp", link: "reader_ep4.html" },
+                    { title: "01 - Who (Part 2)", date: "Mar 08, 2026", thumb: "images/ep5-thumb.webp", link: "reader_ep5.html" },
+                    { title: "02 - Friend (Part 1)", date: "Apr 23, 2026", thumb: "images/ep6-thumb.webp", link: "reader_ep6.html" }
+                ],
+                comingSoon: "Coming soon"
+            },
+            ID: {
+                navComics: "komik", navAbout: "tentang", status: "Cerita Utama Berjalan", tabs: ["INFO", "EPISODE", "GALERI"],
+                // THE RESTORED SYNOPSIS (ID)
+                synopsisHTML: `
+                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">
+                        Alicia dan Archius harus berjuang demi identitas mereka sambil menjalankan tugas melindungi kerajaan dari kekuatan kegelapan yang muncul. Bagaimana takdir mereka yang saling terkait akan terungkap?
+                    </p>
+                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">
+                        "
