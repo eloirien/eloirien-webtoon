@@ -8,10 +8,10 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
         
-        /* Navigation Pill - uppercase for Links */
+        /* Navigation Pill - All Lowercase for Links */
         .nav-container { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding-top: 2rem; padding-left: 15px; padding-right: 15px; pointer-events: none; }
         .nav-pill { pointer-events: auto; background-color: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px) saturate(180%); padding: 6px 16px; border-radius: 9999px; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 12px; height: 42px; margin: 0 auto; }
-        .nav-link { color: #9ca3af; text-transform: uppercase; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; transition: color 0.3s; cursor: pointer; }
+        .nav-link { color: #9ca3af; text-transform: lowercase; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; transition: color 0.3s; cursor: pointer; }
         .nav-link:hover { color: #3b82f6; }
 
         /* Infinity Blur Background */
@@ -32,7 +32,7 @@
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
-        .logo-placeholder { width: 100%; max-width: 200px; height: auto; margin-bottom: 1rem; }
+        .logo-placeholder { width: 100%; max-width: 240px; height: auto; margin-bottom: 1.5rem; }
 
         img { -webkit-user-drag: none; user-select: none; }
     </style>
@@ -69,7 +69,7 @@
                 <h2 class="text-2xl font-black text-white uppercase tracking-tighter">Eloirien</h2>
                 <p class="text-blue-400 text-xs font-bold uppercase tracking-widest">Illustrator & Comic Artist</p>
             </div>
-            <div id="text-creator" class="text-sm text-gray-400 leading-relaxed text-left">
+            <div id="text-creator" class="text-sm text-gray-400 leading-relaxed text-left whitespace-pre-line">
                 </div>
         </section>
 
@@ -98,25 +98,25 @@
         const aboutContent = {
             EN: {
                 navHome: "home", navComics: "comics",
-                creator: "Dey, known as Eloirien, is a professional illustrator based in Indonesia with years of experience in the webtoon industry. Specializing in cinematic aesthetics and sustainable creative workflows.",
+                creator: "**As a passionate storyteller with more than three years of experience creating digital comics and illustrations, my goal is to tell stories that touch souls and hearts for the glory of God.**\n\n*I'm truly inspired by the greatest storyteller of all time: Jesus Christ. For me, every brushstroke is a prayer. I hope my art will be a blessing to you as much as it is a blessing to me.*",
                 silverstring: "Silverstring is an original high-fantasy webtoon following the intertwined destinies of Princess Alicia and Crown Prince Archius in the Kingdom of Luminus.",
-                bethlehem: "Project Bethlehem serves as the creative umbrella for the independent intellectual properties developed by Eloirien."
+                bethlehem: "Project Bethlehem serves as the creative umbrella for the independent intellectual properties developed by Eloirien, balancing profit with sustainable and ethical value."
             },
             ID: {
                 navHome: "home", navComics: "komik",
-                creator: "Dey, yang dikenal sebagai Eloirien, adalah ilustrator profesional asal Indonesia dengan pengalaman bertahun-tahun di industri webtoon.",
+                creator: "**Sebagai pencerita yang bersemangat dengan lebih dari tiga tahun pengalaman menciptakan komik digital dan ilustrasi, tujuan saya adalah menceritakan kisah yang menyentuh jiwa dan hati demi kemuliaan Tuhan.**\n\n*Saya sangat terinspirasi oleh pencerita terhebat sepanjang masa: Yesus Kristus. Bagi saya, setiap sapuan kuas adalah doa. Saya berharap karya saya menjadi berkat bagi Anda sebagaimana ia menjadi berkat bagi saya.*",
                 silverstring: "Silverstring adalah webtoon fantasi orisinal yang mengikuti takdir Alicia dan Archius di Kerajaan Luminus.",
                 bethlehem: "Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien."
             },
             JP: {
                 navHome: "ホーム", navComics: "コミック",
-                creator: "インドネシアを拠点に活動するプロのイラストレーター、Eloirien（Dey）。ウェブトゥーン業界での豊富な経験を持ちます。",
+                creator: "**デジタルコミックやイラスト制作で3年以上の経験を持つストーリーテラーとして、私の目標は神の栄光のために魂と心に響く物語を伝えることです。**\n\n*私は史上最高のストーリーテラーであるイエス・キリストから真にインスピレーションを受けています。私にとって、すべての筆致は祈りです。私の作品が私にとっての祝福であるのと同じくらい、あなたにとっても祝福となることを願っています。*",
                 silverstring: "『シルバーストリング』は、ルミナス王国のアリシア王女とアルキウス王太子の運命を描くオリジナル・ファンタジー。",
                 bethlehem: "プロジェクト・ベツレヘムは、Eloirienが展開するインディーIPのクリエイティブ・アンブレラ。"
             },
             KR: {
                 navHome: "홈", navComics: "코믹스",
-                creator: "Eloirien(Dey)은 인도네시아의 프로 일러스트레이터로, 웹툰 업계에서 다년간의 경험을 쌓았습니다.",
+                creator: "**디지털 코믹스와 일러스트레이션 제작 분야에서 3년 이상의 경험을 쌓은 열정적인 스토리텔러로서, 제 목표는 하나님의 영광을 위해 영혼과 마음을 울리는 이야기를 전하는 것입니다.**\n\n*저는 역사상 위대한 스토리텔러인 예수 그리스도에게서 진정한 영감을 얻습니다. 저에게 모든 붓터치는 기도입니다. 제 예술이 저에게 축복인 만큼 여러분에게도 축복이 되기를 바랍니다.*",
                 silverstring: "실버스링은 루미누스 왕국의 알리시아 공주와 아르키우스 왕세자의 운명을 다룬 오리지널 판타지 웹툰입니다.",
                 bethlehem: "프로젝트 베들레헴은 Eloirien이 개발하는 독립 IP의 크리에이티브 우산입니다."
             }
@@ -128,7 +128,12 @@
             document.querySelector('.nav-link-comics').innerText = dict.navComics;
             document.getElementById('current-lang-label').innerText = lang;
             
-            document.getElementById('text-creator').innerText = dict.creator;
+            // Helper to handle the simple markdown formatting for bold/italic
+            const formattedCreator = dict.creator
+                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em class="text-gray-500 italic">$1</em>');
+            
+            document.getElementById('text-creator').innerHTML = formattedCreator;
             document.getElementById('text-silverstring').innerText = dict.silverstring;
             document.getElementById('text-bethlehem').innerText = dict.bethlehem;
 
