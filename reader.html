@@ -15,7 +15,6 @@
         .bottom-ui { transform: translateY(100%); }
         .ui-active { transform: translateY(0) !important; opacity: 1 !important; pointer-events: auto !important; }
 
-        /* Episode List Drawer */
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
         #episode-drawer.open { transform: translateY(0); }
 
@@ -24,8 +23,21 @@
         .ghost-layer { position: absolute; inset: 0; z-index: 5; background: transparent; }
         img { width: 100%; display: block; -webkit-user-drag: none; background-color: #0a0a0a; }
 
-        /* Teleport Button style */
-        #back-to-top { transition: all 0.3s ease; bottom: 100px; }
+        /* THE TWEAK: Teleport button starts completely hidden and non-interactable */
+        #back-to-top { 
+            transition: all 0.3s ease; 
+            bottom: 100px; 
+            opacity: 0; 
+            pointer-events: none; 
+            transform: translateY(20px);
+        }
+        
+        /* Show only when this class is added via JS */
+        #back-to-top.show-btn {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -66,10 +78,10 @@
                 <img src="images/ep1-thumb.webp" class="rounded border-2 border-transparent group-hover:border-blue-500 transition shadow-lg">
                 <p class="text-[9px] mt-2 text-gray-400 uppercase font-bold">Prologue: Storm</p>
             </div>
-            </div>
+        </div>
     </div>
 
-    <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 opacity-0 translate-y-10 bg-white p-3 rounded-full shadow-2xl z-40">
+    <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-white p-3 rounded-full shadow-2xl z-40">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
     </button>
 
@@ -77,6 +89,7 @@
         const totalPages = 22;
         const readerMain = document.getElementById('reader-main');
 
+        // Automatic Page Loader
         for (let i = 1; i <= totalPages; i++) {
             const pageNum = i.toString().padStart(2, '0'); 
             readerMain.innerHTML += `
@@ -87,10 +100,24 @@
         }
 
         let uiVisible = false;
+        const btn = document.getElementById('back-to-top');
+
         function toggleUI() {
             uiVisible = !uiVisible;
             document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
             document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
+            
+            // THE TWEAK: Call the update function to see if button should appear
+            updateTeleportVisibility();
+        }
+
+        function updateTeleportVisibility() {
+            // Only show if UI is active AND we have scrolled past 800px
+            if (uiVisible && window.scrollY > 800) {
+                btn.classList.add('show-btn');
+            } else {
+                btn.classList.remove('show-btn');
+            }
         }
 
         function toggleDrawer(e) {
@@ -98,16 +125,11 @@
             document.getElementById('episode-drawer').classList.toggle('open');
         }
 
+        // Keep button state updated on scroll if UI is already open
         window.onscroll = function() {
-            const btn = document.getElementById('back-to-top');
-            if (window.scrollY > 800) {
-                btn.classList.remove('opacity-0', 'translate-y-10');
-            } else {
-                btn.classList.add('opacity-0', 'translate-y-10');
-            }
+            updateTeleportVisibility();
         };
 
-        // THE FIX: Teleport straight to the beginning of the episode
         function teleportToTop(e) {
             e.stopPropagation(); 
             window.scrollTo({ top: 0, behavior: 'smooth' });
