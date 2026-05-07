@@ -8,19 +8,49 @@
     <style>
         body, html { height: 100%; margin: 0; background-color: #0a0a0a; color: #d1d5db; font-family: 'Inter', sans-serif; user-select: none; }
         #global-click-zone { min-height: 100vh; width: 100%; cursor: pointer; position: relative; z-index: 10; }
+        
+        /* Immersive UI Logic */
         .immersive-ui { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; opacity: 0; pointer-events: none; z-index: 50; }
         .top-ui { transform: translateY(-100%); }
         .bottom-ui { transform: translateY(100%); }
         .ui-active { transform: translateY(0) !important; opacity: 1 !important; pointer-events: auto !important; }
+        
+        /* Language Dropdown Style */
+        .custom-lang-dropdown { position: relative; display: inline-block; }
+        .lang-trigger { 
+            background-color: rgba(31, 41, 55, 0.6); 
+            border: 1px solid rgba(59, 130, 246, 0.3); 
+            color: #3b82f6; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-size: 10px; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+        .lang-menu { 
+            position: absolute; top: 100%; right: 0; padding-top: 10px; 
+            display: none; flex-direction: column; z-index: 100; width: 160px; 
+        }
+        .lang-menu-content { 
+            background-color: #1a1a1a; border: 1px solid #333; border-radius: 10px; 
+            overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.8); 
+        }
+        .lang-item { 
+            padding: 10px 12px; font-size: 11px; display: flex; align-items: center; gap: 8px; 
+            color: #E0E0E0; border-bottom: 1px solid #1f1f1f; transition: background 0.2s;
+        }
+        .lang-item:hover { background-color: #2d2d2d; color: #3b82f6; }
+        .custom-lang-dropdown:hover .lang-menu { display: flex; }
+
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
         #episode-drawer.open { transform: translateY(0); }
         .webtoon-container { width: 100%; max-width: 800px; margin: 0 auto; line-height: 0; }
         .panel-container { position: relative; width: 100%; }
         .ghost-layer { position: absolute; inset: 0; z-index: 5; background: transparent; }
         img { width: 100%; display: block; -webkit-user-drag: none; background-color: #0a0a0a; }
+
         #back-to-top { transition: all 0.3s ease; bottom: 100px; opacity: 0; pointer-events: none; transform: translateY(20px); }
         #back-to-top.show-btn { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .lang-btn-active { color: #3b82f6 !important; border-bottom: 2px solid #3b82f6; }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -30,19 +60,21 @@
         <nav id="top-nav" class="immersive-ui top-ui fixed top-0 left-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center">
             <a href="index.html" class="text-blue-400 font-bold text-xs tracking-widest" onclick="event.stopPropagation();">EXIT</a>
             
-            <div class="text-center flex flex-col items-center">
+            <div class="text-center">
                 <p id="display-ep-title" class="text-[10px] text-white uppercase tracking-[0.2em]">Prologue: Storm</p>
-                <div class="flex gap-3 mt-1">
-                    <button onclick="changeLanguage('EN', event)" id="lang-EN" class="text-[8px] font-bold text-gray-500 uppercase tracking-tighter">EN</button>
-                    <button onclick="changeLanguage('ID', event)" id="lang-ID" class="text-[8px] font-bold text-gray-500 uppercase tracking-tighter">ID</button>
-                    <button onclick="changeLanguage('JP', event)" id="lang-JP" class="text-[8px] font-bold text-gray-500 uppercase tracking-tighter">JP</button>
-                    <button onclick="changeLanguage('KR', event)" id="lang-KR" class="text-[8px] font-bold text-gray-500 uppercase tracking-tighter">KR</button>
-                </div>
             </div>
 
-            <button onclick="toggleDrawer(event)" class="text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
+            <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
+                <div class="lang-trigger"><span id="current-lang-label">EN</span></div>
+                <div class="lang-menu">
+                    <div class="lang-menu-content">
+                        <div class="lang-item" onclick="changeLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="w-4 h-3 object-cover rounded-sm"> English</div>
+                        <div class="lang-item" onclick="changeLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="w-4 h-3 object-cover rounded-sm"> Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="changeLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="w-4 h-3 object-cover rounded-sm"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguageKR()">🇰🇷 한국어</div>
+                    </div>
+                </div>
+            </div>
         </nav>
 
         <main id="reader-main" class="webtoon-container"></main>
@@ -62,11 +94,11 @@
     <div id="episode-drawer" class="fixed bottom-0 left-0 w-full bg-zinc-900 border-t border-zinc-800 p-6 max-h-[50vh] overflow-y-auto">
         <div class="flex justify-between items-center mb-6">
             <h3 id="label-drawer-title" class="text-white text-xs font-bold uppercase tracking-widest">Episode List</h3>
-            <button onclick="toggleDrawer(event)" id="label-drawer-close" class="text-gray-500 text-xs uppercase">CLOSE</button>
+            <button onclick="toggleDrawer(event)" id="label-drawer-close" class="text-gray-500 text-xs">CLOSE</button>
         </div>
         <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-            <div class="flex-shrink-0 w-32 group cursor-pointer opacity-100">
-                <img src="images/ep1-thumb.webp" class="rounded border-2 border-blue-500 shadow-lg">
+            <div class="flex-shrink-0 w-32 group cursor-pointer opacity-100" onclick="toggleDrawer(event)">
+                <img src="images/ep1-thumb.webp" class="rounded border-2 border-blue-500 transition shadow-lg">
                 <p id="label-ep1-name" class="text-[9px] mt-2 text-gray-400 uppercase font-bold">Prologue: Storm</p>
             </div>
         </div>
@@ -86,11 +118,9 @@
 
         const readerMain = document.getElementById('reader-main');
 
-        function changeLanguage(lang, e) {
-            if(e) e.stopPropagation();
+        function changeLanguage(lang) {
             const data = readerData[lang];
             
-            // Update UI Labels
             document.getElementById('display-ep-title').innerText = data.epName;
             document.getElementById('label-ep1-name').innerText = data.epName;
             document.getElementById('label-prev').innerText = data.prev;
@@ -98,15 +128,10 @@
             document.getElementById('label-ep-small').innerText = data.epLabel;
             document.getElementById('label-drawer-title').innerText = data.listTitle;
             document.getElementById('label-drawer-close').innerText = data.close;
+            document.getElementById('current-lang-label').innerText = lang;
 
-            // Lang Button UI highlight
-            document.querySelectorAll('[id^="lang-"]').forEach(btn => btn.classList.remove('lang-btn-active'));
-            document.getElementById('lang-' + lang).classList.add('lang-btn-active');
-
-            // Load Panels
             readerMain.innerHTML = '';
             if (data.placeholder) {
-                // Emergency Chibi Alice Placeholder
                 readerMain.innerHTML = `<div class="panel-container"><img src="${data.path}" alt="Placeholder"><div class="ghost-layer"></div></div>`;
             } else {
                 for (let i = 1; i <= data.panels; i++) {
@@ -120,6 +145,9 @@
             }
             window.location.hash = lang;
         }
+
+        // Specific helper for KR to keep the emoji formatting clean
+        function setLanguageKR() { changeLanguage('KR'); }
 
         let uiVisible = false;
         const btn = document.getElementById('back-to-top');
