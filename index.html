@@ -23,7 +23,7 @@
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
-        /* Unified Button Sizing */
+        /* Button UI */
         .btn-action-size { width: 110px; padding-top: 0.5rem; padding-bottom: 0.5rem; text-align: center; }
         .btn-read { transition: all 0.3s ease; }
         .btn-read:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); transform: translateY(-1px); }
@@ -34,7 +34,7 @@
         .episode-card:hover { transform: scale(1.01); border-color: #3b82f6; }
         .card-coming-soon:hover { border-color: #f59e0b !important; box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
 
-        /* Hero Styling */
+        /* Hero */
         .hero-wrapper { position: relative; background-color: #0d0d0d; overflow: hidden; width: 100%; }
         .hero-blur-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/cover.webp'); background-size: cover; filter: blur(10px) brightness(0.3); z-index: 1; }
         .hero-stage-fixed { position: relative; z-index: 2; width: 90%; max-width: 1100px; margin: 8rem auto 2.5rem auto; aspect-ratio: 2 / 1; background-image: url('images/cover.webp'); background-size: cover; border-radius: 16px; }
@@ -45,22 +45,20 @@
     </style>
 </head>
 <body>
-
     <nav class="nav-container">
         <div class="nav-pill">
             <span class="text-white font-bold tracking-[0.2em] text-[10px] uppercase">E L O I R I E N</span>
             <div class="h-4 w-[1px] bg-gray-800"></div>
-            <a href="comics.html" class="nav-link nav-link-comics uppercase tracking-widest">comics</a>
-            <a href="about.html" class="nav-link nav-link-about uppercase tracking-widest">about</a>
-            
+            <a href="comics.html" class="nav-link nav-link-comics">comics</a>
+            <a href="about.html" class="nav-link nav-link-about">about</a>
             <div class="custom-lang-dropdown">
-                <div class="lang-trigger text-[10px]">🌐 <span id="current-lang-label" class="uppercase">EN</span></div>
+                <div class="lang-trigger">🌐 <span id="current-lang-label">EN</span></div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
-                        <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
-                        <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
+                        <div class="lang-item" onclick="setLanguage('EN')">English</div>
+                        <div class="lang-item" onclick="setLanguage('ID')">Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="setLanguage('JP')">日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KR')">한국어</div>
                     </div>
                 </div>
             </div>
@@ -83,9 +81,9 @@
 
     <div class="sticky top-0 bg-black/95 backdrop-blur-md border-b border-gray-800 z-40">
         <div class="max-w-screen-xl mx-auto flex justify-center">
-            <button onclick="switchTab('info')" id="tab-info" class="tab-button active px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-blue-600 text-white uppercase transition-all">Info</button>
-            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-all">Episodes</button>
-            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-all">Gallery</button>
+            <button onclick="switchTab('info')" id="tab-info" class="tab-button active px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-blue-600 text-white uppercase">Info</button>
+            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase">Episodes</button>
+            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase">Gallery</button>
         </div>
     </div>
 
@@ -96,7 +94,6 @@
             </div>
             <div class="max-w-2xl text-center space-y-8">
                 <div id="dynamic-synopsis"></div>
-                
                 <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left flex items-center space-x-4">
                     <img src="images/profile.webp" class="w-12 h-12 rounded-full border border-gray-700">
                     <div>
@@ -108,16 +105,16 @@
         </section>
 
         <section id="content-episodes" class="tab-content hidden flex flex-col items-center">
-            <div id="episode-list" class="flex flex-col items-center space-y-6 w-full">
+            <div class="w-full max-w-2xl flex items-center justify-between mb-6 px-2">
                 <div class="flex gap-2">
-                    <button onclick="scrollToFirst()" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">First Episode</button>
-                    <button onclick="scrollToNewest()" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">Newest Episode</button>
+                    <button class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">First Episode</button>
+                    <button class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">Newest Episode</button>
                 </div>
                 <button onclick="toggleSort()" class="w-8 h-8 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center hover:border-blue-500 transition-all">
                     <span id="sort-icon" class="text-gray-400 text-sm transition-transform duration-300">⇅</span>
                 </button>
             </div>
-            <div id="episode-list-container" class="w-full flex flex-col items-center space-y-4"></div>
+            <div id="episode-list" class="w-full flex flex-col items-center space-y-4"></div>
         </section>
 
         <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -126,7 +123,6 @@
                 <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20">
                     <p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p>
                 </div>
-                <div class="absolute inset-0 z-10 w-full h-full cursor-default" style="background: rgba(0,0,0,0);"></div>
             </div>
         </section>
     </main>
@@ -134,14 +130,10 @@
     <script>
         const siteContent = {
             EN: {
-                navComics: "comics",
-                navAbout: "about",
-                seriesStatus: "Main Story in Progress",
-                tabs: ["INFO", "EPISODES", "GALLERY"],
-                synopsisHTML: `
-                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?</p>
-                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world..."</em>
-                `,
+                navComics: "comics", navAbout: "about", status: "Main Story in Progress", tabs: ["INFO", "EPISODES", "GALLERY"],
+                genres: ["Fantasy", "Drama", "Action"],
+                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?</p>
+                <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world..."</em>`,
                 episodes: [
                     { title: "Prologue: Storm", date: "Nov 01, 2025", thumb: "images/ep1-thumb.webp", link: "reader.html" },
                     { title: "Prologue: The King", date: "Nov 29, 2025", thumb: "images/ep2-thumb.webp", link: "reader_ep2.html" },
@@ -152,16 +144,11 @@
                 ],
                 comingSoon: "Coming soon"
             },
-            
             ID: {
-                navComics: "komik",
-                navAbout: "tentang",
-                seriesStatus: "Cerita Utama Berjalan",
-                tabs: ["INFO", "EPISODE", "GALERI"],
-                synopsisHTML: `
-                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Alicia dan Archius harus berjuang demi identitas mereka sambil menjalankan tugas melindungi kerajaan...</p>
-                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Karena perjuangan kita bukanlah melawan darah dan daging..."</em>
-                `,
+                navComics: "komik", navAbout: "tentang", status: "Cerita Utama Berjalan", tabs: ["INFO", "EPISODE", "GALERI"],
+                genres: ["Fantasi", "Drama", "Aksi"],
+                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Alicia dan Archius harus berjuang demi identitas mereka sambil menjalankan tugas melindungi kerajaan dari kekuatan kegelapan yang muncul...</p>
+                <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Karena perjuangan kita bukanlah melawan darah dan daging, melainkan melawan pemerintah-pemerintah, melawan penguasa-penguasa..."</em>`,
                 episodes: [
                     { title: "Prolog: Badai", date: "01 Nov 2025", thumb: "images/ep1-thumb.webp", link: "reader.html" },
                     { title: "Prolog: Sang Raja", date: "29 Nov 2025", thumb: "images/ep2-thumb.webp", link: "reader_ep2.html" },
@@ -171,26 +158,18 @@
                     { title: "02 - Teman (Bagian 1)", date: "23 Apr 2026", thumb: "images/ep6-thumb.webp", link: "reader_ep6.html" }
                 ],
                 comingSoon: "Segera hadir"
-                },
-            
+            },
             JP: {
                 navComics: "コミック", navAbout: "概要", status: "連載中", tabs: ["情報", "エピソード", "ギャラリー"],
                 genres: ["ファンタジー", "ドラマ", "アクション"],
-                synopsisHTML: `
-                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">アリシアとアルキウスは、忍び寄る闇の勢力から王国を守るという使命を果たしながら、自らのアイデンティティのために戦わなければならない。絡み合う二人の運命は、いかにして明らかになるのか？</p>
-                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">「私たちの格闘は血肉に対するものではなく、主権、力、この暗やみの世界の支配者たち、また、天にいる悪の霊に対するものである。」</em>
-                `,
-                comingSoon: "近日公開"
+                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">アリシアとアルキウスは、忍び寄る闇の勢力から王国を守るという使命を果たしながら...</p>`,
+                episodes: [], comingSoon: "近日公開"
             },
-            
             KR: {
                 navComics: "코믹스", navAbout: "정보", status: "연재 중", tabs: ["정보", "에피소드", "갤러리"],
                 genres: ["판타지", "드라마", "액션"],
-                synopsisHTML: `
-                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">알리시아와 아르키우스는 어둠의 세력으로부터 왕국을 지키는 의무를 다하는 동시에, 자신의 정체성을 찾기 위해 싸워야 한다. 뒤얽힌 두 사람의 운명은 어떻게 밝혀질 것인가?</p>
-                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"우리의 씨름은 혈과 육을 상대하는 것이 아니요 통치자들과 권세들과 이 어둠의 세상 주관자들과 하늘에 있는 악의 영들을 상대함이라."</em>
-                `,
-                comingSoon: "곧 공개"
+                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">알리시아와 아르키우스는 어둠의 세력으로부터 왕국을 지키는 의무를 다하는 동시에...</p>`,
+                episodes: [], comingSoon: "곧 공개"
             }
         };
 
@@ -198,93 +177,34 @@
 
         function setLanguage(lang) {
             const dict = siteContent[lang] || siteContent.EN;
-            
-            // Update Navigation, Status, and Synopsis
             document.querySelector('.nav-link-comics').innerText = dict.navComics;
             document.querySelector('.nav-link-about').innerText = dict.navAbout;
-            document.querySelector('.series-status-tag').innerText = dict.seriesStatus;
-            document.getElementById('dynamic-synopsis').innerHTML = dict.synopsisHTML;
+            document.querySelector('.series-status-tag').innerText = dict.status;
             document.getElementById('current-lang-label').innerText = lang;
-        
-            // Update Tabs
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach((btn, i) => { if(dict.tabs[i]) btn.innerText = dict.tabs[i]; });
-        
-            // RENDER EPISODES (The Restoration)
-            const container = document.getElementById('episode-list');
-            container.innerHTML = ''; // Clear the current view
-            
-                dict.episodes.forEach(ep => {
-                    container.innerHTML += `
-                        <div class="episode-card flex items-center p-4 rounded-xl">
-                            <img src="${ep.thumb}" alt="${ep.title}" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                            <div class="ml-4 flex-grow">
-                                <h4 class="text-sm md:text-base font-bold text-white">${ep.title}</h4>
-                                <p class="text-[10px] md:text-xs text-gray-500">${ep.date}</p>
-                            </div>
-                            <a href="${ep.link}" class="btn-read btn-action-size bg-blue-600 text-white text-[10px] rounded font-bold uppercase tracking-wider text-center flex items-center justify-center">Read</a>
-                        </div>`;
-                });
-            
-                // Add Coming Soon Card
-                container.innerHTML += `
-                    <div class="episode-card card-coming-soon flex items-center p-4 rounded-xl opacity-80 cursor-default">
-                        <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700">
-                            <span class="text-[10px] font-bold text-zinc-500">EP 07</span>
-                        </div>
-                        <div class="ml-4 flex-grow">
-                            <h4 class="text-sm md:text-base font-bold text-zinc-400">02 - Friend (Part 2)</h4>
-                            <p class="text-[10px] md:text-xs text-amber-500 font-bold uppercase">${dict.comingSoon}</p>
-                        </div>
-                        <button class="btn-notify btn-action-size text-[10px] rounded font-black uppercase text-center flex items-center justify-center">Notify</button>
-                    </div>`;
-            }document.getElementById('current-lang-label').innerText = lang;
-            
-            // Update Synopsis
             document.getElementById('dynamic-synopsis').innerHTML = dict.synopsisHTML;
             
-            // Update Genres (RESTORED)
-            const genreTags = document.querySelectorAll('.genre-tag');
-            genreTags.forEach((tag, i) => {
-                if (dict.genres[i]) tag.innerText = dict.genres[i];
-            });
-        
-        }
+            const tabBtns = document.querySelectorAll('.tab-button');
+            tabBtns.forEach((btn, i) => btn.innerText = dict.tabs[i]);
 
-        function renderEpisodes(eps, soonLabel) {
-            const container = document.getElementById('episode-list-container');
+            const genreTags = document.querySelectorAll('.genre-tag');
+            genreTags.forEach((tag, i) => { if (dict.genres[i]) tag.innerText = dict.genres[i]; });
+
+            const container = document.getElementById('episode-list');
             container.innerHTML = '';
-            const list = isReversed ? [...eps].reverse() : eps;
+            const list = isReversed ? [...dict.episodes].reverse() : dict.episodes;
 
             list.forEach(ep => {
-                container.innerHTML += `
-                    <div class="episode-card flex items-center p-4 rounded-xl">
-                        <img src="${ep.thumb}" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                        <div class="ml-4 flex-grow">
-                            <h4 class="text-sm font-bold text-white">${ep.title}</h4>
-                            <p class="text-[10px] text-gray-500">${ep.date}</p>
-                        </div>
-                        <a href="${ep.link}" class="btn-read btn-action-size bg-blue-600 text-white text-[10px] rounded font-bold uppercase tracking-wider">Read</a>
-                    </div>`;
-            });
-            
-            container.innerHTML += `
-                <div class="episode-card card-coming-soon flex items-center p-4 rounded-xl opacity-80 cursor-default">
-                    <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700"><span class="text-[10px] font-bold text-zinc-500 tracking-widest">EP 07</span></div>
-                    <div class="ml-4 flex-grow">
-                        <h4 class="text-sm font-bold text-zinc-400">02 - Friend (Part 2)</h4>
-                        <p class="text-[10px] text-amber-500 font-bold uppercase tracking-widest">${soonLabel}</p>
-                    </div>
-                    <button class="btn-notify btn-action-size text-[10px] rounded font-black uppercase tracking-widest">Notify</button>
+                container.innerHTML += `<div class="episode-card flex items-center p-4 rounded-xl">
+                    <img src="${ep.thumb}" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                    <div class="ml-4 flex-grow"><h4 class="text-sm font-bold text-white">${ep.title}</h4><p class="text-[10px] text-gray-500">${ep.date}</p></div>
+                    <a href="${ep.link}" class="btn-read btn-action-size bg-blue-600 text-white text-[10px] rounded font-bold uppercase tracking-wider flex items-center justify-center">Read</a>
                 </div>`;
-        }
-
-        function toggleSort() {
-            isReversed = !isReversed;
-            const icon = document.getElementById('sort-icon');
-            icon.style.transform = isReversed ? 'rotate(180deg)' : 'rotate(0deg)';
-            const lang = document.getElementById('current-lang-label').innerText;
-            setLanguage(lang);
+            });
+            container.innerHTML += `<div class="episode-card card-coming-soon flex items-center p-4 rounded-xl opacity-80 cursor-default">
+                <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700"><span class="text-[10px] font-bold text-zinc-500 tracking-widest">EP 07</span></div>
+                <div class="ml-4 flex-grow"><h4 class="text-sm font-bold text-zinc-400">02 - Friend (Part 2)</h4><p class="text-[10px] text-amber-500 font-bold uppercase tracking-widest">${dict.comingSoon}</p></div>
+                <button class="btn-notify btn-action-size text-[10px] rounded font-black uppercase flex items-center justify-center">Notify</button>
+            </div>`;
         }
 
         function switchTab(tabName) {
@@ -294,8 +214,14 @@
                 b.classList.remove('border-blue-600', 'text-white');
                 b.classList.add('border-transparent', 'text-gray-500');
             });
-            const activeBtn = document.getElementById('tab-' + tabName);
-            activeBtn.classList.add('border-blue-600', 'text-white');
+            document.getElementById('tab-' + tabName).classList.add('border-blue-600', 'text-white');
+        }
+
+        function toggleSort() {
+            isReversed = !isReversed;
+            const icon = document.getElementById('sort-icon');
+            icon.style.transform = isReversed ? 'rotate(180deg)' : 'rotate(0deg)';
+            setLanguage(document.getElementById('current-lang-label').innerText);
         }
 
         window.onload = () => setLanguage('EN');
