@@ -41,14 +41,16 @@
     <div id="global-click-zone" onclick="toggleUI()">
 
         <nav id="top-nav" class="immersive-ui top-ui fixed top-0 left-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center">
-            <a href="index.html" class="text-blue-400 font-bold text-xs tracking-widest" onclick="event.stopPropagation();">EXIT</a>
+            <a href="index.html" class="text-blue-400 font-bold text-[10px] tracking-widest" onclick="event.stopPropagation();">EXIT</a>
             
-            <div class="text-center">
-                <p id="display-ep-title" class="text-[10px] text-white uppercase tracking-[0.2em]">Prologue: Storm</p>
+            <div class="text-center" onclick="event.stopPropagation();">
+                <select id="episode-selector" onchange="changeEpisode(this.value)" 
+                        class="bg-transparent text-white text-[10px] font-black uppercase tracking-[0.2em] focus:outline-none cursor-pointer text-center">
+                    </select>
             </div>
-
+        
             <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
-                <div class="lang-trigger"><span id="current-lang-label">EN</span></div>
+                <div class="lang-trigger"><span id="current-lang-label" class="text-[10px] font-bold text-blue-400">EN</span></div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
                         <div class="lang-item" onclick="changeLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
@@ -92,82 +94,101 @@
     </button>
 
     <script>
-        const readerData = {
-            EN: { epName: "Prologue: Storm", prev: "Prev", next: "Next", epLabel: "Episode", listTitle: "Episode List", close: "Close", panels: 22, path: "images/episodes/ep1/ep1_", suffix: "_EN.webp", placeholder: false },
-            ID: { epName: "Prolog: Badai", prev: "Sebm", next: "Lanjut", epLabel: "Episode", listTitle: "Daftar Episode", close: "Tutup", panels: 22, path: "images/episodes/ep1/ep1_", suffix: "_ID.webp", placeholder: false },
-            // SENTRY ALICE
-            JP: { epName: "プロローグ: 嵐", prev: "前へ", next: "次へ", epLabel: "エピソード", listTitle: "エピソード一覧", close: "閉じる", panels: 1, path: "images/tl-JP.webp", suffix: "", placeholder: true },
-            KR: { epName: "프롤로그: 폭풍", prev: "이전", next: "다음", epLabel: "에피소드", listTitle: "에피소드 목록", close: "닫기", panels: 1, path: "images/tl-KR.webp", suffix: "", placeholder: true }
+      
+        // 1. CONFIGURATION: Add your episode details here
+        const library = {
+            1: { name: "Prologue: Storm", panels: 22 },
+            2: { name: "Prologue: The King", panels: 18 },
+            3: { name: "Prologue: The Cup", panels: 20 },
+            // Just add more lines here as you release them!
         };
-
-        const readerMain = document.getElementById('reader-main');
-
+    
+        const totalEpisodesReleased = Object.keys(library).length;
+    
+        // 2. STATE LOGIC
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentEp = parseInt(urlParams.get('ep')) || 1;
+        let currentLang = window.location.hash.replace('#', '') || 'EN';
+    
+        function initReader() {
+            populateSelector();
+            changeLanguage(currentLang);
+        }
+    
+        function populateSelector() {
+            const selector = document.getElementById('episode-selector');
+            selector.innerHTML = '';
+            for (let i = 1; i <= totalEpisodesReleased; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                // Clean look: "01. PROLOGUE: STORM"
+                opt.innerHTML = `${String(i).padStart(2, '0')}. ${library[i].name.toUpperCase()}`;
+                if (i === currentEp) opt.selected = true;
+                selector.appendChild(opt);
+            }
+        }
+    
         function changeLanguage(lang) {
-            const data = readerData[lang];
-            
-            document.getElementById('display-ep-title').innerText = data.epName;
-            document.getElementById('label-ep1-name').innerText = data.epName;
-            document.getElementById('label-prev').innerText = data.prev;
-            document.getElementById('label-next').innerText = data.next;
-            document.getElementById('label-ep-small').innerText = data.epLabel;
-            document.getElementById('label-drawer-title').innerText = data.listTitle;
-            document.getElementById('label-drawer-close').innerText = data.close;
+            currentLang = lang;
             document.getElementById('current-lang-label').innerText = lang;
-
+            window.location.hash = lang;
+            loadPanels();
+        }
+    
+        function loadPanels() {
+            const readerMain = document.getElementById('reader-main');
             readerMain.innerHTML = '';
-            if (data.placeholder) {
-                // SINGLE PANEL SENTRY
-                readerMain.innerHTML = `<div class="panel-container"><img src="${data.path}" alt="Placeholder"><div class="ghost-layer"></div></div>`;
+            
+            const epData = library[currentEp];
+            
+            // SENTRY LOGIC: Use placeholder for JP/KR if not ready
+            const isPlaceholder = (currentLang === 'JP' || currentLang === 'KR');
+    
+            if (isPlaceholder) {
+                const path = (currentLang === 'JP') ? 'images/tl-JP.webp' : 'images/tl-KR.webp';
+                readerMain.innerHTML = `<div class="panel-container"><img src="${path}" alt="Placeholder"><div class="ghost-layer"></div></div>`;
             } else {
-                // 22 PANEL LOOP
-                for (let i = 1; i <= data.panels; i++) {
-                    const pageNum = i.toString().padStart(2, '0'); 
+                // DYNAMIC LOOP: images/episodes/ep1/ep1_01_EN.webp
+                for (let i = 1; i <= epData.panels; i++) {
+                    const pageNum = i.toString().padStart(2, '0');
+                    const imgPath = `images/episodes/ep${currentEp}/ep${currentEp}_${pageNum}_${currentLang}.webp`;
+                    
                     readerMain.innerHTML += `
                         <div class="panel-container">
-                            <img src="${data.path}${pageNum}${data.suffix}" alt="Page ${pageNum}" loading="lazy">
+                            <img src="${imgPath}" alt="Page ${pageNum}" loading="lazy" onerror="this.src='images/placeholders/chibi_alice.webp'; this.classList.add('w-48','mx-auto','py-20','opacity-50');">
                             <div class="ghost-layer"></div>
                         </div>`;
                 }
             }
-            window.location.hash = lang;
+            
+            // Update Bottom Nav Number
+            document.querySelector('.bottom-ui .text-white').innerText = `#${currentEp}`;
         }
-
+    
+        function changeEpisode(newEp) {
+            window.location.href = `reader.html?ep=${newEp}#${currentLang}`;
+        }
+    
+        // IMMERSIVE UI LOGIC
         let uiVisible = false;
-        const btn = document.getElementById('back-to-top');
-
         function toggleUI() {
             uiVisible = !uiVisible;
             document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
             document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
-            updateTeleportVisibility();
+            const btn = document.getElementById('back-to-top');
+            if (uiVisible && window.scrollY > 800) btn.classList.add('show-btn');
+            else btn.classList.remove('show-btn');
         }
-
-        function updateTeleportVisibility() {
-            // Button only appears if UI is active AND scrolled
-            if (uiVisible && window.scrollY > 800) { btn.classList.add('show-btn'); } 
-            else { btn.classList.remove('show-btn'); }
-        }
-
+    
         function toggleDrawer(e) {
             e.stopPropagation();
             document.getElementById('episode-drawer').classList.toggle('open');
         }
-
-        window.onscroll = function() { updateTeleportVisibility(); };
-
-        function teleportToTop(e) {
-            e.stopPropagation(); 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.onload = () => {
-            const initialLang = window.location.hash.replace('#', '') || 'EN';
-            changeLanguage(initialLang);
-        };
-
-        // ART PROTECTION
+    
+        window.onload = initReader;
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
+
     </script>
 </body>
 </html>
