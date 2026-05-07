@@ -478,6 +478,71 @@
     </footer>
 
     <script>
+
+        // THE IMPERIAL DICTIONARY: Centralized text for all 4 languages
+        const siteContent = {
+            EN: {
+                navComics: "comics",
+                navAbout: "about",
+                seriesTitle: "Silverstring",
+                seriesStatus: "Main Story in Progress",
+                tabs: ["INFO", "EPISODES", "GALLERY"],
+                epDate: "May 07, 2026"
+            },
+            ID: {
+                navComics: "komik",
+                navAbout: "tentang",
+                seriesTitle: "Silverstring",
+                seriesStatus: "Cerita Utama Sedang Berjalan",
+                tabs: ["INFO", "EPISODE", "GALERI"],
+                epDate: "07 Mei 2026"
+            },
+            JP: {
+                navComics: "コミック",
+                navAbout: "概要",
+                seriesTitle: "シルバーストリング",
+                seriesStatus: "翻訳進行中 (Translation in progress)",
+                tabs: ["情報", "エピソード", "ギャラリー"],
+                epDate: "翻訳中 (Translation in progress)"
+            },
+            KR: {
+                navComics: "코믹스",
+                navAbout: "정보",
+                seriesTitle: "실버스트링",
+                seriesStatus: "번역 진행 중 (Translation in progress)",
+                tabs: ["정보", "에피소드", "갤러리"],
+                epDate: "번역 중 (Translation in progress)"
+            }
+        };
+    
+        function setLanguage(lang) {
+            const dict = siteContent[lang];
+            
+            // Update Navigation
+            document.querySelector('.nav-link-comics').innerText = dict.navComics;
+            document.querySelector('.nav-link-about').innerText = dict.navAbout;
+    
+            // Update Hero Section
+            document.querySelector('.series-main-title').innerText = dict.seriesTitle;
+            document.querySelector('.series-status-tag').innerText = dict.seriesStatus;
+    
+            // Update Tabs
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons[0].innerText = dict.tabs[0];
+            tabButtons[1].innerText = dict.tabs[1];
+            tabButtons[2].innerText = dict.tabs[2];
+    
+            // Update Episode Dates
+            const dateTags = document.querySelectorAll('.episode-date');
+            dateTags.forEach(tag => tag.innerText = dict.epDate);
+    
+            // Highlight active language button in the UI pill
+            updateLanguageUI(lang);
+        }
+    
+        // Initial load (defaults to ID for now)
+        window.onload = () => setLanguage('EN');
+        
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
             document.getElementById('content-' + tabName).classList.remove('hidden');
