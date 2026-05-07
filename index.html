@@ -134,24 +134,44 @@
         </section>
 
         <section id="content-episodes" class="tab-content hidden flex flex-col items-center">
-            <div class="flex flex-col items-center mt-8 px-4">
-                <div class="flex flex-row gap-2 sm:gap-4 justify-center w-full max-w-[400px]">
-                    <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] rounded-full transition-all shadow-lg min-w-0 truncate">
-                        Read First
-                    </button>
-                    <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] rounded-full transition-all min-w-0 truncate">
-                        Read Newest
-                    </button>
-                </div>
-            
-                <div class="mt-4">
-                    <button onclick="toggleSort()" class="w-10 h-10 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800 flex items-center justify-center hover:border-blue-500 transition-all shadow-xl group">
-                        <span id="sort-icon-hero" class="text-gray-400 text-sm group-hover:text-blue-400 transition-transform duration-300">⇅</span>
-                    </button>
+            <div class="flex flex-col items-center mt-8 px-4 w-full">
+            <div class="flex flex-row gap-2 sm:gap-4 justify-center w-full max-w-[450px]">
+                <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] rounded-full transition-all shadow-lg truncate">
+                    Read First
+                </button>
+                <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] rounded-full transition-all truncate">
+                    Read Newest
+                </button>
+            </div>
+        
+            <div class="mt-6">
+                <button id="main-flip-btn" onclick="toggleSort()" class="w-10 h-10 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800 flex items-center justify-center hover:border-blue-500 transition-all shadow-xl group">
+                    <span id="sort-icon-hero" class="text-gray-400 text-sm group-hover:text-blue-400 transition-transform duration-300">⇅</span>
+                </button>
+            </div>
+        </div>
+        
+        <section id="episodes" class="max-w-5xl mx-auto px-6 py-20">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-[10px] text-blue-500 font-black uppercase tracking-[0.4em] mb-2">Library</h2>
+                    <p id="label-ep-count" class="text-2xl font-black text-white uppercase tracking-tighter">1 Episode</p>
                 </div>
             </div>
-            
-            <div id="episode-list" class="w-full flex flex-col items-center space-y-4"></div>
+        
+            <div id="episode-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="episode-card group bg-zinc-900/40 border border-white/5 rounded-2xl p-4 flex gap-5 hover:border-blue-500/50 transition-all cursor-pointer" onclick="navigateEpisode(1)">
+                    <div class="relative w-32 h-20 flex-shrink-0 overflow-hidden rounded-lg">
+                        <img src="images/ep1-thumb.webp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <span class="text-[8px] text-blue-500 font-bold uppercase tracking-widest mb-1">Episode 01</span>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wide group-hover:text-blue-400 transition-colors">Prologue: Storm</h3>
+                        <p class="text-[9px] text-gray-500 mt-1 uppercase font-medium">Feb 12, 2026</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
             <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -302,6 +322,29 @@
             // Detects the active language from the current page URL hash
             const currentLang = window.location.hash || '#EN';
             // Redirects to the reader with the correct language context
+            window.location.href = `reader.html${currentLang}`;
+        }
+
+        let isDescending = true;
+
+        // RESTORED FLIP LOGIC
+        function toggleSort() {
+            const list = document.getElementById('episode-list');
+            const cards = Array.from(list.children);
+            const icon = document.getElementById('sort-icon-hero');
+            
+            isDescending = !isDescending;
+            
+            // Reverse the DOM order of the cards
+            cards.reverse().forEach(card => list.appendChild(card));
+            
+            // Visual feedback for the flip
+            icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+    
+        // UNIFIED NAVIGATION
+        function navigateEpisode(epNumber) {
+            const currentLang = window.location.hash || '#EN';
             window.location.href = `reader.html${currentLang}`;
         }
         
