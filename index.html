@@ -43,6 +43,33 @@
         .genre-tag { border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; padding: 4px 16px; color: white; font-size: 10px; font-weight: bold; text-transform: uppercase; }
 
         img { -webkit-user-drag: none; user-select: none; }
+
+        /* Lightbox Modal Style */
+        #lightbox-overlay {
+            display: none;
+            position: fixed;
+            z-index: 5000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        
+        #lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        #lightbox-overlay.active #lightbox-img {
+            transform: scale(1);
+        }
+        
     </style>
 </head>
 <body>
@@ -119,14 +146,16 @@
             <div id="episode-list" class="w-full flex flex-col items-center space-y-4"></div>
         </section>
 
-        <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group">
-                <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
-                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20">
-                    <p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p>
+            <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group cursor-zoom-in" 
+                     onclick="openLightbox('images/gallery/gallery-eden.webp')">
+                    <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20">
+                        <p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p>
+                    </div>
+                    <div class="absolute inset-0 z-10 w-full h-full" style="background: rgba(0,0,0,0);"></div>
                 </div>
-            </div>
-        </section>
+            </section>
     </main>
 
     <script>
@@ -246,6 +275,26 @@
 
         window.onload = () => setLanguage('EN');
         document.addEventListener('contextmenu', e => e.preventDefault());
+
+        function openLightbox(src) {
+            const overlay = document.getElementById('lightbox-overlay');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            overlay.style.display = 'flex';
+            setTimeout(() => overlay.classList.add('active'), 10);
+        }
+        
+        function closeLightbox() {
+            const overlay = document.getElementById('lightbox-overlay');
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.style.display = 'none', 300);
+        }
+        
     </script>
+
+    <div id="lightbox-overlay" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full Size View">
+    </div>
+    
 </body>
 </html>
