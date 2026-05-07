@@ -15,7 +15,6 @@
             user-select: none;
         }
 
-        /* THE FIX: Full-screen click zone background */
         #global-click-zone {
             min-height: 100vh;
             width: 100%;
@@ -31,11 +30,9 @@
             z-index: 50;
         }
         
-        /* Fixed initial positions */
         .top-ui { transform: translateY(-100%); }
         .bottom-ui { transform: translateY(100%); }
 
-        /* The 'summoned' state */
         .ui-active {
             transform: translateY(0) !important;
             opacity: 1 !important;
@@ -46,11 +43,11 @@
             width: 100%;
             max-width: 800px; 
             margin: 0 auto;
-            line-height: 0; /* Prevents gaps between panels */
+            line-height: 0;
         }
 
-        /* Art Protection: Ghost Layer */
         .panel-container { position: relative; width: 100%; }
+        
         .ghost-layer {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -58,22 +55,12 @@
             background: transparent;
         }
 
-        /* Placeholder style for testing paths */
-        .placeholder-panel {
-            width: 100%;
-            aspect-ratio: 2/3;
-            background: linear-gradient(45deg, #1a1a1a, #0f0f0f);
-            border-bottom: 1px solid #222;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5em;
+        img { 
+            width: 100%; 
+            display: block; 
+            -webkit-user-drag: none; 
+            background-color: #0a0a0a;
         }
-
-        img { width: 100%; display: block; -webkit-user-drag: none; }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -88,16 +75,8 @@
             <div class="w-8"></div>
         </nav>
 
-        <main class="webtoon-container">
-            <div class="panel-container">
-                <div class="placeholder-panel">Panel 01</div>
-                <div class="ghost-layer"></div>
-            </div>
-            <div class="panel-container">
-                <div class="placeholder-panel">Panel 02</div>
-                <div class="ghost-layer"></div>
-            </div>
-        </main>
+        <main id="reader-main" class="webtoon-container">
+            </main>
 
         <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4">
             <div class="max-w-md mx-auto flex items-center justify-between">
@@ -113,22 +92,33 @@
     </div>
 
     <script>
+        const totalPages = 22;
+        const readerMain = document.getElementById('reader-main');
+
+        // Logic to generate all 22 protected panels automatically
+        for (let i = 1; i <= totalPages; i++) {
+            // Formats number to 01, 02, etc. to match your filenames
+            const pageNum = i.toString().padStart(2, '0'); 
+            const panelHtml = `
+                <div class="panel-container">
+                    <img src="images/episodes/ep1/ep1_${pageNum}_ID.webp" alt="Page ${pageNum}" loading="lazy">
+                    <div class="ghost-layer"></div>
+                </div>
+            `;
+            readerMain.innerHTML += panelHtml;
+        }
+
         let uiVisible = false;
         const topNav = document.getElementById('top-nav');
         const bottomNav = document.getElementById('bottom-nav');
 
         function toggleUI() {
             uiVisible = !uiVisible;
-            if (uiVisible) {
-                topNav.classList.add('ui-active');
-                bottomNav.classList.add('ui-active');
-            } else {
-                topNav.classList.remove('ui-active');
-                bottomNav.classList.remove('ui-active');
-            }
+            topNav.classList.toggle('ui-active', uiVisible);
+            bottomNav.classList.toggle('ui-active', uiVisible);
         }
 
-        // Global Art Protection
+        // Global Protection
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
     </script>
