@@ -29,17 +29,18 @@
         }
         .lang-menu { 
             position: absolute; top: 100%; right: 0; padding-top: 10px; 
-            display: none; flex-direction: column; z-index: 100; width: 160px; 
+            display: none; flex-direction: column; z-index: 100; width: 180px; 
         }
         .lang-menu-content { 
             background-color: #1a1a1a; border: 1px solid #333; border-radius: 10px; 
             overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.8); 
         }
         .lang-item { 
-            padding: 10px 12px; font-size: 11px; display: flex; align-items: center; gap: 8px; 
+            padding: 10px 12px; font-size: 11px; display: flex; align-items: center; gap: 10px; 
             color: #E0E0E0; border-bottom: 1px solid #1f1f1f; transition: background 0.2s;
         }
         .lang-item:hover { background-color: #2d2d2d; color: #3b82f6; }
+        .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
@@ -65,13 +66,13 @@
             </div>
 
             <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
-                <div class="lang-trigger"><span id="current-lang-label">EN</span></div>
+                <div class="lang-trigger"><span id="current-lang-label" class="uppercase">EN</span></div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
-                        <div class="lang-item" onclick="changeLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="w-4 h-3 object-cover rounded-sm"> English</div>
-                        <div class="lang-item" onclick="changeLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="w-4 h-3 object-cover rounded-sm"> Bahasa Indonesia</div>
-                        <div class="lang-item" onclick="changeLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="w-4 h-3 object-cover rounded-sm"> 日本語</div>
-                        <div class="lang-item" onclick="setLanguageKR()">🇰🇷 한국어</div>
+                        <div class="lang-item" onclick="changeLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item" onclick="changeLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="changeLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="changeLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
                 </div>
             </div>
@@ -111,7 +112,7 @@
     <script>
         const readerData = {
             EN: { epName: "Prologue: Storm", prev: "Prev", next: "Next", epLabel: "Episode", listTitle: "Episode List", close: "Close", panels: 22, path: "images/episodes/ep1/ep1_", suffix: "_EN.webp", placeholder: false },
-            ID: { epName: "Prolog: Badai", prev: "Sebm", next: "Lanjut", epLabel: "Episode", listTitle: "Daftar Episode", close: "Tutup", panels: 22, path: "images/episodes/ep1/ep1_", suffix: "_ID.webp", placeholder: false },
+            ID: { epName: "Prolog: Badai", prev: "Sebelumnya", next: "Lanjut", epLabel: "Episode", listTitle: "Daftar Episode", close: "Tutup", panels: 22, path: "images/episodes/ep1/ep1_", suffix: "_ID.webp", placeholder: false },
             JP: { epName: "プロローグ: 嵐", prev: "前へ", next: "次へ", epLabel: "エピソード", listTitle: "エピソード一覧", close: "閉じる", panels: 1, path: "images/placeholders/chibi_alice.webp", suffix: "", placeholder: true },
             KR: { epName: "프롤로그: 폭풍", prev: "이전", next: "다음", epLabel: "에피소드", listTitle: "에피소드 목록", close: "닫기", panels: 1, path: "images/placeholders/chibi_alice.webp", suffix: "", placeholder: true }
         };
@@ -146,9 +147,6 @@
             window.location.hash = lang;
         }
 
-        // Specific helper for KR to keep the emoji formatting clean
-        function setLanguageKR() { changeLanguage('KR'); }
-
         let uiVisible = false;
         const btn = document.getElementById('back-to-top');
 
@@ -176,13 +174,4 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.onload = () => {
-            const initialLang = window.location.hash.replace('#', '') || 'EN';
-            changeLanguage(initialLang);
-        };
-
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('dragstart', e => e.preventDefault());
-    </script>
-</body>
-</html>
+        window.onload = ()
