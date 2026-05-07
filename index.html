@@ -107,8 +107,8 @@
             </div>
         </section>
 
-        <section id="content-episodes" class="tab-content hidden flex flex-col items-center space-y-4">
-            <div class="w-full max-w-2xl flex items-center justify-between mb-6 px-2">
+        <section id="content-episodes" class="tab-content hidden flex flex-col items-center">
+            <div id="episode-list" class="flex flex-col items-center space-y-6 w-full">
                 <div class="flex gap-2">
                     <button onclick="scrollToFirst()" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">First Episode</button>
                     <button onclick="scrollToNewest()" class="text-[10px] font-bold border border-gray-700 px-3 py-1.5 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">Newest Episode</button>
@@ -134,23 +134,45 @@
     <script>
         const siteContent = {
             EN: {
-                navComics: "comics", navAbout: "about", status: "Main Story in Progress", tabs: ["INFO", "EPISODES", "GALLERY"],
-                genres: ["Fantasy", "Drama", "Action"],
+                navComics: "comics",
+                navAbout: "about",
+                seriesStatus: "Main Story in Progress",
+                tabs: ["INFO", "EPISODES", "GALLERY"],
                 synopsisHTML: `
                     <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?</p>
                     <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world..."</em>
                 `,
+                episodes: [
+                    { title: "Prologue: Storm", date: "Nov 01, 2025", thumb: "images/ep1-thumb.webp", link: "reader.html" },
+                    { title: "Prologue: The King", date: "Nov 29, 2025", thumb: "images/ep2-thumb.webp", link: "reader_ep2.html" },
+                    { title: "Prologue: The Cup", date: "Jan 04, 2026", thumb: "images/ep3-thumb.webp", link: "reader_ep3.html" },
+                    { title: "01 - Who (Part 1)", date: "Feb 07, 2026", thumb: "images/ep4-thumb.webp", link: "reader_ep4.html" },
+                    { title: "01 - Who (Part 2)", date: "Mar 08, 2026", thumb: "images/ep5-thumb.webp", link: "reader_ep5.html" },
+                    { title: "02 - Friend (Part 1)", date: "Apr 23, 2026", thumb: "images/ep6-thumb.webp", link: "reader_ep6.html" }
+                ],
                 comingSoon: "Coming soon"
             },
+            
             ID: {
-                navComics: "komik", navAbout: "tentang", status: "Cerita Utama Berjalan", tabs: ["INFO", "EPISODE", "GALERI"],
-                genres: ["Fantasi", "Drama", "Aksi"],
+                navComics: "komik",
+                navAbout: "tentang",
+                seriesStatus: "Cerita Utama Berjalan",
+                tabs: ["INFO", "EPISODE", "GALERI"],
                 synopsisHTML: `
-                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Alicia dan Archius harus berjuang demi identitas mereka sambil menjalankan tugas melindungi kerajaan dari kekuatan kegelapan yang muncul. Bagaimana takdir mereka yang saling terkait akan terungkap?</p>
-                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Karena perjuangan kita bukanlah melawan darah dan daging, melainkan melawan pemerintah-pemerintah, melawan penguasa-penguasa..."</em>
+                    <p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Alicia dan Archius harus berjuang demi identitas mereka sambil menjalankan tugas melindungi kerajaan...</p>
+                    <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Karena perjuangan kita bukanlah melawan darah dan daging..."</em>
                 `,
+                episodes: [
+                    { title: "Prolog: Badai", date: "01 Nov 2025", thumb: "images/ep1-thumb.webp", link: "reader.html" },
+                    { title: "Prolog: Sang Raja", date: "29 Nov 2025", thumb: "images/ep2-thumb.webp", link: "reader_ep2.html" },
+                    { title: "Prolog: Cawan", date: "04 Jan 2026", thumb: "images/ep3-thumb.webp", link: "reader_ep3.html" },
+                    { title: "01 - Siapa (Bagian 1)", date: "07 Feb 2026", thumb: "images/ep4-thumb.webp", link: "reader_ep4.html" },
+                    { title: "01 - Siapa (Bagian 2)", date: "08 Mar 2026", thumb: "images/ep5-thumb.webp", link: "reader_ep5.html" },
+                    { title: "02 - Teman (Bagian 1)", date: "23 Apr 2026", thumb: "images/ep6-thumb.webp", link: "reader_ep6.html" }
+                ],
                 comingSoon: "Segera hadir"
-            },
+                },
+            
             JP: {
                 navComics: "コミック", navAbout: "概要", status: "連載中", tabs: ["情報", "エピソード", "ギャラリー"],
                 genres: ["ファンタジー", "ドラマ", "アクション"],
@@ -160,6 +182,7 @@
                 `,
                 comingSoon: "近日公開"
             },
+            
             KR: {
                 navComics: "코믹스", navAbout: "정보", status: "연재 중", tabs: ["정보", "에피소드", "갤러리"],
                 genres: ["판타지", "드라마", "액션"],
@@ -176,11 +199,46 @@
         function setLanguage(lang) {
             const dict = siteContent[lang] || siteContent.EN;
             
-            // Update Navigation & Status
+            // Update Navigation, Status, and Synopsis
             document.querySelector('.nav-link-comics').innerText = dict.navComics;
             document.querySelector('.nav-link-about').innerText = dict.navAbout;
-            document.querySelector('.series-status-tag').innerText = dict.status;
+            document.querySelector('.series-status-tag').innerText = dict.seriesStatus;
+            document.getElementById('dynamic-synopsis').innerHTML = dict.synopsisHTML;
             document.getElementById('current-lang-label').innerText = lang;
+        
+            // Update Tabs
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach((btn, i) => { if(dict.tabs[i]) btn.innerText = dict.tabs[i]; });
+        
+            // RENDER EPISODES (The Restoration)
+            const container = document.getElementById('episode-list');
+            container.innerHTML = ''; // Clear the current view
+            
+                dict.episodes.forEach(ep => {
+                    container.innerHTML += `
+                        <div class="episode-card flex items-center p-4 rounded-xl">
+                            <img src="${ep.thumb}" alt="${ep.title}" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
+                            <div class="ml-4 flex-grow">
+                                <h4 class="text-sm md:text-base font-bold text-white">${ep.title}</h4>
+                                <p class="text-[10px] md:text-xs text-gray-500">${ep.date}</p>
+                            </div>
+                            <a href="${ep.link}" class="btn-read btn-action-size bg-blue-600 text-white text-[10px] rounded font-bold uppercase tracking-wider text-center flex items-center justify-center">Read</a>
+                        </div>`;
+                });
+            
+                // Add Coming Soon Card
+                container.innerHTML += `
+                    <div class="episode-card card-coming-soon flex items-center p-4 rounded-xl opacity-80 cursor-default">
+                        <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700">
+                            <span class="text-[10px] font-bold text-zinc-500">EP 07</span>
+                        </div>
+                        <div class="ml-4 flex-grow">
+                            <h4 class="text-sm md:text-base font-bold text-zinc-400">02 - Friend (Part 2)</h4>
+                            <p class="text-[10px] md:text-xs text-amber-500 font-bold uppercase">${dict.comingSoon}</p>
+                        </div>
+                        <button class="btn-notify btn-action-size text-[10px] rounded font-black uppercase text-center flex items-center justify-center">Notify</button>
+                    </div>`;
+            }document.getElementById('current-lang-label').innerText = lang;
             
             // Update Synopsis
             document.getElementById('dynamic-synopsis').innerHTML = dict.synopsisHTML;
