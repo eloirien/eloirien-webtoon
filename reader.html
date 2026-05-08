@@ -129,12 +129,27 @@
             }
         }
     
+        // REINFORCED changeLanguage
         function changeLanguage(lang) {
+            localStorage.setItem('preferredLang', lang); // Save choice to memory
             currentLang = lang;
             document.getElementById('current-lang-label').innerText = lang;
             window.location.hash = lang;
-            loadPanels();
-        }
+            loadPanels(); // Your function that fetches from /episodes/ep1/ etc.
+            }
+        
+        // REINFORCED window.onload
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentEp = parseInt(urlParams.get('ep')) || 1; // Pull episode from URL
+        
+            const savedLang = localStorage.getItem('preferredLang');
+            const hashLang = window.location.hash.replace('#', '');
+            const finalLang = hashLang || savedLang || 'EN';
+            
+            changeLanguage(finalLang);
+            if (typeof populateSelector === 'function') populateSelector();
+            };
     
         function loadPanels() {
             const readerMain = document.getElementById('reader-main');
