@@ -128,8 +128,8 @@
             
             // Formatting and Injecting Creator Bio
             const formattedCreator = page.creator
-                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em class="text-gray-500 italic">$1</em>');
+                .replace(/\*\*(.*?)\*\*/g, '<em class="text-white">$1</em>')
+                .replace(/\*(.*?)\*/g, '<em class="text-gray-300 italic">$1</em>');
             
             document.getElementById('text-creator').innerHTML = formattedCreator;
             document.getElementById('text-silverstring').innerText = page.silverstring;
