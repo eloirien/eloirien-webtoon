@@ -118,12 +118,12 @@
         img { -webkit-user-drag: none; user-select: none; }
     </style>
 </head>
+
    <body>
-    
     <div class="bg-wrapper"><div class="bg-blur"></div></div>
 
     <div class="w-full text-center py-12">
-        <h2 id="page-title" class="uppercase text-white">COMIC</h2>
+        <h2 id="page-title" class="uppercase">COMIC</h2>
     </div>
 
     <nav class="nav-container">
@@ -148,57 +148,74 @@
     </nav>
 
     <main class="article-room shadow-2xl">
-        ```
-
+        <a href="index.html" class="comic-card">
+            <img src="images/vertical-cover.webp" alt="Silverstring" class="comic-thumb">
+            <div class="flex flex-col gap-4 items-center md:items-start"> 
+                <img src="images/logo.png" alt="Silverstring Logo" class="w-48 mx-auto md:mx-0">
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span id="genre-fantasy" class="genre-tag">Fantasy</span>
+                    <span id="genre-drama" class="genre-tag">Drama</span>
+                    <span id="genre-action" class="genre-tag">Action</span>
+                </div>
+                <p id="status-silverstring" class="text-[9px] text-blue-400 font-bold uppercase tracking-widest">Main Story In Progress</p>
+            </div>
+        </a>
+    
+        <div class="section-divider"></div>
+    
+        <div class="comic-card opacity-80 cursor-default">
+            <div class="comic-thumb bg-zinc-800 aspect-[3/4] flex items-center justify-center border border-zinc-700">
+                <span id="label-specials-thumb" class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Specials</span>
+            </div>
+            <div class="flex flex-col gap-4 items-center md:items-start"> 
+                <h3 id="label-specials-title" class="text-2xl font-black text-white uppercase tracking-tighter">Silverstring Specials</h3>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span id="genre-spec-fantasy" class="genre-tag">Fantasy</span>
+                    <span id="genre-slice" class="genre-tag">Slice of Life</span>
+                </div>
+                <p id="status-specials" class="text-[9px] text-gray-500 font-bold uppercase tracking-widest">Awaiting Transmission...</p>
+            </div>
+        </div>
     </main>
 
     <script>
- 
         function setLanguage(lang) {
-            // 1. Memory Sentry: Simpan preferensi bahasa
             localStorage.setItem('preferredLang', lang);
             
-            // 2. Ambil data dari Universal Database
+            // Fetch from Universal Database
             const ui = LUMINUS_DB.ui[lang];
-            const page = LUMINUS_DB.pages.index[lang]; // Mengambil genre dan label dari data index
+            const page = LUMINUS_DB.pages.index[lang]; 
             
-            // 3. Update Navigation Pill
+            // Update Navigation
             document.querySelector('.nav-link[href="index.html"]').innerText = ui.home;
             document.querySelector('.nav-link[href="about.html"]').innerText = ui.about;
             document.getElementById('current-lang-label').innerText = lang;
             
-            // 4. Update Konten Halaman
+            // Update Page Content
+            // This now targets the ONLY "page-title" ID
             document.getElementById('page-title').innerText = ui.comics; 
             document.getElementById('status-silverstring').innerText = ui.status;
             document.getElementById('status-specials').innerText = ui.comingSoon;
             
-            // 5. Update Genre Tags (diambil dari data pusat)
+            // Update Genre Tags
             document.getElementById('genre-fantasy').innerText = page.genres[0];
             document.getElementById('genre-drama').innerText = page.genres[1];
             document.getElementById('genre-action').innerText = page.genres[2];
-            
-            // Specials Genres
             document.getElementById('genre-spec-fantasy').innerText = page.genres[0];
-            // Note: Pastikan "Slice of Life" ada di urutan genre database Anda jika ingin dinamis
         
-            // 6. Update URL context
             window.location.hash = lang;
         }
     
-            // The Sentry on Load
-            window.onload = () => {
-                const savedLang = localStorage.getItem('preferredLang');
-                const hashLang = window.location.hash.replace('#', '');
-                const finalLang = hashLang || savedLang || 'EN';
-                
-                setLanguage(finalLang);
-            };
+        window.onload = () => {
+            const savedLang = localStorage.getItem('preferredLang');
+            const hashLang = window.location.hash.replace('#', '');
+            const finalLang = hashLang || savedLang || 'EN';
+            setLanguage(finalLang);
+        };
         
-            // Art Protection
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('dragstart', e => e.preventDefault());
-        
-</script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
+    </script>
 
          <footer class="w-full py-16 border-t border-gray-900 bg-black/50 backdrop-blur-md flex flex-col items-center">
          <p class="text-[9px] text-gray-600 uppercase tracking-[0.4em] text-center px-6 leading-relaxed">
