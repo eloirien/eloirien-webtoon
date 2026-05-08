@@ -136,7 +136,7 @@
             document.getElementById('current-lang-label').innerText = lang;
             window.location.hash = lang;
             loadPanels(); // Your function that fetches from /episodes/ep1/ etc.
-            }
+        }
         
         // REINFORCED window.onload
         window.onload = () => {
@@ -149,7 +149,7 @@
             
             changeLanguage(finalLang);
             if (typeof populateSelector === 'function') populateSelector();
-            };
+        };
     
         function loadPanels() {
             const readerMain = document.getElementById('reader-main');
