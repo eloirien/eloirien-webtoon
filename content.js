@@ -37,7 +37,7 @@ const LUMINUS_DB = {
                 errSub: "집으로 돌아갈 수 있도록 돕는 중입니다...",
                 errRetry: "구조 작전 개시"
             }
-        }
+        },
 
     library: {
         1: {
