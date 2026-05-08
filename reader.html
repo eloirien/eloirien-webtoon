@@ -6,6 +6,7 @@
     <title>Silverstring | Reader</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="content.js"></script>
     <style>
         body, html { height: 100%; margin: 0; background-color: #0a0a0a; color: #d1d5db; font-family: 'Inter', sans-serif; user-select: none; }
         #global-click-zone { min-height: 100vh; width: 100%; cursor: pointer; position: relative; z-index: 10; }
@@ -101,133 +102,132 @@
     </button>
 
     <script>
-        // 1. CONFIGURATION
-        const library = {
-            1: { name: "Prologue: Storm", panels: 22, thumb: "images/ep1-thumb.webp" },
-            2: { name: "Prologue: The King", panels: 18, thumb: "images/ep2-thumb.webp" },
-            3: { name: "Prologue: The Cup", panels: 20, thumb: "images/ep3-thumb.webp" }
-        };
-    
-        const uiTranslations = {
-            EN: { prev: "Prev", next: "Next", epLabel: "Episode", listTitle: "Episode List", close: "Close" },
-            ID: { prev: "Sebm", next: "Lanjut", epLabel: "Episode", listTitle: "Daftar Episode", close: "Tutup" },
-            JP: { prev: "前へ", next: "次へ", epLabel: "エピソード", listTitle: "エピソード一覧", close: "閉じる" },
-            KR: { prev: "이전", next: "다음", epLabel: "에피소드", listTitle: "에피소드 목록", close: "닫기" }
-        };
-    
-        // 2. STATE LOGIC
+    let currentEp = 1;
+    let currentLang = 'EN';
+    let uiVisible = false;
+
+    function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
-        let currentEp = parseInt(urlParams.get('ep')) || 1;
-        let currentLang = window.location.hash.replace('#', '') || localStorage.getItem('preferredLang') || 'EN';
-    
-        function initReader() {
-            populateEpisodeMenu();
-            populateDrawer();
-            changeLanguage(currentLang);
+        return urlParams.get(param);
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('preferredLang', lang);
+        window.location.hash = lang;
+        
+        const ui = LUMINUS_DB.ui[lang];
+        
+        // Update Reader UI 
+        document.getElementById('nav-home-text').innerText = ui.home;
+        document.getElementById('nav-episodes-text').innerText = ui.episodes;
+        
+        // Update Current Episode Title in Header
+        const epData = LUMINUS_DB.library[currentEp];
+        if (epData) {
+            document.getElementById('ep-title').innerText = epData.name[lang];
         }
-    
-        // Fills the Top Nav Dropdown
-        function populateEpisodeMenu() {
-            const menu = document.getElementById('ep-menu-content');
-            menu.innerHTML = '';
-            Object.keys(library).forEach(id => {
-                const num = String(id).padStart(2, '0');
-                menu.innerHTML += `
-                    <div class="lang-item ${id == currentEp ? 'text-blue-400 font-bold' : ''}" onclick="changeEpisode(${id})">
-                        ${num}. ${library[id].name.toUpperCase()}
+        
+        renderDrawer(lang);
+    }
+
+    function renderDrawer(lang) {
+        const drawerList = document.getElementById('drawer-episode-list');
+        drawerList.innerHTML = '';
+        
+        // Sort descending
+        const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(b) - parseInt(a));
+        
+        keys.forEach(key => {
+            const ep = LUMINUS_DB.library[key];
+            const isUpcoming = ep.status === 'upcoming';
+            const isActive = parseInt(key) === currentEp;
+            const title = ep.name[lang];
+            
+            if (isUpcoming) {
+                drawerList.innerHTML += `
+                    <div class="ep-row upcoming-row opacity-40 cursor-not-allowed border-b border-zinc-800 pb-3 mb-3">
+                        <div class="text-[10px] text-zinc-500 font-bold mb-1 tracking-widest">${ep.dateLabel}</div>
+                        <div class="text-sm text-zinc-400 font-bold tracking-wider uppercase">${title}</div>
                     </div>`;
-            });
-        }
-    
-        // Fills the Bottom Drawer Thumbnails
-        function populateDrawer() {
-            const list = document.getElementById('drawer-list');
-            list.innerHTML = '';
-            Object.keys(library).forEach(id => {
-                const isActive = (id == currentEp);
-                list.innerHTML += `
-                    <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'}" onclick="changeEpisode(${id})">
-                        <img src="${library[id].thumb}" class="rounded border-2 ${isActive ? 'border-blue-500' : 'border-transparent'} transition shadow-lg">
-                        <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold">
-                            ${library[id].name}
-                        </p>
-                    </div>`;
-            });
-        }
-    
-        function changeLanguage(lang) {
-            localStorage.setItem('preferredLang', lang);
-            currentLang = lang;
-            window.location.hash = lang;
-            document.getElementById('current-lang-label').innerText = lang;
-            
-            // Update Static UI Text
-            const ui = uiTranslations[lang] || uiTranslations.EN;
-            document.getElementById('label-prev').innerText = ui.prev;
-            document.getElementById('label-next').innerText = ui.next;
-            document.getElementById('label-ep-small').innerText = ui.epLabel;
-            document.getElementById('label-drawer-title').innerText = ui.listTitle;
-            document.getElementById('label-drawer-close').innerText = ui.close;
-    
-            loadPanels();
-        }
-    
-        function loadPanels() {
-            const readerMain = document.getElementById('reader-main');
-            const epData = library[currentEp] || library[1];
-            
-            // Update Dynamic Title
-            document.getElementById('display-ep-title').innerText = epData.name;
-            document.querySelector('.bottom-ui .text-white').innerText = `#${currentEp}`;
-            
-            readerMain.innerHTML = '';
-            
-            // SENTRY: Placeholder for JP/KR
-            if (currentLang === 'JP' || currentLang === 'KR') {
-                const path = (currentLang === 'JP') ? 'images/tl-JP.webp' : 'images/tl-KR.webp';
-                readerMain.innerHTML = `<div class="panel-container"><img src="${path}" alt="Placeholder"><div class="ghost-layer"></div></div>`;
             } else {
-                for (let i = 1; i <= epData.panels; i++) {
-                    const pageNum = i.toString().padStart(2, '0');
-                    const imgPath = `images/episodes/ep${currentEp}/ep${currentEp}_${pageNum}_${currentLang}.webp`;
-                    readerMain.innerHTML += `
-                        <div class="panel-container">
-                            <img src="${imgPath}" alt="Page ${pageNum}" loading="lazy" onerror="this.src='images/placeholders/chibi_alice.webp'; this.classList.add('w-48','mx-auto','py-20','opacity-50');">
-                            <div class="ghost-layer"></div>
-                        </div>`;
-                }
+                drawerList.innerHTML += `
+                    <div class="ep-row cursor-pointer group border-b border-zinc-800 pb-3 mb-3 transition-colors ${isActive ? 'bg-zinc-900/50 -mx-4 px-4 rounded' : ''}" onclick="changeEpisode(${key})">
+                        <div class="text-[10px] font-bold mb-1 tracking-widest ${isActive ? 'text-blue-400' : 'text-gray-500 group-hover:text-blue-400'}">${ep.date[lang]}</div>
+                        <div class="text-sm font-bold tracking-wider uppercase ${isActive ? 'text-white' : 'text-gray-300 group-hover:text-white'}">${title}</div>
+                    </div>`;
+            }
+        });
+    }
+
+    function loadPages() {
+        const container = document.getElementById('comic-container');
+        container.innerHTML = '';
+        
+        const epData = LUMINUS_DB.library[currentEp];
+        if (epData && epData.status === 'released') {
+            const totalPanels = epData.panels;
+            
+            for (let i = 1; i <= totalPanels; i++) {
+                // Ensure double-digit formatting for image files (e.g., 01.webp, 02.webp)
+                const pageNum = i.toString().padStart(2, '0');
+                const imgPath = `images/ep${currentEp}/${pageNum}.webp`;
+                
+                container.innerHTML += `
+                    <div class="comic-page" onclick="toggleUI()">
+                        <img src="${imgPath}" alt="Page ${pageNum}" loading="lazy" onerror="this.src='images/placeholders/chibi_alice.webp'; this.classList.add('w-48','mx-auto','py-20','opacity-50');">
+                        <div class="ghost-layer"></div>
+                    </div>`;
             }
         }
-    
-        function changeEpisode(newEp) {
-            window.location.href = `reader.html?ep=${newEp}#${currentLang}`;
+    }
+
+    function changeEpisode(newEp) {
+        window.location.href = `reader.html?ep=${newEp}#${currentLang}`;
+    }
+
+    function toggleUI() {
+        uiVisible = !uiVisible;
+        document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
+        document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
+        const btn = document.getElementById('back-to-top');
+        if (uiVisible && window.scrollY > 800) btn.classList.add('show-btn');
+        else btn.classList.remove('show-btn');
+    }
+
+    function toggleDrawer(e) {
+        if(e) e.stopPropagation();
+        document.getElementById('episode-drawer').classList.toggle('open');
+    }
+
+    function teleportToTop(e) {
+        e.stopPropagation(); 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function initReader() {
+        // Parse the episode from URL
+        const epParam = getQueryParam('ep');
+        currentEp = epParam ? parseInt(epParam) : 1;
+        
+        // Ensure episode exists in database, fallback to 1
+        if (!LUMINUS_DB.library[currentEp]) {
+            currentEp = 1;
         }
-    
-        // UI LOGIC
-        let uiVisible = false;
-        function toggleUI() {
-            uiVisible = !uiVisible;
-            document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
-            document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
-            const btn = document.getElementById('back-to-top');
-            if (uiVisible && window.scrollY > 800) btn.classList.add('show-btn');
-            else btn.classList.remove('show-btn');
-        }
-    
-        function toggleDrawer(e) {
-            if(e) e.stopPropagation();
-            document.getElementById('episode-drawer').classList.toggle('open');
-        }
-    
-        function teleportToTop(e) {
-            e.stopPropagation(); 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    
-        window.onload = initReader;
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('dragstart', e => e.preventDefault());
-    </script>
+
+        // Parse Language
+        const savedLang = localStorage.getItem('preferredLang');
+        const hashLang = window.location.hash.replace('#', '');
+        const finalLang = hashLang || savedLang || 'EN';
+        
+        setLanguage(finalLang);
+        loadPages();
+    }
+
+    window.onload = initReader;
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+</script>
     
 </body>
     
