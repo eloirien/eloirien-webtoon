@@ -11,13 +11,11 @@
         body, html { height: 100%; margin: 0; background-color: #0a0a0a; color: #d1d5db; font-family: 'Inter', sans-serif; user-select: none; }
         #global-click-zone { min-height: 100vh; width: 100%; cursor: pointer; position: relative; z-index: 10; }
         
-        /* Immersive UI Logic */
         .immersive-ui { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; opacity: 0; pointer-events: none; z-index: 50; }
         .top-ui { transform: translateY(-100%); }
         .bottom-ui { transform: translateY(100%); }
         .ui-active { transform: translateY(0) !important; opacity: 1 !important; pointer-events: auto !important; }
         
-        /* Dropdowns: Hover-Only */
         .custom-lang-dropdown, .custom-ep-dropdown { position: relative; display: inline-block; }
         .lang-trigger, .ep-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
         .ep-trigger { background-color: transparent; border: none; color: white; padding: 6px 12px; }
@@ -35,16 +33,14 @@
         .custom-lang-dropdown:hover .lang-menu, .custom-ep-dropdown:hover .ep-menu { display: flex; }
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
 
-        /* RESTORED: Horizontal Thumbnail Drawer */
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
         #episode-drawer.open { transform: translateY(0); }
-        .drawer-scroll { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; scrollbar-width: none; -ms-overflow-style: none; }
+        .drawer-scroll { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; scrollbar-width: none; }
         .drawer-scroll::-webkit-scrollbar { display: none; }
 
         .webtoon-container { width: 100%; max-width: 800px; margin: 0 auto; line-height: 0; padding-bottom: 6rem; position: relative; z-index: 20; }
         img { width: 100%; display: block; -webkit-user-drag: none; background-color: #0a0a0a; }
 
-        /* Buttons: Rounded Squares */
         .btn-square { border-radius: 6px; transition: all 0.3s ease; }
     </style>
 </head>
@@ -88,12 +84,10 @@
         <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4">
             <div class="max-w-md mx-auto flex items-center justify-between px-2">
                 <button id="btn-prev" class="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 btn-square border border-zinc-700 text-[10px] font-bold text-white uppercase" onclick="event.stopPropagation();">&larr; Prev</button>
-                
                 <div class="text-center cursor-pointer group flex flex-col items-center gap-1" onclick="toggleDrawer(event)">
                     <svg class="w-6 h-6 text-gray-500 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     <span id="bottom-ep-number" class="text-[9px] font-bold text-gray-500 group-hover:text-blue-400 tracking-widest uppercase transition-colors">EP #1</span>
                 </div>
-                
                 <button id="btn-next" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 btn-square text-[10px] font-bold text-white uppercase shadow-[0_0_15px_rgba(59,130,246,0.4)]" onclick="event.stopPropagation();">Next &rarr;</button>
             </div>
         </nav>
@@ -136,40 +130,31 @@
             document.getElementById('bottom-ep-number').innerText = "EP #" + currentEp;
         }
         populateMenus(lang);
+        loadPages(); // Reload pages when language changes for placeholders
     }
 
-    // RESTORED: Side-Scrolling Thumbnail Logic
     function populateMenus(lang) {
         const list = document.getElementById('drawer-list');
         const dropdownList = document.getElementById('ep-dropdown-list');
         list.innerHTML = '';
         dropdownList.innerHTML = '';
-        
         const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
-        
         keys.forEach(id => {
             const ep = LUMINUS_DB.library[id];
             const isActive = (id == currentEp);
             const isUpcoming = ep.status === 'upcoming';
             const title = ep.name[lang];
-
-            // Top Dropdown
             if (isUpcoming) {
                 dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed uppercase">${ep.dateLabel} - UPCOMING</div>`;
             } else {
                 dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${id})">${title}</div>`;
             }
-
-            // Bottom Horizontal Drawer
             list.innerHTML += `
                 <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'} ${isUpcoming ? 'opacity-30 cursor-not-allowed' : ''}" 
                      onclick="${isUpcoming ? '' : `changeEpisode(${id})`}">
                     <img src="${isUpcoming ? 'images/placeholders/coming_soon.webp' : ep.thumb}" 
-                         class="rounded-md border-2 ${isActive ? 'border-blue-500' : 'border-transparent group-hover:border-zinc-500'} transition shadow-lg aspect-[16/9] object-cover"
-                         onerror="this.src='images/placeholders/chibi_alice.webp';">
-                    <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold truncate">
-                        ${isUpcoming ? ep.dateLabel : title}
-                    </p>
+                         class="rounded-md border-2 ${isActive ? 'border-blue-500' : 'border-transparent group-hover:border-zinc-500'} transition shadow-lg aspect-[16/9] object-cover">
+                    <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold truncate">${isUpcoming ? ep.dateLabel : title}</p>
                 </div>`;
         });
     }
@@ -181,7 +166,6 @@
         const nextEp = currentEp + 1;
         const hasPrev = LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released';
         const hasNext = LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released';
-        
         if (hasPrev) {
             prevBtn.classList.remove('opacity-30', 'cursor-not-allowed');
             prevBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(prevEp); };
@@ -189,7 +173,6 @@
             prevBtn.classList.add('opacity-30', 'cursor-not-allowed');
             prevBtn.onclick = (e) => { e.stopPropagation(); };
         }
-        
         if (hasNext) {
             nextBtn.classList.remove('opacity-30', 'cursor-not-allowed');
             nextBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(nextEp); };
@@ -199,20 +182,38 @@
         }
     }
 
+    // SENTRY: "Rex Alice" Error Logic
+    function handleImageError(img) {
+        const container = document.getElementById('comic-container');
+        // Clear all panels and show only ONE solid Rex Alice
+        container.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-24 px-10 text-center">
+                <img src="images/placeholders/chibi-alice.png" class="w-64 h-auto mb-8 shadow-2xl rounded-xl" alt="Transmission Interrupted">
+                <p class="text-[10px] font-bold tracking-[0.3em] text-gray-600 uppercase">Archive Transmission Interrupted</p>
+                <button onclick="location.reload()" class="mt-8 text-[10px] text-blue-500 border border-blue-500/30 px-4 py-2 rounded-md uppercase font-bold">Retry Transmission</button>
+            </div>`;
+    }
+
     function loadPages() {
         const container = document.getElementById('comic-container');
         container.innerHTML = '';
         const epData = LUMINUS_DB.library[currentEp];
-        if (epData && epData.status === 'released') {
-            // FIXED: Start from 0
-            for (let i = 0; i < epData.panels; i++) {
-                container.innerHTML += `<div class="comic-page"><img src="images/ep${currentEp}/${i}.webp" alt="Page ${i}" loading="lazy" onerror="this.onerror=null; this.src='images/placeholders/chibi_alice.webp'; this.classList.add('w-48','mx-auto','py-20','opacity-50');"></div>`;
-            }
+        if (!epData || epData.status !== 'released') return;
+
+        // SENTRY: Placeholder for JP/KR
+        if (currentLang === 'JP' || currentLang === 'KR') {
+            const path = (currentLang === 'JP') ? 'images/tl-JP.webp' : 'images/tl-KR.webp';
+            container.innerHTML = `<div class="comic-page"><img src="${path}" alt="Awaiting Translation"></div>`;
+            return;
+        }
+
+        // Logic & Steel Pathing (0-based)
+        for (let i = 0; i < epData.panels; i++) {
+            container.innerHTML += `<div class="comic-page"><img src="images/ep${currentEp}/${i}.webp" alt="Record Panel ${i}" loading="lazy" onerror="handleImageError(this)"></div>`;
         }
     }
 
     function changeEpisode(newEp) { window.location.href = `reader.html?ep=${newEp}#${currentLang}`; }
-
     function toggleUI() {
         uiVisible = !uiVisible;
         document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
@@ -221,7 +222,6 @@
         if (uiVisible && window.scrollY > 800) btn.classList.add('show-btn');
         else btn.classList.remove('show-btn');
     }
-
     function toggleDrawer(e) { if(e) e.stopPropagation(); document.getElementById('episode-drawer').classList.toggle('open'); }
     function teleportToTop(e) { e.stopPropagation(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
@@ -233,7 +233,6 @@
         const hashLang = window.location.hash.replace('#', '');
         setLanguage(hashLang || savedLang || 'EN');
         updateNavButtons();
-        loadPages();
     }
 
     window.onload = initReader;
