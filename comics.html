@@ -187,33 +187,44 @@
             }
         };
 
+        // 1. The Main Language Function
         function setLanguage(lang) {
-            const dict = comicsContent[lang] || comicsContent.EN;
-            document.getElementById('current-lang-label').innerText = lang;
-            document.getElementById('page-title').innerText = dict.pageTitle;
+            // Save to memory first
+            localStorage.setItem('preferredLang', lang);
             
-            // Silverstring Card
-            document.getElementById('status-silverstring').innerText = dict.silverStatus;
-            document.getElementById('genre-fantasy').innerText = dict.genres[0];
-            document.getElementById('genre-drama').innerText = dict.genres[1];
-            document.getElementById('genre-action').innerText = dict.genres[2];
-
-            // Specials Card
-            document.getElementById('label-specials-thumb').innerText = dict.labels.thumb;
-            document.getElementById('label-specials-title').innerText = dict.specialsTitle;
-            document.getElementById('genre-spec-fantasy').innerText = dict.genres[0];
-            document.getElementById('genre-slice').innerText = dict.genres[3];
-            document.getElementById('status-specials').innerText = dict.specialsStatus;
-
+            const dict = aboutContent[lang] || aboutContent.EN;
+            
+            // Update Nav and Labels
+            document.querySelector('.nav-link-home').innerText = dict.navHome;
+            document.querySelector('.nav-link-comics').innerText = dict.navComics;
+            document.getElementById('current-lang-label').innerText = lang;
+            
+            // Formatting the Creator text
+            const formattedCreator = dict.creator
+                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em class="text-gray-500 italic">$1</em>');
+            
+            document.getElementById('text-creator').innerHTML = formattedCreator;
+            document.getElementById('text-silverstring').innerText = dict.silverstring;
+            document.getElementById('text-bethlehem').innerText = dict.bethlehem;
+        
+            // Update URL hash
             window.location.hash = lang;
-        }
-
+            }
+        
+        // 2. The Sentry on Load (Simplified for About Page)
         window.onload = () => {
-            const initialLang = window.location.hash.replace('#', '') || 'EN';
-            setLanguage(initialLang);
-        };
-
+            const savedLang = localStorage.getItem('preferredLang');
+            const hashLang = window.location.hash.replace('#', '');
+            const finalLang = hashLang || savedLang || 'EN';
+            
+            // CALL setLanguage, not changeLanguage
+            setLanguage(finalLang);
+            };
+        
+        // Art Protection
         document.addEventListener('contextmenu', e => e.preventDefault());
+        
     </script>
 </body>
 </html>
