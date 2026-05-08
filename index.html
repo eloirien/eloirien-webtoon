@@ -46,41 +46,17 @@
 
         img { -webkit-user-drag: none; user-select: none; }
 
-        /* Subtle sparkle pulse for the language star */
         @keyframes pulse-slow {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.7; transform: scale(0.9); }
         }
-        .animate-pulse-slow {
-            animation: pulse-slow 3s infinite ease-in-out;
-        }
+        .animate-pulse-slow { animation: pulse-slow 3s infinite ease-in-out; }
 
-        /* Lightbox Modal Style */
-        #lightbox-overlay {
-            display: none;
-            position: fixed;
-            z-index: 5000;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            justify-content: center;
-            align-items: center;
-            cursor: zoom-out;
-        }
-        
-        #lightbox-img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 8px;
-            box-shadow: 0 0 50px rgba(59, 130, 246, 0.2);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        
-        #lightbox-overlay.active #lightbox-img {
-            transform: scale(1);
-        }
-        
+        /* Lightbox */
+        #lightbox-overlay { display: none; position: fixed; z-index: 5000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); justify-content: center; align-items: center; cursor: zoom-out; }
+        #lightbox-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 50px rgba(59, 130, 246, 0.2); transform: scale(0.9); transition: transform 0.3s ease; }
+        #lightbox-overlay.active #lightbox-img { transform: scale(1); }
+        #lightbox-overlay.active { display: flex; }
     </style>
 </head>
 <body>
@@ -97,7 +73,7 @@
                     <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
                     </svg>
                     <span id="current-lang-label" class="mt-[1px]">EN</span>
-                    </div>
+                </div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
                         <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
@@ -116,19 +92,19 @@
         <div class="branding-pill">
             <img src="images/logo.png" alt="Silverstring" class="w-full max-w-[280px] md:max-w-[400px]">
             <div class="flex items-center space-x-3">
-                <span class="genre-tag">Fantasy</span>
-                <span class="genre-tag">Drama</span>
-                <span class="genre-tag">Action</span>
+                <span id="genre-fantasy" class="genre-tag">Fantasy</span>
+                <span id="genre-drama" class="genre-tag">Drama</span>
+                <span id="genre-action" class="genre-tag">Action</span>
             </div>
-            <span class="series-status-tag text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-2">Main Story in Progress</span>
+            <span id="series-status" class="series-status-tag text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-2">Main Story in Progress</span>
         </div>
     </section>
 
     <div class="sticky top-0 bg-black/95 backdrop-blur-md border-b border-gray-800 z-40">
         <div class="max-w-screen-xl mx-auto flex justify-center">
-            <button onclick="switchTab('info')" id="tab-info" class="tab-button active px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-blue-600 text-white uppercase">Info</button>
-            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase">Episodes</button>
-            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase">Gallery</button>
+            <button onclick="switchTab('info')" id="tab-info" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-blue-600 text-white uppercase transition-colors">Info</button>
+            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-colors">Episodes</button>
+            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-colors">Gallery</button>
         </div>
     </div>
 
@@ -167,9 +143,11 @@
                 </div>
             </div>
         
-            <div id="episode-list" class="flex flex-col items-center gap-6 mb-20">
+            <div id="episode-list" class="flex flex-col items-center gap-6 mb-20 w-full">
                 </div>
-        </section> <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        </section> 
+        
+        <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto w-full">
             <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group cursor-zoom-in" 
                  onclick="openLightbox('images/gallery/gallery-eden.webp')">
                 <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
@@ -180,136 +158,143 @@
         </section>
     </main>
 
-    <script>
-    let isDescending = true;
-
-    function setLanguage(lang) {
-        // Memory Sentry
-        localStorage.setItem('preferredLang', lang);
-        
-        // Fetch from Universal Database
-        const ui = LUMINUS_DB.ui[lang];
-        const page = LUMINUS_DB.pages.index[lang];
-        
-        // Update Navigation Pill
-        document.querySelector('.nav-link[href="comics.html"]').innerText = ui.comics;
-        document.querySelector('.nav-link[href="about.html"]').innerText = ui.about;
-        document.getElementById('current-lang-label').innerText = lang;
-        
-        // Update Tabs
-        document.getElementById('tab-info').innerText = page.tabs[0];
-        document.getElementById('tab-episodes').innerText = page.tabs[1];
-        document.getElementById('tab-gallery').innerText = page.tabs[2];
-        
-        // Update Genres & Synopsis
-        document.getElementById('genre-fantasy').innerText = page.genres[0];
-        document.getElementById('genre-drama').innerText = page.genres[1];
-        document.getElementById('genre-action').innerText = page.genres[2];
-        document.getElementById('dynamic-synopsis').innerHTML = page.synopsisHTML;
-        
-        // Update Episode Section Header
-        document.getElementById('episodes-header').innerText = ui.episodes;
-        
-        // Render Episodes based on language
-        renderEpisodes(lang);
-        
-        // Update URL Context
-        window.location.hash = lang;
-    }
-
-    function renderEpisodes(lang) {
-        const list = document.getElementById('episode-list');
-        list.innerHTML = '';
-        const ui = LUMINUS_DB.ui[lang];
-        
-        // Sort keys mathematically
-        const epKeys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
-        const orderedKeys = isDescending ? epKeys.slice().reverse() : epKeys;
-
-        orderedKeys.forEach(key => {
-            const ep = LUMINUS_DB.library[key];
-            const isUpcoming = ep.status === 'upcoming';
-            const title = ep.name[lang];
-            const dateStr = ep.date[lang];
-            
-            if (isUpcoming) {
-                // Upcoming Episode Card
-                list.innerHTML += `
-                    <div class="episode-card upcoming-card cursor-not-allowed">
-                        <div class="ep-thumb aspect-video bg-zinc-800 flex items-center justify-center border border-zinc-700">
-                            <span class="text-xs font-bold text-zinc-600 uppercase tracking-widest">${ep.dateLabel}</span>
-                        </div>
-                        <div class="flex-grow min-w-0">
-                            <h4 class="font-bold text-gray-500 truncate group-hover:text-gray-400 transition-colors uppercase tracking-wider text-sm">${title}</h4>
-                            <p class="text-xs text-gray-600 mt-1 uppercase tracking-widest">${dateStr}</p>
-                        </div>
-                        <div class="text-xs font-bold text-gray-600 tracking-widest uppercase hidden md:block whitespace-nowrap">
-                            ${ui.comingSoon}
-                        </div>
-                    </div>`;
-            } else {
-                // Released Episode Card
-                list.innerHTML += `
-                    <a href="reader.html?ep=${key}#${lang}" class="episode-card group">
-                        <img src="${ep.thumb}" alt="${title}" class="ep-thumb group-hover:brightness-110 transition-all">
-                        <div class="flex-grow min-w-0">
-                            <h4 class="font-bold text-gray-300 truncate group-hover:text-white transition-colors uppercase tracking-wider text-sm">${title}</h4>
-                            <p class="text-xs text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
-                        </div>
-                    </a>`;
-            }
-        });
-    }
-
-    function toggleSort() {
-        isDescending = !isDescending;
-        const icon = document.getElementById('sort-icon-hero');
-        icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
-        const currentLang = window.location.hash.replace('#', '') || 'EN';
-        renderEpisodes(currentLang);
-    }
-
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
-        document.getElementById(`content-${tabId}`).classList.add('active');
-        document.getElementById(`tab-${tabId}`).classList.add('active-tab');
-    }
-
-    function navigateEpisode(epNumber) {
-        const currentLang = window.location.hash || '#EN';
-        window.location.href = `reader.html?ep=${epNumber}${currentLang}`;
-    }
-
-    // Lightbox Logic
-    function openLightbox(imgSrc) {
-        document.getElementById('lightbox-img').src = imgSrc;
-        document.getElementById('lightbox-overlay').classList.add('active');
-    }
-    function closeLightbox() {
-        document.getElementById('lightbox-overlay').classList.remove('active');
-    }
-
-    window.onload = () => {
-        const savedLang = localStorage.getItem('preferredLang');
-        const hashLang = window.location.hash.replace('#', '');
-        const finalLang = hashLang || savedLang || 'EN';
-        setLanguage(finalLang);
-    };
-
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('dragstart', e => e.preventDefault());
-</script>
-
-    <div id="lightbox-overlay" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" alt="Full Size View">
-    </div>
-
-        <footer class="w-full py-16 border-t border-gray-900 bg-black/50 backdrop-blur-md flex flex-col items-center">
+    <footer class="w-full py-16 border-t border-gray-900 bg-black/50 backdrop-blur-md flex flex-col items-center mt-12">
         <p class="text-[9px] text-gray-600 uppercase tracking-[0.4em] text-center px-6 leading-relaxed">
             Copyright 2026 © Eloirien. All Rights Reserved.
         </p>
-        </footer>
-    
+    </footer>
+
+    <div id="lightbox-overlay" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Full Size View">
+    </div>
+
+    <script>
+        let isDescending = true;
+
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLang', lang);
+            
+            const ui = LUMINUS_DB.ui[lang];
+            const page = LUMINUS_DB.pages.index[lang];
+            
+            document.querySelector('.nav-link-comics').innerText = ui.comics;
+            document.querySelector('.nav-link-about').innerText = ui.about;
+            document.getElementById('current-lang-label').innerText = lang;
+            
+            // Status and Genres 
+            document.getElementById('series-status').innerText = ui.status;
+            document.getElementById('genre-fantasy').innerText = page.genres[0];
+            document.getElementById('genre-drama').innerText = page.genres[1];
+            document.getElementById('genre-action').innerText = page.genres[2];
+            document.getElementById('dynamic-synopsis').innerHTML = page.synopsisHTML;
+            
+            // Tabs 
+            document.getElementById('tab-info').innerText = page.tabs[0];
+            document.getElementById('tab-episodes').innerText = page.tabs[1];
+            document.getElementById('tab-gallery').innerText = page.tabs[2];
+            
+            renderEpisodes(lang);
+            window.location.hash = lang;
+        }
+
+        function renderEpisodes(lang) {
+            const list = document.getElementById('episode-list');
+            list.innerHTML = '';
+            const ui = LUMINUS_DB.ui[lang];
+            
+            const epKeys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
+            const orderedKeys = isDescending ? epKeys.slice().reverse() : epKeys;
+
+            orderedKeys.forEach(key => {
+                const ep = LUMINUS_DB.library[key];
+                const isUpcoming = ep.status === 'upcoming';
+                const title = ep.name[lang];
+                const dateStr = ep.date[lang];
+                
+                if (isUpcoming) {
+                    list.innerHTML += `
+                        <div class="episode-card upcoming-card cursor-not-allowed flex flex-row items-center gap-4 p-4 rounded-2xl opacity-50">
+                            <div class="w-32 md:w-48 flex-shrink-0 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700 aspect-[16/9]">
+                                <span class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">${ep.dateLabel}</span>
+                            </div>
+                            <div class="flex-grow min-w-0 flex flex-col justify-center">
+                                <h4 class="font-bold text-gray-500 truncate uppercase tracking-wider text-xs md:text-sm">${title}</h4>
+                                <p class="text-[10px] text-gray-600 mt-1 uppercase tracking-widest">${dateStr}</p>
+                            </div>
+                            <div class="text-[10px] font-bold text-gray-600 tracking-widest uppercase hidden md:block whitespace-nowrap pr-4">
+                                ${ui.comingSoon}
+                            </div>
+                        </div>`;
+                } else {
+                    list.innerHTML += `
+                        <a href="reader.html?ep=${key}#${lang}" class="episode-card group flex flex-row items-center gap-4 p-4 rounded-2xl">
+                            <div class="w-32 md:w-48 flex-shrink-0 overflow-hidden rounded-lg border border-gray-800">
+                                <img src="${ep.thumb}" alt="${title}" class="w-full h-full object-cover group-hover:brightness-110 transition-all aspect-[16/9]">
+                            </div>
+                            <div class="flex-grow min-w-0 flex flex-col justify-center">
+                                <h4 class="font-bold text-gray-300 truncate group-hover:text-white transition-colors uppercase tracking-wider text-xs md:text-sm">${title}</h4>
+                                <p class="text-[10px] text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
+                            </div>
+                        </a>`;
+                }
+            });
+        }
+
+        function toggleSort() {
+            isDescending = !isDescending;
+            const icon = document.getElementById('sort-icon-hero');
+            icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
+            const currentLang = window.location.hash.replace('#', '') || 'EN';
+            renderEpisodes(currentLang);
+        }
+
+        function switchTab(tabId) {
+            // Hide all content blocks using Tailwind's 'hidden' class
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.add('hidden');
+                c.classList.remove('flex'); // Remove flex from info section if present
+            });
+            
+            // Reset all tab button styles
+            document.querySelectorAll('.tab-button').forEach(b => {
+                b.classList.remove('border-blue-600', 'text-white');
+                b.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show target content 
+            const targetContent = document.getElementById(`content-${tabId}`);
+            targetContent.classList.remove('hidden');
+            if (tabId === 'info') targetContent.classList.add('flex'); // Info uses flex column
+            
+            // Highlight target tab button
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+            activeTab.classList.add('border-blue-600', 'text-white');
+        }
+
+        function navigateEpisode(epNumber) {
+            const currentLang = window.location.hash || '#EN';
+            window.location.href = `reader.html?ep=${epNumber}${currentLang}`;
+        }
+
+        function openLightbox(imgSrc) {
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox-overlay').classList.add('active');
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox-overlay').classList.remove('active');
+        }
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem('preferredLang');
+            const hashLang = window.location.hash.replace('#', '');
+            const finalLang = hashLang || savedLang || 'EN';
+            setLanguage(finalLang);
+        };
+
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => e.preventDefault());
+    </script>
 </body>
 </html>
