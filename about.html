@@ -112,12 +112,10 @@
     </main>
 
         <script>
-            // 1. The Main Language Function
-            function setLanguage(lang) {
-            // Save to memory first
+           function setLanguage(lang) {
             localStorage.setItem('preferredLang', lang);
             
-            // Fetch from Universal Database
+            // Fetch from LUMINUS_DB
             const ui = LUMINUS_DB.ui[lang];
             const page = LUMINUS_DB.pages.about[lang];
             
@@ -126,16 +124,18 @@
             document.querySelector('.nav-link-comics').innerText = page.navComics;
             document.getElementById('current-lang-label').innerText = lang;
             
-            // Formatting and Injecting Creator Bio
-            const formattedCreator = page.creator
-                .replace(/\*\*(.*?)\*\*/g, '<em class="text-white">$1</em>')
-                .replace(/\*(.*?)\*/g, '<em class="text-gray-300 italic">$1</em>');
+            // Helper to format text (Bold & Italic)
+            const formatText = (rawText) => {
+                return rawText
+                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em class="text-gray-500 italic">$1</em>');
+            };
             
-            document.getElementById('text-creator').innerHTML = formattedCreator;
-            document.getElementById('text-silverstring').innerText = page.silverstring;
-            document.getElementById('text-bethlehem').innerText = page.bethlehem;
+            // Inject formatted content
+            document.getElementById('text-creator').innerHTML = formatText(page.creator);
+            document.getElementById('text-silverstring').innerHTML = formatText(page.silverstring);
+            document.getElementById('text-bethlehem').innerHTML = formatText(page.bethlehem);
         
-            // Update URL hash for visual consistency
             window.location.hash = lang;
             }
         
