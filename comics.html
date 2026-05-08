@@ -10,6 +10,32 @@
     <script src="content.js"></script>
     
     <style>
+       
+      /* Elegant Header Styling */
+      #page-title {
+          font-size: 10px; /* Smaller, sharper font */
+          font-weight: 900;
+          letter-spacing: 0.6em; /* Extreme tracking for elegance */
+          color: rgba(255, 255, 255, 0.9);
+          text-shadow: 0 0 15px rgba(59, 130, 246, 0.3); /* Subtle blue glow */
+          position: relative;
+          display: inline-block;
+          left: 50%;
+          transform: translateX(-50%);
+          margin-bottom: 4rem;
+      }
+      
+      #page-title::after {
+          content: '';
+          position: absolute;
+          bottom: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 40px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+      }
+       
         body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
         
         /* Navigation Pill */
@@ -92,8 +118,12 @@
         img { -webkit-user-drag: none; user-select: none; }
     </style>
 </head>
-<body>
-
+   <body>
+      
+   <div class="w-full text-center py-8">
+       <h2 id="page-title" class="uppercase">Archived Records</h2>
+   </div>
+   
     <div class="bg-wrapper"><div class="bg-blur"></div></div>
 
     <nav class="nav-container">
