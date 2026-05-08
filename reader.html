@@ -17,7 +17,7 @@
         .bottom-ui { transform: translateY(100%); }
         .ui-active { transform: translateY(0) !important; opacity: 1 !important; pointer-events: auto !important; }
         
-        /* Elegant Dropdowns (Hover-Only) */
+        /* Dropdowns: Hover-Only */
         .custom-lang-dropdown, .custom-ep-dropdown { position: relative; display: inline-block; }
         .lang-trigger, .ep-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
         .ep-trigger { background-color: transparent; border: none; color: white; padding: 6px 12px; }
@@ -35,9 +35,12 @@
         .custom-lang-dropdown:hover .lang-menu, .custom-ep-dropdown:hover .ep-menu { display: flex; }
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
 
-        /* Drawer & Layout */
+        /* RESTORED: Horizontal Thumbnail Drawer */
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
         #episode-drawer.open { transform: translateY(0); }
+        .drawer-scroll { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; scrollbar-width: none; -ms-overflow-style: none; }
+        .drawer-scroll::-webkit-scrollbar { display: none; }
+
         .webtoon-container { width: 100%; max-width: 800px; margin: 0 auto; line-height: 0; padding-bottom: 6rem; position: relative; z-index: 20; }
         img { width: 100%; display: block; -webkit-user-drag: none; background-color: #0a0a0a; }
 
@@ -96,12 +99,14 @@
         </nav>
     </div>
 
-    <div id="episode-drawer" class="fixed bottom-0 left-0 w-full bg-zinc-950 border-t border-zinc-800 p-6 max-h-[70vh] overflow-y-auto">
-        <div class="flex justify-between items-center mb-6 max-w-2xl mx-auto border-b border-zinc-800 pb-4">
-            <h3 class="text-white text-xs font-bold uppercase tracking-widest">Select Episode</h3>
-            <button onclick="toggleDrawer(event)" class="text-gray-500 hover:text-white text-xs font-bold tracking-widest">CLOSE &times;</button>
+    <div id="episode-drawer" class="fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-xl border-t border-zinc-800 p-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-white text-[10px] font-bold uppercase tracking-[0.2em]">Select Record</h3>
+                <button onclick="toggleDrawer(event)" class="text-gray-500 hover:text-white text-[10px] font-bold uppercase">&times; Close</button>
+            </div>
+            <div id="drawer-list" class="drawer-scroll"></div>
         </div>
-        <div id="drawer-episode-list" class="flex flex-col gap-4 max-w-2xl mx-auto pb-4"></div>
     </div>
 
     <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-blue-600 hover:bg-blue-500 p-3 btn-square shadow-[0_0_20px_rgba(59,130,246,0.4)] z-40 transition-colors">
@@ -130,27 +135,42 @@
             document.getElementById('ep-title').innerText = epData.name[lang];
             document.getElementById('bottom-ep-number').innerText = "EP #" + currentEp;
         }
-        renderMenus(lang);
+        populateMenus(lang);
     }
 
-    function renderMenus(lang) {
-        const drawerList = document.getElementById('drawer-episode-list');
+    // RESTORED: Side-Scrolling Thumbnail Logic
+    function populateMenus(lang) {
+        const list = document.getElementById('drawer-list');
         const dropdownList = document.getElementById('ep-dropdown-list');
-        drawerList.innerHTML = '';
+        list.innerHTML = '';
         dropdownList.innerHTML = '';
-        const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(b) - parseInt(a));
-        keys.forEach(key => {
-            const ep = LUMINUS_DB.library[key];
+        
+        const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
+        
+        keys.forEach(id => {
+            const ep = LUMINUS_DB.library[id];
+            const isActive = (id == currentEp);
             const isUpcoming = ep.status === 'upcoming';
-            const isActive = parseInt(key) === currentEp;
             const title = ep.name[lang];
+
+            // Top Dropdown
             if (isUpcoming) {
-                dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed">${ep.dateLabel} - UPCOMING</div>`;
-                drawerList.innerHTML += `<div class="flex items-center gap-4 opacity-40 cursor-not-allowed bg-zinc-900/50 p-3 rounded-md border border-zinc-800"><div class="w-24 md:w-32 flex-shrink-0 bg-zinc-800 rounded-md flex items-center justify-center border border-zinc-700 aspect-[16/9]"><span class="text-[8px] font-bold text-zinc-600 uppercase tracking-widest">${ep.dateLabel}</span></div><div class="flex-grow min-w-0"><h4 class="font-bold text-gray-500 truncate uppercase tracking-wider text-xs">${title}</h4><p class="text-[9px] text-gray-600 mt-1 uppercase tracking-widest">Awaiting Transmission</p></div></div>`;
+                dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed uppercase">${ep.dateLabel} - UPCOMING</div>`;
             } else {
-                dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${key})">${title}</div>`;
-                drawerList.innerHTML += `<div class="flex items-center gap-4 cursor-pointer group p-3 rounded-md border transition-all ${isActive ? 'bg-zinc-900 border-blue-900/50' : 'bg-zinc-900/50 border-zinc-800 hover:border-zinc-600'}" onclick="changeEpisode(${key})"><div class="w-24 md:w-32 flex-shrink-0 overflow-hidden rounded-md border border-gray-800"><img src="${ep.thumb}" alt="${title}" class="w-full h-full object-cover group-hover:brightness-110 transition-all aspect-[16/9]"></div><div class="flex-grow min-w-0"><h4 class="font-bold truncate uppercase tracking-wider text-xs transition-colors ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}">${title}</h4><p class="text-[9px] font-bold mt-1 uppercase tracking-widest transition-colors ${isActive ? 'text-blue-400' : 'text-gray-600 group-hover:text-blue-400'}">${ep.date[lang]}</p></div></div>`;
+                dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${id})">${title}</div>`;
             }
+
+            // Bottom Horizontal Drawer
+            list.innerHTML += `
+                <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'} ${isUpcoming ? 'opacity-30 cursor-not-allowed' : ''}" 
+                     onclick="${isUpcoming ? '' : `changeEpisode(${id})`}">
+                    <img src="${isUpcoming ? 'images/placeholders/coming_soon.webp' : ep.thumb}" 
+                         class="rounded-md border-2 ${isActive ? 'border-blue-500' : 'border-transparent group-hover:border-zinc-500'} transition shadow-lg aspect-[16/9] object-cover"
+                         onerror="this.src='images/placeholders/chibi_alice.webp';">
+                    <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold truncate">
+                        ${isUpcoming ? ep.dateLabel : title}
+                    </p>
+                </div>`;
         });
     }
 
@@ -161,6 +181,7 @@
         const nextEp = currentEp + 1;
         const hasPrev = LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released';
         const hasNext = LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released';
+        
         if (hasPrev) {
             prevBtn.classList.remove('opacity-30', 'cursor-not-allowed');
             prevBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(prevEp); };
@@ -168,6 +189,7 @@
             prevBtn.classList.add('opacity-30', 'cursor-not-allowed');
             prevBtn.onclick = (e) => { e.stopPropagation(); };
         }
+        
         if (hasNext) {
             nextBtn.classList.remove('opacity-30', 'cursor-not-allowed');
             nextBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(nextEp); };
@@ -182,7 +204,7 @@
         container.innerHTML = '';
         const epData = LUMINUS_DB.library[currentEp];
         if (epData && epData.status === 'released') {
-            // FIXED: Start from 0 and use simple index (e.g., 0.webp, 1.webp)
+            // FIXED: Start from 0
             for (let i = 0; i < epData.panels; i++) {
                 container.innerHTML += `<div class="comic-page"><img src="images/ep${currentEp}/${i}.webp" alt="Page ${i}" loading="lazy" onerror="this.onerror=null; this.src='images/placeholders/chibi_alice.webp'; this.classList.add('w-48','mx-auto','py-20','opacity-50');"></div>`;
             }
