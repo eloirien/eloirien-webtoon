@@ -19,7 +19,8 @@
         
         /* Unified Dropdown */
         .custom-lang-dropdown { position: relative; display: inline-block; }
-        .lang-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
+        .lang-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .lang-trigger:hover { background-color: rgba(59, 130, 246, 0.2); }
         .lang-menu { position: absolute; top: 100%; right: 0; padding-top: 10px; display: none; flex-direction: column; z-index: 100; width: 180px; }
         .lang-menu-content { background-color: #1a1a1a; border: 1px solid #333; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
         .lang-item { padding: 10px 12px; font-size: 11px; display: flex; align-items: center; gap: 10px; color: #E0E0E0; border-bottom: 1px solid #1f1f1f; transition: background 0.2s; }
@@ -29,7 +30,7 @@
 
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
         #episode-drawer.open { transform: translateY(0); }
-        .webtoon-container { width: 100%; max-width: 800px; margin: 0 auto; line-height: 0; }
+        .webtoon-container { width: 100%; max-width: 800px; margin: 0 auto; line-height: 0; padding-bottom: 6rem; }
         .panel-container { position: relative; width: 100%; }
         .ghost-layer { position: absolute; inset: 0; z-index: 5; background: transparent; }
         img { width: 100%; display: block; -webkit-user-drag: none; background-color: #0a0a0a; }
@@ -43,62 +44,57 @@
     <div id="global-click-zone" onclick="toggleUI()">
 
         <nav id="top-nav" class="immersive-ui top-ui fixed top-0 left-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center">
-        <a href="index.html" class="text-blue-400 font-bold text-[10px] tracking-widest" onclick="event.stopPropagation();">EXIT</a>
+            <a href="index.html" id="nav-home-text" class="text-blue-400 font-bold text-[10px] tracking-widest hover:text-white transition-colors uppercase" onclick="event.stopPropagation();">EXIT</a>
+            
+            <div class="text-center px-4 truncate" onclick="event.stopPropagation();">
+                <span id="ep-title" class="text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] truncate">LOADING...</span>
+            </div>
         
-        <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
-            <div class="lang-trigger flex items-center gap-2">
-                <span id="display-ep-title" class="text-white text-[10px] font-black uppercase tracking-[0.2em]">LOADING...</span>
-                <svg class="w-2 h-2 text-gray-500 fill-current" viewBox="0 0 24 24"><path d="M12 21l-12-18h24z"/></svg>
-            </div>
-            <div class="lang-menu">
-                <div id="ep-menu-content" class="lang-menu-content max-h-[60vh] overflow-y-auto">
+            <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
+                <div class="lang-trigger flex items-center gap-1.5">
+                    <svg class="w-3 h-3 text-blue-400 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+                    </svg>
+                    <span id="current-lang-label" class="text-[10px] font-bold text-blue-400">EN</span>
+                </div>
+                <div class="lang-menu">
+                    <div class="lang-menu-content">
+                        <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                        <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
-            </div>
-        </div>
-    
-        <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
-            <div class="lang-trigger flex items-center gap-1.5">
-                <svg class="w-3 h-3 text-blue-400 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
-                </svg>
-                <span id="current-lang-label" class="text-[10px] font-bold text-blue-400">EN</span>
-            </div>
-            <div class="lang-menu">
-                <div class="lang-menu-content">
-                    <div class="lang-item" onclick="changeLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
-                    <div class="lang-item" onclick="changeLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                    <div class="lang-item" onclick="changeLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                    <div class="lang-item" onclick="changeLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-        <main id="reader-main" class="webtoon-container"></main>
+        <main id="comic-container" class="webtoon-container"></main>
 
         <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4">
             <div class="max-w-md mx-auto flex items-center justify-between">
-                <button id="label-prev" class="text-[10px] font-bold text-gray-600 uppercase" onclick="event.stopPropagation();">Prev</button>
-                <div class="text-center cursor-pointer" onclick="toggleDrawer(event)">
-                    <span id="label-ep-small" class="text-[9px] text-gray-500 uppercase font-bold block tracking-tighter">Episode</span>
-                    <span class="text-xs font-bold text-white tracking-widest">#1</span>
+                <button id="btn-prev" class="text-[10px] font-bold text-gray-500 hover:text-white uppercase transition-all" onclick="event.stopPropagation();">&larr; Prev</button>
+                
+                <div class="text-center cursor-pointer group" onclick="toggleDrawer(event)">
+                    <span id="nav-episodes-text" class="text-[9px] text-gray-500 group-hover:text-blue-400 transition-colors uppercase font-bold block tracking-tighter">EPISODES</span>
+                    <span id="bottom-ep-number" class="text-xs font-bold text-white tracking-widest">#1</span>
                 </div>
-                <button id="label-next" class="px-6 py-2 bg-blue-600 rounded-md text-[10px] font-bold text-white uppercase" onclick="event.stopPropagation();">Next</button>
+                
+                <button id="btn-next" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full text-[10px] font-bold text-white uppercase shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all" onclick="event.stopPropagation();">Next &rarr;</button>
             </div>
         </nav>
     </div>
 
     <div id="episode-drawer" class="fixed bottom-0 left-0 w-full bg-zinc-900 border-t border-zinc-800 p-6 max-h-[60vh] overflow-y-auto">
-        <div class="flex justify-between items-center mb-6">
-            <h3 id="label-drawer-title" class="text-white text-xs font-bold uppercase tracking-widest">Episode List</h3>
-            <button onclick="toggleDrawer(event)" id="label-drawer-close" class="text-gray-500 text-xs font-bold">CLOSE</button>
+        <div class="flex justify-between items-center mb-6 max-w-2xl mx-auto">
+            <h3 class="text-white text-xs font-bold uppercase tracking-widest">Archive</h3>
+            <button onclick="toggleDrawer(event)" class="text-gray-500 hover:text-white text-xs font-bold tracking-widest transition-colors">CLOSE</button>
         </div>
-        <div id="drawer-list" class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+        <div id="drawer-episode-list" class="flex flex-col max-w-2xl mx-auto pb-4">
             </div>
     </div>
 
-    <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-white p-3 rounded-full shadow-2xl z-40">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-blue-600 hover:bg-blue-500 p-3 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.4)] z-40 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
     </button>
 
     <script>
@@ -121,11 +117,13 @@
         // Update Reader UI 
         document.getElementById('nav-home-text').innerText = ui.home;
         document.getElementById('nav-episodes-text').innerText = ui.episodes;
+        document.getElementById('current-lang-label').innerText = lang;
         
-        // Update Current Episode Title in Header
+        // Update Current Episode Title & Number
         const epData = LUMINUS_DB.library[currentEp];
         if (epData) {
             document.getElementById('ep-title').innerText = epData.name[lang];
+            document.getElementById('bottom-ep-number').innerText = "#" + currentEp;
         }
         
         renderDrawer(lang);
@@ -146,18 +144,50 @@
             
             if (isUpcoming) {
                 drawerList.innerHTML += `
-                    <div class="ep-row upcoming-row opacity-40 cursor-not-allowed border-b border-zinc-800 pb-3 mb-3">
+                    <div class="ep-row upcoming-row opacity-40 cursor-not-allowed border-b border-zinc-800 pb-4 mb-4">
                         <div class="text-[10px] text-zinc-500 font-bold mb-1 tracking-widest">${ep.dateLabel}</div>
                         <div class="text-sm text-zinc-400 font-bold tracking-wider uppercase">${title}</div>
                     </div>`;
             } else {
                 drawerList.innerHTML += `
-                    <div class="ep-row cursor-pointer group border-b border-zinc-800 pb-3 mb-3 transition-colors ${isActive ? 'bg-zinc-900/50 -mx-4 px-4 rounded' : ''}" onclick="changeEpisode(${key})">
-                        <div class="text-[10px] font-bold mb-1 tracking-widest ${isActive ? 'text-blue-400' : 'text-gray-500 group-hover:text-blue-400'}">${ep.date[lang]}</div>
-                        <div class="text-sm font-bold tracking-wider uppercase ${isActive ? 'text-white' : 'text-gray-300 group-hover:text-white'}">${title}</div>
+                    <div class="ep-row cursor-pointer group border-b border-zinc-800 pb-4 mb-4 transition-colors ${isActive ? 'bg-zinc-800/80 -mx-4 px-4 rounded-lg' : ''}" onclick="changeEpisode(${key})">
+                        <div class="text-[10px] font-bold mb-1 tracking-widest ${isActive ? 'text-blue-400' : 'text-gray-500 group-hover:text-blue-400 transition-colors'}">${ep.date[lang]}</div>
+                        <div class="text-sm font-bold tracking-wider uppercase ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white transition-colors'}">${title}</div>
                     </div>`;
             }
         });
+    }
+
+    function updateNavButtons() {
+        const prevBtn = document.getElementById('btn-prev');
+        const nextBtn = document.getElementById('btn-next');
+        
+        const prevEp = currentEp - 1;
+        const nextEp = currentEp + 1;
+        
+        // Check if previous and next episodes exist and are released
+        const hasPrev = LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released';
+        const hasNext = LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released';
+        
+        // Logic for Prev Button
+        if (hasPrev) {
+            prevBtn.style.opacity = '1';
+            prevBtn.style.pointerEvents = 'auto';
+            prevBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(prevEp); };
+        } else {
+            prevBtn.style.opacity = '0.3';
+            prevBtn.style.pointerEvents = 'none';
+        }
+        
+        // Logic for Next Button
+        if (hasNext) {
+            nextBtn.style.opacity = '1';
+            nextBtn.style.pointerEvents = 'auto';
+            nextBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(nextEp); };
+        } else {
+            nextBtn.style.opacity = '0.3';
+            nextBtn.style.pointerEvents = 'none';
+        }
     }
 
     function loadPages() {
@@ -169,7 +199,6 @@
             const totalPanels = epData.panels;
             
             for (let i = 1; i <= totalPanels; i++) {
-                // Ensure double-digit formatting for image files (e.g., 01.webp, 02.webp)
                 const pageNum = i.toString().padStart(2, '0');
                 const imgPath = `images/ep${currentEp}/${pageNum}.webp`;
                 
@@ -206,29 +235,25 @@
     }
 
     function initReader() {
-        // Parse the episode from URL
         const epParam = getQueryParam('ep');
         currentEp = epParam ? parseInt(epParam) : 1;
         
-        // Ensure episode exists in database, fallback to 1
         if (!LUMINUS_DB.library[currentEp]) {
             currentEp = 1;
         }
 
-        // Parse Language
         const savedLang = localStorage.getItem('preferredLang');
         const hashLang = window.location.hash.replace('#', '');
         const finalLang = hashLang || savedLang || 'EN';
         
         setLanguage(finalLang);
+        updateNavButtons();
         loadPages();
     }
 
     window.onload = initReader;
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('dragstart', e => e.preventDefault());
-</script>
-    
+    </script>
 </body>
-    
 </html>
