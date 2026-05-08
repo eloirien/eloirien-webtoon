@@ -25,14 +25,14 @@
         .lang-menu { right: 0; width: 180px; }
         .ep-menu { left: 50%; transform: translateX(-50%); width: 220px; max-height: 50vh; overflow-y: auto; }
         .lang-menu-content, .ep-menu-content { background-color: #1a1a1a; border: 1px solid #333; border-radius: 6px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
-        .lang-item, .ep-item { padding: 10px 12px; font-size: 11px; display: flex; align-items: center; gap: 10px; color: #E0E0E0; border-bottom: 1px solid #1f1f1f; transition: background 0.2s; cursor: pointer; }
+        .lang-item, .ep-item { padding: 12px 16px; font-size: 11px; display: flex; align-items: center; gap: 10px; color: #E0E0E0; border-bottom: 1px solid #1f1f1f; transition: background 0.2s; cursor: pointer; }
         .ep-item { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
         .lang-item:hover, .ep-item:hover { background-color: #2d2d2d; color: #3b82f6; }
         .ep-item.active-ep { background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; }
         .custom-lang-dropdown:hover .lang-menu, .custom-ep-dropdown:hover .ep-menu { display: flex; }
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
 
-        /* Horizontal Drawer */
+        /* Drawer */
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
         #episode-drawer.open { transform: translateY(0); }
         .drawer-scroll { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; scrollbar-width: none; }
@@ -126,6 +126,8 @@
         const ui = LUMINUS_DB.ui[lang];
         document.getElementById('nav-home-text').innerText = ui.home;
         document.getElementById('current-lang-label').innerText = lang;
+        
+        // REINFORCED SYNC: Update both UI titles immediately
         syncEpisodeInfo();
         populateMenus(lang);
         loadPages(); 
@@ -134,7 +136,9 @@
     function syncEpisodeInfo() {
         const epData = LUMINUS_DB.library[currentEp];
         if (epData) {
+            // SYNC TOP: Corrects the mismatch
             document.getElementById('ep-title').innerText = epData.name[currentLang];
+            // SYNC BOTTOM:
             document.getElementById('bottom-ep-number').innerText = "EP #" + currentEp;
         }
     }
@@ -145,16 +149,20 @@
         list.innerHTML = '';
         dropdownList.innerHTML = '';
         const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
+        
         keys.forEach(id => {
             const ep = LUMINUS_DB.library[id];
-            const isActive = (id == currentEp);
+            const isActive = (parseInt(id) === currentEp); // Strict Sync
             const isUpcoming = ep.status === 'upcoming';
             const title = ep.name[lang];
+            
+            // Sync Dropdown Active State
             if (isUpcoming) {
                 dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed uppercase">${ep.dateLabel} - UPCOMING</div>`;
             } else {
                 dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${id})">${title}</div>`;
             }
+            
             list.innerHTML += `
                 <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'} ${isUpcoming ? 'opacity-30 cursor-not-allowed' : ''}" 
                      onclick="${isUpcoming ? '' : `changeEpisode(${id})`}">
@@ -190,21 +198,20 @@
         }
     }
 
-    // SENTRY: "Rex Alice" Wait Logic
+    // REFINED REX ALICE TYPOGRAPHY
     function handleImageError(img) {
-    if (img.complete && img.naturalWidth === 0) {
-        const container = document.getElementById('comic-container');
-        const ui = LUMINUS_DB.ui[currentLang];
-        
-        container.innerHTML = `
-            <div class="flex flex-col items-center justify-center py-24 px-10 text-center animate-fade-in">
-                <img src="images/placeholders/chibi-alice.png" class="w-64 h-auto mb-8 shadow-2xl rounded-xl" alt="Alice">
-                <h2 class="text-white text-xs font-black uppercase tracking-[0.3em] mb-2">${ui.errTitle}</h2>
-                <p class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">${ui.errSub}</p>
-                <button onclick="location.reload()" class="mt-8 text-[10px] text-blue-500 border border-blue-500/30 px-6 py-2 rounded-md uppercase font-bold transition-all hover:bg-blue-500/10 hover:border-blue-500">
-                    ${ui.errRetry}
-                </button>
-            </div>`;
+        if (img.complete && img.naturalWidth === 0) {
+            const container = document.getElementById('comic-container');
+            const ui = LUMINUS_DB.ui[currentLang];
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-32 px-10 text-center animate-fade-in">
+                    <img src="images/placeholders/chibi-alice.png" class="w-64 h-auto mb-10 shadow-2xl rounded-xl" alt="Lost Alice">
+                    <h2 class="text-white text-sm font-black uppercase tracking-[0.4em] mb-4 leading-relaxed">${ui.errTitle}</h2>
+                    <p class="text-[11px] font-bold tracking-[0.2em] text-gray-500 uppercase max-w-xs leading-loose">${ui.errSub}</p>
+                    <button onclick="location.reload()" class="mt-12 text-[10px] text-blue-500 border border-blue-500/30 px-6 py-2 rounded-md uppercase font-black tracking-widest transition-all hover:bg-blue-500/10 hover:border-blue-500">
+                        ${ui.errRetry}
+                    </button>
+                </div>`;
         }
     }
 
@@ -236,26 +243,26 @@
         else btn.classList.remove('show-btn');
     }
 
-    // Mobile Swipe Sentry
+    // CONNECTED MOBILE SWIPE
     function handleSwipe() {
-        const threshold = 100;
+        const threshold = 80;
         const diff = touchStartX - touchEndX;
         if (Math.abs(diff) > threshold) {
-            if (diff > 0) { // Swipe Left -> Next
+            if (diff > 0) { // Swipe Left -> NEXT
                 const nextEp = currentEp + 1;
                 if (LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released') changeEpisode(nextEp);
-            } else { // Swipe Right -> Prev
+            } else { // Swipe Right -> PREV
                 const prevEp = currentEp - 1;
                 if (LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released') changeEpisode(prevEp);
             }
         }
     }
 
-    document.getElementById('global-click-zone').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    document.getElementById('global-click-zone').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
     document.getElementById('global-click-zone').addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
-    });
+    }, {passive: true});
 
     function toggleDrawer(e) { if(e) e.stopPropagation(); document.getElementById('episode-drawer').classList.toggle('open'); }
     function teleportToTop(e) { e.stopPropagation(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
