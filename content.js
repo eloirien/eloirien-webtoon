@@ -79,7 +79,7 @@ const LUMINUS_DB = {
             status: "released",
             name: { EN: "02 - Friend (Part 1)", ID: "02 - Teman (Bagian 1)", JP: "02 - 友 (前編)", KR: "02 - 친구 (1부)" },
             date: { EN: "Apr 23, 2026", ID: "23 Apr 2026", JP: "2026年04月23日", KR: "2026년 04월 23일" },
-            panels: 15,
+            panels: 23,
             thumb: "images/ep6-thumb.webp"
         },
         7: {
