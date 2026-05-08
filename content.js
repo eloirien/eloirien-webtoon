@@ -86,24 +86,25 @@ const LUMINUS_DB = {
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">우리의 씨름은 혈과 육을 상대하는 것이 아니요 통치자들과 권세들과 이 어둠의 세상 주관자들과 하늘에 있는 악의 영들을 상대함이라.</em>` 
             }
         },
+        // Corrected about section for content.js
         about: {
             EN: {
                 navHome: "home", navComics: "comics",
                 creator: "**As a passionate storyteller with more than three years of experience creating digital comics and illustrations, Eloirien's goal is to tell stories that touch souls and hearts for the glory of God.**\n\n*I'm truly inspired by the greatest storyteller of all time: Jesus Christ. For me, every brushstroke is a prayer. I hope my art will be a blessing to you as much as it is a blessing to me.*",
-                silverstring: **"Silverstring is a Bible-inspired fantasy that delves into the struggle for identity and the weight of spiritual warfare.**\n\n*Silverstring is a passion project that I do on the side, in my free time, and completely solo right now, so updates might be slow and irregular. Still, I'll do my best to continue working on it.*",
+                silverstring: "**Silverstring is a Bible-inspired fantasy that delves into the struggle for identity and the weight of spiritual warfare.**\n\n*Silverstring is a passion project that I do on the side, in my free time, and completely solo right now, so updates might be slow and irregular. Still, I'll do my best to continue working on it.*",
                 bethlehem: "Project Bethlehem serves as the creative umbrella for the independent intellectual properties developed by Eloirien."
             },
             ID: {
                 navHome: "home", navComics: "komik",
                 creator: "**Sebagai pencerita yang penuh dengan passion, dengan lebih dari tiga tahun pengalaman menciptakan komik digital dan ilustrasi, impian Eloirien adalah menceritakan kisah yang menyentuh hati dan jiwa demi kemuliaan Tuhan.**\n\n*Saya sangat terinspirasi oleh pencerita terhebat sepanjang masa: Yesus Kristus. Bagi saya, setiap sapuan kuas adalah doa. Saya berharap karya saya menjadi berkat bagi Anda sebagaimana ia menjadi berkat bagi saya.*",
-                silverstring: **"Silverstring adalah sebuah fantasi bertemakan Alkitab yang mendalami pergumulan identitas dan beratnya peperangan rohani.**\n\n*Silverstring adalah passion project yang saya kerjakan sebagai sampingan di waktu luang. Saat ini saya mengerjakannya sepenuhnya sendirian, jadi jadwal updatenya mungkin terasa lambat dan tidak menentu. Meski begitu, saya akan berusaha sebaik mungkin untuk terus melanjutkan proyek ini!*",
+                silverstring: "**Silverstring adalah sebuah fantasi bertemakan Alkitab yang mendalami pergumulan identitas dan beratnya peperangan rohani.**\n\n*Silverstring adalah passion project yang saya kerjakan sebagai sampingan di waktu luang. Saat ini saya mengerjakannya sepenuhnya sendirian, jadi jadwal updatenya mungkin terasa lambat dan tidak menentu. Meski begitu, saya akan berusaha sebaik mungkin untuk terus melanjutkan proyek ini!*",
                 bethlehem: "Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien."
             },
             JP: {
                 navHome: "ホーム", navComics: "コミック",
                 creator: "**デジタルコミックやイラスト制作で3年以上の経験を持つストーリーテラーとして、Eloirienの目標は神の栄光のために魂と心に響く物語を伝えることです。**\n\n*私は史上最高のストーリーテラーであるイエス・キリストから真にインスピレーションを受けています。私にとって、すべての筆致は祈りです。私の作品が私にとっての祝福であるのと同じくらい、あなたにとっても祝福となることを願っています。*",
                 silverstring: "**「Silverstring」は、聖書にインスパイアされたファンタジーであり、アイデンティティを懸けた葛藤と、霊的戦いの重みを深く描き出しています。**\n\n*「Silverstring」は、私が空いた時間に個人で制作している情熱プロジェクト（パッションプロジェクト）です。現在はすべて一人で作業しているため、更新が遅れたり不定期になったりするかもしれません。それでも、描き続けられるよう精一杯頑張りますので、どうぞよろしくお願いいたします。*",
-                bethlehem: "プロジェクト・ベツレヘムは、Eloirienが展開するインディーIPのクリエイティブ・アンブレラ。"
+                bethlehem: "プロジェクト・ベツレヘムは、Eloirienが展開するインディーIP의 크리에이티브 우산。"
             },
             KR: {
                 navHome: "홈", navComics: "코믹스",
