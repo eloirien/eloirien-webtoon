@@ -25,7 +25,7 @@
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
-        /* Unified Button Sizing */
+        /* Unified Button Sizing & Glows */
         .btn-action-size { width: 110px; padding-top: 0.5rem; padding-bottom: 0.5rem; text-align: center; }
         .btn-read { transition: all 0.3s ease; }
         .btn-read:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); transform: translateY(-1px); }
@@ -35,6 +35,9 @@
         /* Content Cards */
         .episode-card { background-color: #1a1a1a; border: 1px solid #2d2d2d; transition: all 0.2s; width: 100%; max-width: 42rem; }
         .episode-card:hover { transform: scale(1.01); border-color: #3b82f6; }
+        
+        /* The Orange Outline Fix */
+        .card-coming-soon { border-color: #2d2d2d; }
         .card-coming-soon:hover { border-color: #f59e0b !important; box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
 
         /* Hero */
@@ -128,10 +131,10 @@
         <section id="content-episodes" class="tab-content hidden w-full">
             <div class="flex flex-col items-center mt-8 px-4 w-full">
                 <div class="flex flex-row gap-3 justify-center w-full max-w-[400px]">
-                    <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-lg truncate">
+                    <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-lg truncate btn-read">
                         Read First
                     </button>
-                    <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">
+                    <button onclick="navigateEpisode('newest')" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">
                         Read Newest
                     </button>
                 </div>
@@ -212,8 +215,9 @@
                 const dateStr = ep.date[lang];
                 
                 if (isUpcoming) {
+                    // RESTORED: Orange Notify Button & Orange Hover Card
                     list.innerHTML += `
-                        <div class="episode-card upcoming-card cursor-not-allowed flex flex-row items-center gap-4 p-4 rounded-2xl opacity-50">
+                        <div class="episode-card card-coming-soon flex flex-row items-center gap-4 p-4 rounded-2xl opacity-70 cursor-not-allowed">
                             <div class="w-32 md:w-48 flex-shrink-0 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700 aspect-[16/9]">
                                 <span class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">${ep.dateLabel}</span>
                             </div>
@@ -221,19 +225,23 @@
                                 <h4 class="font-bold text-gray-500 truncate uppercase tracking-wider text-xs md:text-sm">${title}</h4>
                                 <p class="text-[10px] text-gray-600 mt-1 uppercase tracking-widest">${dateStr}</p>
                             </div>
-                            <div class="text-[10px] font-bold text-gray-600 tracking-widest uppercase hidden md:block whitespace-nowrap pr-4">
-                                ${ui.comingSoon}
+                            <div class="hidden md:flex items-center pr-4">
+                                <button class="btn-action-size btn-notify rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">${ui.notify}</button>
                             </div>
                         </div>`;
                 } else {
+                    // RESTORED: Blue Read Button inside the card
                     list.innerHTML += `
-                        <a href="reader.html?ep=${key}#${lang}" class="episode-card group flex flex-row items-center gap-4 p-4 rounded-2xl">
+                        <a href="reader.html?ep=${key}#${lang}" class="episode-card group flex flex-row items-center gap-4 p-4 rounded-2xl relative">
                             <div class="w-32 md:w-48 flex-shrink-0 overflow-hidden rounded-lg border border-gray-800">
                                 <img src="${ep.thumb}" alt="${title}" class="w-full h-full object-cover group-hover:brightness-110 transition-all aspect-[16/9]">
                             </div>
                             <div class="flex-grow min-w-0 flex flex-col justify-center">
                                 <h4 class="font-bold text-gray-300 truncate group-hover:text-white transition-colors uppercase tracking-wider text-xs md:text-sm">${title}</h4>
                                 <p class="text-[10px] text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
+                            </div>
+                            <div class="hidden md:flex items-center pr-4">
+                                <div class="btn-action-size btn-read bg-blue-600 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center">READ</div>
                             </div>
                         </a>`;
                 }
@@ -249,31 +257,36 @@
         }
 
         function switchTab(tabId) {
-            // Hide all content blocks using Tailwind's 'hidden' class
             document.querySelectorAll('.tab-content').forEach(c => {
                 c.classList.add('hidden');
-                c.classList.remove('flex'); // Remove flex from info section if present
+                c.classList.remove('flex'); 
             });
             
-            // Reset all tab button styles
             document.querySelectorAll('.tab-button').forEach(b => {
                 b.classList.remove('border-blue-600', 'text-white');
                 b.classList.add('border-transparent', 'text-gray-500');
             });
             
-            // Show target content 
             const targetContent = document.getElementById(`content-${tabId}`);
             targetContent.classList.remove('hidden');
-            if (tabId === 'info') targetContent.classList.add('flex'); // Info uses flex column
+            if (tabId === 'info') targetContent.classList.add('flex'); 
             
-            // Highlight target tab button
             const activeTab = document.getElementById(`tab-${tabId}`);
             activeTab.classList.remove('border-transparent', 'text-gray-500');
             activeTab.classList.add('border-blue-600', 'text-white');
         }
 
+        // RESTORED: Dynamic "Read Newest" Logic
         function navigateEpisode(epNumber) {
             const currentLang = window.location.hash || '#EN';
+            
+            if (epNumber === 'newest') {
+                // Find all keys that are released, sort them, and pick the highest
+                const releasedKeys = Object.keys(LUMINUS_DB.library).filter(k => LUMINUS_DB.library[k].status === 'released');
+                const sortedKeys = releasedKeys.map(Number).sort((a, b) => b - a);
+                epNumber = sortedKeys[0] || 1; // Fallback to 1 if nothing is released
+            }
+            
             window.location.href = `reader.html?ep=${epNumber}${currentLang}`;
         }
 
