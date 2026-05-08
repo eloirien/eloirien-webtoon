@@ -42,26 +42,36 @@
     <div id="global-click-zone" onclick="toggleUI()">
 
         <nav id="top-nav" class="immersive-ui top-ui fixed top-0 left-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center">
-            <a href="index.html" class="text-blue-400 font-bold text-[10px] tracking-widest" onclick="event.stopPropagation();">EXIT</a>
-            
-            <div class="text-center" onclick="event.stopPropagation();">
-                <select id="episode-selector" onchange="changeEpisode(this.value)" 
-                        class="bg-transparent text-white text-[10px] font-black uppercase tracking-[0.2em] focus:outline-none cursor-pointer text-center">
-                    </select>
-            </div>
+        <a href="index.html" class="text-blue-400 font-bold text-[10px] tracking-widest" onclick="event.stopPropagation();">EXIT</a>
         
-            <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
-                <div class="lang-trigger"><span id="current-lang-label" class="text-[10px] font-bold text-blue-400">EN</span></div>
-                <div class="lang-menu">
-                    <div class="lang-menu-content">
-                        <div class="lang-item" onclick="changeLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
-                        <div class="lang-item" onclick="changeLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                        <div class="lang-item" onclick="changeLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                        <div class="lang-item" onclick="changeLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
+        <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
+            <div class="lang-trigger flex items-center gap-2">
+                <span id="display-ep-title" class="text-white text-[10px] font-black uppercase tracking-[0.2em]">LOADING...</span>
+                <svg class="w-2 h-2 text-gray-500 fill-current" viewBox="0 0 24 24"><path d="M12 21l-12-18h24z"/></svg>
+            </div>
+            <div class="lang-menu">
+                <div id="ep-menu-content" class="lang-menu-content max-h-[60vh] overflow-y-auto">
                     </div>
+            </div>
+        </div>
+    
+        <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
+            <div class="lang-trigger flex items-center gap-1.5">
+                <svg class="w-3 h-3 text-blue-400 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+                </svg>
+                <span id="current-lang-label" class="text-[10px] font-bold text-blue-400">EN</span>
+            </div>
+            <div class="lang-menu">
+                <div class="lang-menu-content">
+                    <div class="lang-item" onclick="changeLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
+                    <div class="lang-item" onclick="changeLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
+                    <div class="lang-item" onclick="changeLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                    <div class="lang-item" onclick="changeLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
         <main id="reader-main" class="webtoon-container"></main>
 
@@ -77,17 +87,13 @@
         </nav>
     </div>
 
-    <div id="episode-drawer" class="fixed bottom-0 left-0 w-full bg-zinc-900 border-t border-zinc-800 p-6 max-h-[50vh] overflow-y-auto">
+    <div id="episode-drawer" class="fixed bottom-0 left-0 w-full bg-zinc-900 border-t border-zinc-800 p-6 max-h-[60vh] overflow-y-auto">
         <div class="flex justify-between items-center mb-6">
             <h3 id="label-drawer-title" class="text-white text-xs font-bold uppercase tracking-widest">Episode List</h3>
-            <button onclick="toggleDrawer(event)" id="label-drawer-close" class="text-gray-500 text-xs">CLOSE</button>
+            <button onclick="toggleDrawer(event)" id="label-drawer-close" class="text-gray-500 text-xs font-bold">CLOSE</button>
         </div>
-        <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-            <div class="flex-shrink-0 w-32 group cursor-pointer opacity-100" onclick="toggleDrawer(event)">
-                <img src="images/ep1-thumb.webp" class="rounded border-2 border-blue-500 transition shadow-lg">
-                <p id="label-ep1-name" class="text-[9px] mt-2 text-gray-400 uppercase font-bold">Prologue: Storm</p>
+        <div id="drawer-list" class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
             </div>
-        </div>
     </div>
 
     <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-white p-3 rounded-full shadow-2xl z-40">
@@ -95,80 +101,95 @@
     </button>
 
     <script>
-      
-        // 1. CONFIGURATION: Add your episode details here
+        // 1. CONFIGURATION
         const library = {
-            1: { name: "Prologue: Storm", panels: 22 },
-            2: { name: "Prologue: The King", panels: 18 },
-            3: { name: "Prologue: The Cup", panels: 20 },
-            // Just add more lines here as you release them!
+            1: { name: "Prologue: Storm", panels: 22, thumb: "images/ep1-thumb.webp" },
+            2: { name: "Prologue: The King", panels: 18, thumb: "images/ep2-thumb.webp" },
+            3: { name: "Prologue: The Cup", panels: 20, thumb: "images/ep3-thumb.webp" }
         };
     
-        const totalEpisodesReleased = Object.keys(library).length;
+        const uiTranslations = {
+            EN: { prev: "Prev", next: "Next", epLabel: "Episode", listTitle: "Episode List", close: "Close" },
+            ID: { prev: "Sebm", next: "Lanjut", epLabel: "Episode", listTitle: "Daftar Episode", close: "Tutup" },
+            JP: { prev: "前へ", next: "次へ", epLabel: "エピソード", listTitle: "エピソード一覧", close: "閉じる" },
+            KR: { prev: "이전", next: "다음", epLabel: "에피소드", listTitle: "에피소드 목록", close: "닫기" }
+        };
     
         // 2. STATE LOGIC
         const urlParams = new URLSearchParams(window.location.search);
         let currentEp = parseInt(urlParams.get('ep')) || 1;
-        let currentLang = window.location.hash.replace('#', '') || 'EN';
+        let currentLang = window.location.hash.replace('#', '') || localStorage.getItem('preferredLang') || 'EN';
     
         function initReader() {
-            populateSelector();
+            populateEpisodeMenu();
+            populateDrawer();
             changeLanguage(currentLang);
         }
     
-        function populateSelector() {
-            const selector = document.getElementById('episode-selector');
-            selector.innerHTML = '';
-            for (let i = 1; i <= totalEpisodesReleased; i++) {
-                const opt = document.createElement('option');
-                opt.value = i;
-                // Clean look: "01. PROLOGUE: STORM"
-                opt.innerHTML = `${String(i).padStart(2, '0')}. ${library[i].name.toUpperCase()}`;
-                if (i === currentEp) opt.selected = true;
-                selector.appendChild(opt);
-            }
+        // Fills the Top Nav Dropdown
+        function populateEpisodeMenu() {
+            const menu = document.getElementById('ep-menu-content');
+            menu.innerHTML = '';
+            Object.keys(library).forEach(id => {
+                const num = String(id).padStart(2, '0');
+                menu.innerHTML += `
+                    <div class="lang-item ${id == currentEp ? 'text-blue-400 font-bold' : ''}" onclick="changeEpisode(${id})">
+                        ${num}. ${library[id].name.toUpperCase()}
+                    </div>`;
+            });
         }
     
-        // REINFORCED changeLanguage
-        function changeLanguage(lang) {
-            localStorage.setItem('preferredLang', lang); // Save choice to memory
-            currentLang = lang;
-            document.getElementById('current-lang-label').innerText = lang;
-            window.location.hash = lang;
-            loadPanels(); // Your function that fetches from /episodes/ep1/ etc.
+        // Fills the Bottom Drawer Thumbnails
+        function populateDrawer() {
+            const list = document.getElementById('drawer-list');
+            list.innerHTML = '';
+            Object.keys(library).forEach(id => {
+                const isActive = (id == currentEp);
+                list.innerHTML += `
+                    <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'}" onclick="changeEpisode(${id})">
+                        <img src="${library[id].thumb}" class="rounded border-2 ${isActive ? 'border-blue-500' : 'border-transparent'} transition shadow-lg">
+                        <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold">
+                            ${library[id].name}
+                        </p>
+                    </div>`;
+            });
         }
-        
-        // REINFORCED window.onload
-        window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            currentEp = parseInt(urlParams.get('ep')) || 1; // Pull episode from URL
-        
-            const savedLang = localStorage.getItem('preferredLang');
-            const hashLang = window.location.hash.replace('#', '');
-            const finalLang = hashLang || savedLang || 'EN';
+    
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLang', lang);
+            currentLang = lang;
+            window.location.hash = lang;
+            document.getElementById('current-lang-label').innerText = lang;
             
-            changeLanguage(finalLang);
-            if (typeof populateSelector === 'function') populateSelector();
-        };
+            // Update Static UI Text
+            const ui = uiTranslations[lang] || uiTranslations.EN;
+            document.getElementById('label-prev').innerText = ui.prev;
+            document.getElementById('label-next').innerText = ui.next;
+            document.getElementById('label-ep-small').innerText = ui.epLabel;
+            document.getElementById('label-drawer-title').innerText = ui.listTitle;
+            document.getElementById('label-drawer-close').innerText = ui.close;
+    
+            loadPanels();
+        }
     
         function loadPanels() {
             const readerMain = document.getElementById('reader-main');
+            const epData = library[currentEp] || library[1];
+            
+            // Update Dynamic Title
+            document.getElementById('display-ep-title').innerText = epData.name;
+            document.querySelector('.bottom-ui .text-white').innerText = `#${currentEp}`;
+            
             readerMain.innerHTML = '';
             
-            const epData = library[currentEp];
-            
-            // SENTRY LOGIC: Use placeholder for JP/KR if not ready
-            const isPlaceholder = (currentLang === 'JP' || currentLang === 'KR');
-    
-            if (isPlaceholder) {
+            // SENTRY: Placeholder for JP/KR
+            if (currentLang === 'JP' || currentLang === 'KR') {
                 const path = (currentLang === 'JP') ? 'images/tl-JP.webp' : 'images/tl-KR.webp';
                 readerMain.innerHTML = `<div class="panel-container"><img src="${path}" alt="Placeholder"><div class="ghost-layer"></div></div>`;
             } else {
-                // DYNAMIC LOOP: images/episodes/ep1/ep1_01_EN.webp
                 for (let i = 1; i <= epData.panels; i++) {
                     const pageNum = i.toString().padStart(2, '0');
                     const imgPath = `images/episodes/ep${currentEp}/ep${currentEp}_${pageNum}_${currentLang}.webp`;
-                    
                     readerMain.innerHTML += `
                         <div class="panel-container">
                             <img src="${imgPath}" alt="Page ${pageNum}" loading="lazy" onerror="this.src='images/placeholders/chibi_alice.webp'; this.classList.add('w-48','mx-auto','py-20','opacity-50');">
@@ -176,16 +197,13 @@
                         </div>`;
                 }
             }
-            
-            // Update Bottom Nav Number
-            document.querySelector('.bottom-ui .text-white').innerText = `#${currentEp}`;
         }
     
         function changeEpisode(newEp) {
             window.location.href = `reader.html?ep=${newEp}#${currentLang}`;
         }
     
-        // IMMERSIVE UI LOGIC
+        // UI LOGIC
         let uiVisible = false;
         function toggleUI() {
             uiVisible = !uiVisible;
@@ -197,14 +215,20 @@
         }
     
         function toggleDrawer(e) {
-            e.stopPropagation();
+            if(e) e.stopPropagation();
             document.getElementById('episode-drawer').classList.toggle('open');
+        }
+    
+        function teleportToTop(e) {
+            e.stopPropagation(); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     
         window.onload = initReader;
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
-
     </script>
+    
 </body>
+    
 </html>
