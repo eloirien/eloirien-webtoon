@@ -1,26 +1,43 @@
 // UNIVERSAL LANGUAGE & EPISODE DATABASE
 const LUMINUS_DB = {
-    ui: {
-        EN: { home: "home", comics: "comics", about: "about", status: "Main Story in Progress", comingSoon: "Coming soon", notify: "Notify", episodes: "EPISODES", 
-            errTitle: "OH, NO! Alice got lost!",
-            errSub: "We're helping her find the way home...",
-            errRetry: "Deploy Rescue Mission"},
-        
-        ID: { home: "beranda", comics: "komik", about: "tentang", status: "Cerita Utama Berjalan", comingSoon: "Segera hadir", notify: "Beritahu", episodes: "EPISODE" ,
-            errTitle: "OH, TIDAK! Alice tersesat!",
-            errSub: "Kami sedang membantunya menemukan jalan pulang...",
-            errRetry: "Kerahkan Misi Penyelamatan"},
-        
-        JP: { home: "ホーム", comics: "コミック", about: "概要", status: "連載中", comingSoon: "近日公開", notify: "通知を受け取る", episodes: "エピソード" ,
-            errTitle: "大変！アリスが迷子になっちゃった！",
-            errSub: "帰り道を探してあげているところです...",
-            errRetry: "救出部隊を派遣する"},
-        
-        KR: { home: "홈", comics: "코믹스", about: "정보", status: "연재 중", comingSoon: "곧 공개", notify: "알림 받기", episodes: "에피소드",
-            errTitle: "이런! 앨리스가 길을 잃었어요!",
-            errSub: "집으로 돌아갈 수 있도록 돕는 중입니다...",
-            errRetry: "구조 요원 투입"}
-    },
+        ui: {
+            EN: { 
+                home: "home", comics: "comics", about: "about", status: "Main Story in Progress", 
+                comingSoon: "Coming soon", notify: "Notify", episodes: "EPISODES",
+                readFirst: "Read First", readNewest: "Read Newest", read: "READ",
+                prev: "Prev", next: "Next", selectRecord: "Select Record",
+                errTitle: "OH, NO! Alice got lost!",
+                errSub: "We're helping her find the way home...",
+                errRetry: "Launch Rescue Mission"
+            },
+            ID: { 
+                home: "beranda", comics: "komik", about: "tentang", status: "Cerita Utama Berjalan", 
+                comingSoon: "Segera hadir", notify: "Beritahu", episodes: "EPISODE",
+                readFirst: "Baca Awal", readNewest: "Baca Terbaru", read: "BACA",
+                prev: "Sblm", next: "Slnjt", selectRecord: "Pilih Rekaman",
+                errTitle: "OH, TIDAK! Alice tersesat!",
+                errSub: "Kami sedang membantunya menemukan jalan pulang...",
+                errRetry: "Luncurkan Misi Penyelamatan"
+            },
+            JP: { 
+                home: "ホーム", comics: "コミック", about: "概要", status: "連載中", 
+                comingSoon: "近日公開", notify: "通知を受け取る", episodes: "エピソード",
+                readFirst: "最初から読む", readNewest: "最新話を読む", read: "読む",
+                prev: "前へ", next: "次へ", selectRecord: "記録を選択",
+                errTitle: "大変！アリスが迷子になっちゃった！",
+                errSub: "帰り道を探してあげているところです...",
+                errRetry: "救出作戦を開始する"
+            },
+            KR: { 
+                home: "홈", comics: "코믹스", about: "정보", status: "연재 중", 
+                comingSoon: "곧 공개", notify: "알림 받기", episodes: "에피소드",
+                readFirst: "첫 회 보기", readNewest: "최신 회 보기", read: "읽기",
+                prev: "이전", next: "다음", selectRecord: "기록 선택",
+                errTitle: "이런! 앨리스가 길을 잃었어요!",
+                errSub: "집으로 돌아갈 수 있도록 돕는 중입니다...",
+                errRetry: "구조 작전 개시"
+            }
+        }
 
     library: {
         1: {
