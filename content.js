@@ -34,7 +34,7 @@ const LUMINUS_DB = {
             status: "released",
             name: { EN: "Prologue: The King", ID: "Prolog: Sang Raja", JP: "プロローグ: 王", KR: "프롤로그: 왕" },
             date: { EN: "Nov 29, 2025", ID: "29 Nov 2025", JP: "2025年11月29日", KR: "2025년 11월 29일" },
-            panels: 18,
+            panels: 17,
             thumb: "images/ep2-thumb.webp"
         },
         3: {
