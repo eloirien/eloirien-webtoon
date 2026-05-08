@@ -125,10 +125,11 @@
         <section id="content-episodes" class="tab-content hidden w-full">
             <div class="flex flex-col items-center mt-8 px-4 w-full">
                 <div class="flex flex-row gap-3 justify-center w-full max-w-[400px]">
-                    <button onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-lg truncate btn-read">
+                    <button id="btn-read-first" onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-lg truncate btn-read">
                         Read First
                     </button>
-                    <button onclick="navigateEpisode('newest')" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">
+                    
+                    <button id="btn-read-newest" onclick="navigateEpisode('newest')" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">
                         Read Newest
                     </button>
                 </div>
