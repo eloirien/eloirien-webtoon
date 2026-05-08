@@ -72,7 +72,7 @@ const LUMINUS_DB = {
             status: "released",
             name: { EN: "01 - Who (Part 2)", ID: "01 - Siapa (Bagian 2)", JP: "01 - 誰 (後編)", KR: "01 - 누구 (2부)" },
             date: { EN: "Mar 08, 2026", ID: "08 Mar 2026", JP: "2026年03月08日", KR: "2026년 03월 08일" },
-            panels: 15,
+            panels: 24,
             thumb: "images/ep5-thumb.webp"
         },
         6: {
