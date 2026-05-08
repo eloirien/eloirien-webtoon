@@ -26,7 +26,9 @@
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
         /* Unified Button Sizing & Glows */
-        .btn-action-size { width: 110px; padding-top: 0.5rem; padding-bottom: 0.5rem; text-align: center; }
+        .btn-action-size { width: 90px; padding-top: 0.4rem; padding-bottom: 0.4rem; text-align: center; flex-shrink: 0; }
+        @media (min-width: 768px) { .btn-action-size { width: 110px; padding-top: 0.5rem; padding-bottom: 0.5rem; } }
+        
         .btn-read { transition: all 0.3s ease; }
         .btn-read:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); transform: translateY(-1px); }
         .btn-notify { background-color: #f59e0b; color: #000; transition: all 0.3s ease; }
@@ -35,8 +37,6 @@
         /* Content Cards */
         .episode-card { background-color: #1a1a1a; border: 1px solid #2d2d2d; transition: all 0.2s; width: 100%; max-width: 42rem; }
         .episode-card:hover { transform: scale(1.01); border-color: #3b82f6; }
-        
-        /* The Orange Outline Fix */
         .card-coming-soon { border-color: #2d2d2d; }
         .card-coming-soon:hover { border-color: #f59e0b !important; box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
 
@@ -48,11 +48,7 @@
         .genre-tag { border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; padding: 4px 16px; color: white; font-size: 10px; font-weight: bold; text-transform: uppercase; }
 
         img { -webkit-user-drag: none; user-select: none; }
-
-        @keyframes pulse-slow {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.9); }
-        }
+        @keyframes pulse-slow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.9); } }
         .animate-pulse-slow { animation: pulse-slow 3s infinite ease-in-out; }
 
         /* Lightbox */
@@ -72,9 +68,7 @@
             <a href="about.html" class="nav-link nav-link-about">about</a>
             <div class="custom-lang-dropdown">
                 <div class="lang-trigger flex items-center gap-1.5 px-2.5 py-1">
-                <svg class="w-3 h-3 text-blue-400 fill-current animate-pulse-slow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
-                    </svg>
+                    <svg class="w-3 h-3 text-blue-400 fill-current animate-pulse-slow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
                     <span id="current-lang-label" class="mt-[1px]">EN</span>
                 </div>
                 <div class="lang-menu">
@@ -138,64 +132,49 @@
                         Read Newest
                     </button>
                 </div>
-            
                 <div class="mt-8 mb-12">
                     <button id="main-flip-btn" onclick="toggleSort()" class="w-10 h-10 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800 flex items-center justify-center hover:border-blue-500 transition-all shadow-xl group">
                         <span id="sort-icon-hero" class="text-gray-400 text-sm group-hover:text-blue-400 transition-transform duration-300">⇅</span>
                     </button>
                 </div>
             </div>
-        
             <div id="episode-list" class="flex flex-col items-center gap-6 mb-20 w-full">
                 </div>
         </section> 
         
         <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto w-full">
-            <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group cursor-zoom-in" 
-                 onclick="openLightbox('images/gallery/gallery-eden.webp')">
+            <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group cursor-zoom-in" onclick="openLightbox('images/gallery/gallery-eden.webp')">
                 <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
-                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20">
-                    <p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p>
-                </div>
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20"><p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p></div>
             </div>
         </section>
     </main>
 
     <footer class="w-full py-16 border-t border-gray-900 bg-black/50 backdrop-blur-md flex flex-col items-center mt-12">
-        <p class="text-[9px] text-gray-600 uppercase tracking-[0.4em] text-center px-6 leading-relaxed">
-            Copyright 2026 © Eloirien. All Rights Reserved.
-        </p>
+        <p class="text-[9px] text-gray-600 uppercase tracking-[0.4em] text-center px-6 leading-relaxed">Copyright 2026 © Eloirien. All Rights Reserved.</p>
     </footer>
 
-    <div id="lightbox-overlay" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Full Size View">
-    </div>
+    <div id="lightbox-overlay" onclick="closeLightbox()"><img id="lightbox-img" src="" alt="Full Size View"></div>
 
     <script>
-        let isDescending = true;
+        // SENTRY: Default set to FIFO (Ascending)
+        let isDescending = false;
 
         function setLanguage(lang) {
             localStorage.setItem('preferredLang', lang);
-            
             const ui = LUMINUS_DB.ui[lang];
             const page = LUMINUS_DB.pages.index[lang];
-            
             document.querySelector('.nav-link-comics').innerText = ui.comics;
             document.querySelector('.nav-link-about').innerText = ui.about;
             document.getElementById('current-lang-label').innerText = lang;
-            
-            // Status and Genres 
             document.getElementById('series-status').innerText = ui.status;
             document.getElementById('genre-fantasy').innerText = page.genres[0];
             document.getElementById('genre-drama').innerText = page.genres[1];
             document.getElementById('genre-action').innerText = page.genres[2];
             document.getElementById('dynamic-synopsis').innerHTML = page.synopsisHTML;
-            
-            // Tabs 
             document.getElementById('tab-info').innerText = page.tabs[0];
             document.getElementById('tab-episodes').innerText = page.tabs[1];
             document.getElementById('tab-gallery').innerText = page.tabs[2];
-            
             renderEpisodes(lang);
             window.location.hash = lang;
         }
@@ -204,7 +183,6 @@
             const list = document.getElementById('episode-list');
             list.innerHTML = '';
             const ui = LUMINUS_DB.ui[lang];
-            
             const epKeys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
             const orderedKeys = isDescending ? epKeys.slice().reverse() : epKeys;
 
@@ -215,33 +193,33 @@
                 const dateStr = ep.date[lang];
                 
                 if (isUpcoming) {
-                    // RESTORED: Orange Notify Button & Orange Hover Card
+                    // SENTRY: Restored NOTIFY button to mobile
                     list.innerHTML += `
-                        <div class="episode-card card-coming-soon flex flex-row items-center gap-4 p-4 rounded-2xl opacity-70 cursor-not-allowed">
-                            <div class="w-32 md:w-48 flex-shrink-0 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700 aspect-[16/9]">
-                                <span class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">${ep.dateLabel}</span>
+                        <div class="episode-card card-coming-soon flex flex-row items-center gap-3 p-3 md:gap-4 md:p-4 rounded-2xl opacity-70 cursor-not-allowed">
+                            <div class="w-24 md:w-48 flex-shrink-0 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700 aspect-[16/9]">
+                                <span class="text-[8px] md:text-[10px] font-bold text-zinc-600 uppercase tracking-widest">${ep.dateLabel}</span>
                             </div>
                             <div class="flex-grow min-w-0 flex flex-col justify-center">
-                                <h4 class="font-bold text-gray-500 truncate uppercase tracking-wider text-xs md:text-sm">${title}</h4>
-                                <p class="text-[10px] text-gray-600 mt-1 uppercase tracking-widest">${dateStr}</p>
+                                <h4 class="font-bold text-gray-500 truncate uppercase tracking-wider text-[10px] md:text-sm">${title}</h4>
+                                <p class="text-[8px] md:text-[10px] text-gray-600 mt-1 uppercase tracking-widest">${dateStr}</p>
                             </div>
-                            <div class="hidden md:flex items-center pr-4">
-                                <button class="btn-action-size btn-notify rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">${ui.notify}</button>
+                            <div class="flex items-center pr-1 md:pr-4">
+                                <button class="btn-action-size btn-notify rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">${ui.notify}</button>
                             </div>
                         </div>`;
                 } else {
-                    // RESTORED: Blue Read Button inside the card
+                    // SENTRY: Restored READ button to mobile
                     list.innerHTML += `
-                        <a href="reader.html?ep=${key}#${lang}" class="episode-card group flex flex-row items-center gap-4 p-4 rounded-2xl relative">
-                            <div class="w-32 md:w-48 flex-shrink-0 overflow-hidden rounded-lg border border-gray-800">
+                        <a href="reader.html?ep=${key}#${lang}" class="episode-card group flex flex-row items-center gap-3 p-3 md:gap-4 md:p-4 rounded-2xl relative">
+                            <div class="w-24 md:w-48 flex-shrink-0 overflow-hidden rounded-lg border border-gray-800">
                                 <img src="${ep.thumb}" alt="${title}" class="w-full h-full object-cover group-hover:brightness-110 transition-all aspect-[16/9]">
                             </div>
                             <div class="flex-grow min-w-0 flex flex-col justify-center">
-                                <h4 class="font-bold text-gray-300 truncate group-hover:text-white transition-colors uppercase tracking-wider text-xs md:text-sm">${title}</h4>
-                                <p class="text-[10px] text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
+                                <h4 class="font-bold text-gray-300 truncate group-hover:text-white transition-colors uppercase tracking-wider text-[10px] md:text-sm">${title}</h4>
+                                <p class="text-[8px] md:text-[10px] text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
                             </div>
-                            <div class="hidden md:flex items-center pr-4">
-                                <div class="btn-action-size btn-read bg-blue-600 text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center">READ</div>
+                            <div class="flex items-center pr-1 md:pr-4">
+                                <div class="btn-action-size btn-read bg-blue-600 text-white rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center">READ</div>
                             </div>
                         </a>`;
                 }
@@ -251,59 +229,42 @@
         function toggleSort() {
             isDescending = !isDescending;
             const icon = document.getElementById('sort-icon-hero');
-            icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
+            icon.style.transform = isDescending ? 'rotate(180deg)' : 'rotate(0deg)';
             const currentLang = window.location.hash.replace('#', '') || 'EN';
             renderEpisodes(currentLang);
         }
 
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(c => {
-                c.classList.add('hidden');
-                c.classList.remove('flex'); 
-            });
-            
-            document.querySelectorAll('.tab-button').forEach(b => {
-                b.classList.remove('border-blue-600', 'text-white');
-                b.classList.add('border-transparent', 'text-gray-500');
-            });
-            
+            document.querySelectorAll('.tab-content').forEach(c => { c.classList.add('hidden'); c.classList.remove('flex'); });
+            document.querySelectorAll('.tab-button').forEach(b => { b.classList.remove('border-blue-600', 'text-white'); b.classList.add('border-transparent', 'text-gray-500'); });
             const targetContent = document.getElementById(`content-${tabId}`);
             targetContent.classList.remove('hidden');
             if (tabId === 'info') targetContent.classList.add('flex'); 
-            
             const activeTab = document.getElementById(`tab-${tabId}`);
             activeTab.classList.remove('border-transparent', 'text-gray-500');
             activeTab.classList.add('border-blue-600', 'text-white');
         }
 
-        // RESTORED: Dynamic "Read Newest" Logic
         function navigateEpisode(epNumber) {
             const currentLang = window.location.hash || '#EN';
-            
             if (epNumber === 'newest') {
-                // Find all keys that are released, sort them, and pick the highest
                 const releasedKeys = Object.keys(LUMINUS_DB.library).filter(k => LUMINUS_DB.library[k].status === 'released');
                 const sortedKeys = releasedKeys.map(Number).sort((a, b) => b - a);
-                epNumber = sortedKeys[0] || 1; // Fallback to 1 if nothing is released
+                epNumber = sortedKeys[0] || 1;
             }
-            
             window.location.href = `reader.html?ep=${epNumber}${currentLang}`;
         }
 
-        function openLightbox(imgSrc) {
-            document.getElementById('lightbox-img').src = imgSrc;
-            document.getElementById('lightbox-overlay').classList.add('active');
-        }
-        
-        function closeLightbox() {
-            document.getElementById('lightbox-overlay').classList.remove('active');
-        }
+        function openLightbox(imgSrc) { document.getElementById('lightbox-img').src = imgSrc; document.getElementById('lightbox-overlay').classList.add('active'); }
+        function closeLightbox() { document.getElementById('lightbox-overlay').classList.remove('active'); }
 
         window.onload = () => {
             const savedLang = localStorage.getItem('preferredLang');
             const hashLang = window.location.hash.replace('#', '');
             const finalLang = hashLang || savedLang || 'EN';
             setLanguage(finalLang);
+            // Sync initial flip icon
+            document.getElementById('sort-icon-hero').style.transform = isDescending ? 'rotate(180deg)' : 'rotate(0deg)';
         };
 
         document.addEventListener('contextmenu', e => e.preventDefault());
