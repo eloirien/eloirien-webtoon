@@ -98,17 +98,20 @@
     </div>
 
     <main class="max-w-screen-xl mx-auto px-6 py-12">
-        <section id="content-info" class="tab-content flex flex-col items-center space-y-12">
-            <div class="w-64 md:w-80 rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
-                <img src="images/vertical-cover.webp" class="w-full h-auto">
-            </div>
-            <div class="max-w-2xl text-center space-y-8">
-                <div id="dynamic-synopsis"></div>
-                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left flex items-center space-x-4">
-                    <img src="images/profile.webp" class="w-12 h-12 rounded-full border border-gray-700 object-cover">
-                    <div>
-                        <p class="font-bold text-white uppercase text-xs tracking-widest">Eloirien</p>
-                        <p class="text-[10px] text-blue-400">Illustrator & Comic Artist</p>
+        
+        <section id="content-info" class="tab-content w-full">
+            <div class="flex flex-col items-center space-y-12">
+                <div class="w-64 md:w-80 rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
+                    <img src="images/vertical-cover.webp" class="w-full h-auto">
+                </div>
+                <div class="max-w-2xl text-center space-y-8">
+                    <div id="dynamic-synopsis"></div>
+                    <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left flex items-center space-x-4">
+                        <img src="images/profile.webp" class="w-12 h-12 rounded-full border border-gray-700 object-cover">
+                        <div>
+                            <p class="font-bold text-white uppercase text-xs tracking-widest">Eloirien</p>
+                            <p class="text-[10px] text-blue-400">Illustrator & Comic Artist</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -129,10 +132,12 @@
             <div id="episode-list" class="flex flex-col items-center gap-6 mb-20 w-full"></div>
         </section> 
         
-        <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto w-full">
-            <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group cursor-zoom-in" onclick="openLightbox('images/gallery/gallery-eden.webp')">
-                <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
-                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20"><p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p></div>
+        <section id="content-gallery" class="tab-content hidden w-full">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto w-full">
+                <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group cursor-zoom-in" onclick="openLightbox('images/gallery/gallery-eden.webp')">
+                    <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20"><p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p></div>
+                </div>
             </div>
         </section>
     </main>
@@ -151,13 +156,12 @@
             const ui = LUMINUS_DB.ui[lang];
             const page = LUMINUS_DB.pages.index[lang];
             
-            if(!ui || !page) return; // Safety check
+            if(!ui || !page) return;
             
             document.querySelector('.nav-link-comics').innerText = ui.comics || "comics";
             document.querySelector('.nav-link-about').innerText = ui.about || "about";
             document.getElementById('current-lang-label').innerText = lang;
             
-            // LOCALIZED BUTTONS (with fallback safety net)
             document.getElementById('btn-read-first').innerText = ui.readFirst || "Read First";
             document.getElementById('btn-read-newest').innerText = ui.readNewest || "Read Newest";
             
@@ -227,27 +231,21 @@
             renderEpisodes(currentLang);
         }
 
-        // FIXED: Repaired Tab Switching Logic
+        // BULLETPROOF SWITCH TAB FUNCTION
         function switchTab(tabId) {
-            // 1. Hide all content and explicitly remove layout classes that overpower 'hidden'
-            document.querySelectorAll('.tab-content').forEach(c => { 
-                c.classList.add('hidden'); 
-                c.classList.remove('flex', 'grid'); 
-            });
+            // Hide everything safely
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             
-            // 2. Deactivate all tab buttons
+            // Deactivate all buttons
             document.querySelectorAll('.tab-button').forEach(b => { 
                 b.classList.remove('border-blue-600', 'text-white'); 
                 b.classList.add('border-transparent', 'text-gray-500'); 
             });
             
-            // 3. Show target content and give it the correct layout structure
-            const target = document.getElementById(`content-${tabId}`);
-            target.classList.remove('hidden');
-            if(tabId === 'info') target.classList.add('flex');
-            if(tabId === 'gallery') target.classList.add('grid');
+            // Unhide target safely
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
             
-            // 4. Highlight the active tab button
+            // Highlight target button safely
             const activeTab = document.getElementById(`tab-${tabId}`);
             activeTab.classList.remove('border-transparent', 'text-gray-500');
             activeTab.classList.add('border-blue-600', 'text-white');
