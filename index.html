@@ -44,6 +44,15 @@
 
         img { -webkit-user-drag: none; user-select: none; }
 
+        /* Subtle sparkle pulse for the language star */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.9); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+
         /* Lightbox Modal Style */
         #lightbox-overlay {
             display: none;
@@ -81,7 +90,12 @@
             <a href="comics.html" class="nav-link nav-link-comics">comics</a>
             <a href="about.html" class="nav-link nav-link-about">about</a>
             <div class="custom-lang-dropdown">
-                <div class="lang-trigger">🌐 <span id="current-lang-label">EN</span></div>
+                <div class="lang-trigger flex items-center gap-1.5 px-2.5 py-1">
+                <svg class="w-3 h-3 text-blue-400 fill-current animate-pulse-slow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+                    </svg>
+                    <span id="current-lang-label" class="mt-[1px]">EN</span>
+                    </div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
                         <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
