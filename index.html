@@ -6,6 +6,7 @@
     <title>Eloirien | Silverstring</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="content.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
         
@@ -180,208 +181,125 @@
     </main>
 
     <script>
-        const siteContent = {
-            EN: {
-                navComics: "comics", navAbout: "about", status: "Main Story in Progress", tabs: ["INFO", "EPISODES", "GALLERY"],
-                genres: ["Fantasy", "Drama", "Action"],
-                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?</p>
-                <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."</em>`,
-                episodes: [
-                    { title: "Prologue: Storm", date: "Nov 01, 2025", thumb: "images/ep1-thumb.webp", link: "reader.html" },
-                    { title: "Prologue: The King", date: "Nov 29, 2025", thumb: "images/ep2-thumb.webp", link: "reader.html" },
-                    { title: "Prologue: The Cup", date: "Jan 04, 2026", thumb: "images/ep3-thumb.webp", link: "reader.html" },
-                    { title: "01 - Who (Part 1)", date: "Feb 07, 2026", thumb: "images/ep4-thumb.webp", link: "reader.html" },
-                    { title: "01 - Who (Part 2)", date: "Mar 08, 2026", thumb: "images/ep5-thumb.webp", link: "reader.html" },
-                    { title: "02 - Friend (Part 1)", date: "Apr 23, 2026", thumb: "images/ep6-thumb.webp", link: "reader.html" }
-                ],
-                comingSoon: "Coming soon"
-            },
-            ID: {
-                navComics: "komik", navAbout: "tentang", status: "Cerita Utama Berjalan", tabs: ["INFO", "EPISODE", "GALERI"],
-                genres: ["Fantasi", "Drama", "Aksi"],
-                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Baik Alicia maupun Archius harus menghadapi pergumulan identitas mereka sembari menjalankan tugas untuk menjaga kerajaan dari ancaman bangkitnya kuasa kegelapan. Bagaimanakah takdir mereka yang saling bertautan itu akan terungkap?</p>
-                <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Sebab, pertarungan itu bukanlah melawan darah dan daging, melainkan melawan penguasa-penguasa, melawan otoritas-otoritas, melawan penghulu dunia kegelapan, melawan roh-roh jahat di alam semesta."</em>`,
-                episodes: [
-                    { title: "Prolog: Badai", date: "01 Nov 2025", thumb: "images/ep1-thumb.webp", link: "reader.html" },
-                    { title: "Prolog: Sang Raja", date: "29 Nov 2025", thumb: "images/ep2-thumb.webp", link: "reader.html" },
-                    { title: "Prolog: Cawan", date: "04 Jan 2026", thumb: "images/ep3-thumb.webp", link: "reader.html" },
-                    { title: "01 - Siapa (Bagian 1)", date: "07 Feb 2026", thumb: "images/ep4-thumb.webp", link: "reader.html" },
-                    { title: "01 - Siapa (Bagian 2)", date: "08 Mar 2026", thumb: "images/ep5-thumb.webp", link: "reader.html" },
-                    { title: "02 - Teman (Bagian 1)", date: "23 Apr 2026", thumb: "images/ep6-thumb.webp", link: "reader.html" }
-                ],
-                comingSoon: "Segera hadir"
-            },
-            JP: {
-                navComics: "コミック", navAbout: "概要", status: "連載中", tabs: ["情報", "エピソード", "ギャラリー"],
-                genres: ["ファンタジー", "ドラマ", "アクション"],
-                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">アリシアとアルキウスは、湧き上がる闇の勢力から王国を守るという使命を果たしながら、己のアイデンティティを懸けた闘いに身を投じていく。分かちがたく結ばれた二人の運命は、いかなる結末を迎えるのか。</p>
-                <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">我らの戦いは、血肉を相手にするものではなく、支配者、権威、この暗闇の世界の支配者たち、また、天にいる悪の霊に対する戦いである。</em>`,
-                episodes: [
-                    { title: "プロローグ: 嵐", date: "2025年11月01日", thumb: "images/ep1-thumb.webp", link: "reader.html" },
-                    { title: "プロローグ: 王", date: "2025年11月29日", thumb: "images/ep2-thumb.webp", link: "reader.html" },
-                    { title: "プロローグ: 杯", date: "2026年01月04日", thumb: "images/ep3-thumb.webp", link: "reader.html" },
-                    { title: "01 - 誰 (前編)", date: "2026年02月07日", thumb: "images/ep4-thumb.webp", link: "reader.html" },
-                    { title: "01 - 誰 (後編)", date: "2026年03月08日", thumb: "images/ep5-thumb.webp", link: "reader.html" },
-                    { title: "02 - 友 (前編)", date: "2026年04月23日", thumb: "images/ep6-thumb.webp", link: "reader.html" }
-                ],
-                comingSoon: "近日公開"
-            },
-            KR: {
-                navComics: "코믹스", navAbout: "정보", status: "연재 중", tabs: ["정보", "에피소드", "갤러리"],
-                genres: ["판타지", "드라마", "액션"],
-                synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">알리시아와 아르키우스는 깨어나는 어둠의 세력으로부터 왕국을 지켜야 하는 숙명 속에서, 각자의 정체성을 찾기 위한 치열한 사투를 벌인다. 서로의 운명이 얽히고설킨 두 사람의 앞날에는 과연 무엇이 기다리고 있을 것인가?</p>
-                <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">우리의 씨름은 혈과 육을 상대하는 것이 아니요 통치자들과 권세들과 이 어둠의 세상 주관자들과 하늘에 있는 악의 영들을 상대함이라.</em>`,
-                episodes: [
-                    { title: "프롤로그: 폭풍", date: "2025년 11월 01일", thumb: "images/ep1-thumb.webp", link: "reader.html" },
-                    { title: "프롤로그: 왕", date: "2025년 11월 29일", thumb: "images/ep2-thumb.webp", link: "reader.html" },
-                    { title: "프롤로그: 잔", date: "2026년 01월 04일", thumb: "images/ep3-thumb.webp", link: "reader.html" },
-                    { title: "01 - 누구 (1부)", date: "2026년 02월 07일", thumb: "images/ep4-thumb.webp", link: "reader.html" },
-                    { title: "01 - 누구 (2부)", date: "2026년 03월 08일", thumb: "images/ep5-thumb.webp", link: "reader.html" },
-                    { title: "02 - 친구 (1부)", date: "2026년 04월 23일", thumb: "images/ep6-thumb.webp", link: "reader.html" }
-                ],
-                comingSoon: "곧 공개"
-            }
-        };
+    let isDescending = true;
 
-        let isReversed = false;
-
-        function setLanguage(lang) {
-        // 1. Memory Sentry: Save the chosen language to browser storage
+    function setLanguage(lang) {
+        // Memory Sentry
         localStorage.setItem('preferredLang', lang);
-    
-        const dict = siteContent[lang] || siteContent.EN;
         
-        // Update general UI text
-        document.querySelector('.nav-link-comics').innerText = dict.navComics;
-        document.querySelector('.nav-link-about').innerText = dict.navAbout;
-        document.querySelector('.series-status-tag').innerText = dict.status;
+        // Fetch from Universal Database
+        const ui = LUMINUS_DB.ui[lang];
+        const page = LUMINUS_DB.pages.index[lang];
+        
+        // Update Navigation Pill
+        document.querySelector('.nav-link[href="comics.html"]').innerText = ui.comics;
+        document.querySelector('.nav-link[href="about.html"]').innerText = ui.about;
         document.getElementById('current-lang-label').innerText = lang;
-        document.getElementById('dynamic-synopsis').innerHTML = dict.synopsisHTML;
         
-        // Update Tab Labels
-        const tabBtns = document.querySelectorAll('.tab-button');
-        tabBtns.forEach((btn, i) => btn.innerText = dict.tabs[i]);
-    
-        // Update Genre Tags
-        const genreTags = document.querySelectorAll('.genre-tag');
-        genreTags.forEach((tag, i) => { if (dict.genres[i]) tag.innerText = dict.genres[i]; });
-    
-        // REINFORCED EPISODE NAVIGATION LOGIC
-        const container = document.getElementById('episode-list');
-        container.innerHTML = '';
+        // Update Tabs
+        document.getElementById('tab-info').innerText = page.tabs[0];
+        document.getElementById('tab-episodes').innerText = page.tabs[1];
+        document.getElementById('tab-gallery').innerText = page.tabs[2];
         
-        // Determine the list order based on current sort state
-        const list = isReversed ? [...dict.episodes].reverse() : dict.episodes;
-    
-        list.forEach((ep, index) => {
-            // Calculate the correct episode number for navigation
-            const epNum = isReversed ? (dict.episodes.length - index) : (index + 1);
-    
-            container.innerHTML += `
-                <div class="episode-card flex items-center p-4 rounded-xl">
-                    <img src="${ep.thumb}" class="w-24 h-14 md:w-32 md:h-20 object-cover rounded-lg">
-                    <div class="ml-4 flex-grow">
-                        <h4 class="text-sm font-bold text-white uppercase">${ep.title}</h4>
-                        <p class="text-[10px] text-gray-500 uppercase">${ep.date}</p>
-                    </div>
-                    <button onclick="navigateEpisode(${epNum})" class="btn-read btn-action-size bg-blue-600 text-white text-[10px] rounded font-bold uppercase tracking-wider flex items-center justify-center">
-                        Read
-                    </button>
-                </div>`;
-        });
-    
-        // Add Coming Soon Card
-        container.innerHTML += `<div class="episode-card card-coming-soon flex items-center p-4 rounded-xl opacity-80 cursor-default">
-            <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700"><span class="text-[10px] font-bold text-zinc-500 tracking-widest">EP 07</span></div>
-            <div class="ml-4 flex-grow"><h4 class="text-sm font-bold text-zinc-400 uppercase">02 - Friend (Part 2)</h4><p class="text-[10px] text-amber-500 font-bold uppercase tracking-widest">${dict.comingSoon}</p></div>
-            <button class="btn-notify btn-action-size text-[10px] rounded font-black uppercase flex items-center justify-center">Notify</button>
-        </div>`;
-    
-        // Finalize URL context
+        // Update Genres & Synopsis
+        document.getElementById('genre-fantasy').innerText = page.genres[0];
+        document.getElementById('genre-drama').innerText = page.genres[1];
+        document.getElementById('genre-action').innerText = page.genres[2];
+        document.getElementById('dynamic-synopsis').innerHTML = page.synopsisHTML;
+        
+        // Update Episode Section Header
+        document.getElementById('episodes-header').innerText = ui.episodes;
+        
+        // Render Episodes based on language
+        renderEpisodes(lang);
+        
+        // Update URL Context
         window.location.hash = lang;
-        }
+    }
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            document.getElementById('content-' + tabName).classList.remove('hidden');
-            document.querySelectorAll('.tab-button').forEach(b => {
-                b.classList.remove('border-blue-600', 'text-white');
-                b.classList.add('border-transparent', 'text-gray-500');
-            });
-            document.getElementById('tab-' + tabName).classList.add('border-blue-600', 'text-white');
-        }
-
-        function toggleSort() {
+    function renderEpisodes(lang) {
         const list = document.getElementById('episode-list');
-        const cards = Array.from(list.children);
-        const icon = document.getElementById('sort-icon-hero'); // Corrected ID
+        list.innerHTML = '';
+        const ui = LUMINUS_DB.ui[lang];
         
-        isDescending = !isDescending;
-        
-        // Reverse the DOM elements
-        cards.reverse().forEach(card => list.appendChild(card));
-        
-        // Visual flip animation
-        icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
-        }
+        // Sort keys mathematically
+        const epKeys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
+        const orderedKeys = isDescending ? epKeys.slice().reverse() : epKeys;
 
-        window.onload = () => {
-        // Check memory first, then the URL hash, otherwise default to EN
+        orderedKeys.forEach(key => {
+            const ep = LUMINUS_DB.library[key];
+            const isUpcoming = ep.status === 'upcoming';
+            const title = ep.name[lang];
+            const dateStr = ep.date[lang];
+            
+            if (isUpcoming) {
+                // Upcoming Episode Card
+                list.innerHTML += `
+                    <div class="episode-card upcoming-card cursor-not-allowed">
+                        <div class="ep-thumb aspect-video bg-zinc-800 flex items-center justify-center border border-zinc-700">
+                            <span class="text-xs font-bold text-zinc-600 uppercase tracking-widest">${ep.dateLabel}</span>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <h4 class="font-bold text-gray-500 truncate group-hover:text-gray-400 transition-colors uppercase tracking-wider text-sm">${title}</h4>
+                            <p class="text-xs text-gray-600 mt-1 uppercase tracking-widest">${dateStr}</p>
+                        </div>
+                        <div class="text-xs font-bold text-gray-600 tracking-widest uppercase hidden md:block whitespace-nowrap">
+                            ${ui.comingSoon}
+                        </div>
+                    </div>`;
+            } else {
+                // Released Episode Card
+                list.innerHTML += `
+                    <a href="reader.html?ep=${key}#${lang}" class="episode-card group">
+                        <img src="${ep.thumb}" alt="${title}" class="ep-thumb group-hover:brightness-110 transition-all">
+                        <div class="flex-grow min-w-0">
+                            <h4 class="font-bold text-gray-300 truncate group-hover:text-white transition-colors uppercase tracking-wider text-sm">${title}</h4>
+                            <p class="text-xs text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
+                        </div>
+                    </a>`;
+            }
+        });
+    }
+
+    function toggleSort() {
+        isDescending = !isDescending;
+        const icon = document.getElementById('sort-icon-hero');
+        icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
+        const currentLang = window.location.hash.replace('#', '') || 'EN';
+        renderEpisodes(currentLang);
+    }
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+        document.getElementById(`content-${tabId}`).classList.add('active');
+        document.getElementById(`tab-${tabId}`).classList.add('active-tab');
+    }
+
+    function navigateEpisode(epNumber) {
+        const currentLang = window.location.hash || '#EN';
+        window.location.href = `reader.html?ep=${epNumber}${currentLang}`;
+    }
+
+    // Lightbox Logic
+    function openLightbox(imgSrc) {
+        document.getElementById('lightbox-img').src = imgSrc;
+        document.getElementById('lightbox-overlay').classList.add('active');
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox-overlay').classList.remove('active');
+    }
+
+    window.onload = () => {
         const savedLang = localStorage.getItem('preferredLang');
         const hashLang = window.location.hash.replace('#', '');
         const finalLang = hashLang || savedLang || 'EN';
-        
         setLanguage(finalLang);
-        };
+    };
 
-        
-        document.addEventListener('contextmenu', e => e.preventDefault());
-
-        function openLightbox(src) {
-            const overlay = document.getElementById('lightbox-overlay');
-            const img = document.getElementById('lightbox-img');
-            img.src = src;
-            overlay.style.display = 'flex';
-            setTimeout(() => overlay.classList.add('active'), 10);
-        }
-        
-        function closeLightbox() {
-            const overlay = document.getElementById('lightbox-overlay');
-            overlay.classList.remove('active');
-            setTimeout(() => overlay.style.display = 'none', 300);
-        }
-
-        function navigateEpisode(epNumber) {
-            // Detects the active language from the current page URL hash
-            const currentLang = window.location.hash || '#EN';
-            // Redirects to the reader with the correct language context
-            window.location.href = `reader.html${currentLang}`;
-        }
-
-        let isDescending = true;
-
-        // RESTORED FLIP LOGIC
-        function toggleSort() {
-            const list = document.getElementById('episode-list');
-            const cards = Array.from(list.children);
-            const icon = document.getElementById('sort-icon-hero');
-            
-            isDescending = !isDescending;
-            
-            // Reverse the DOM order of the cards
-            cards.reverse().forEach(card => list.appendChild(card));
-            
-            // Visual feedback for the flip
-            icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
-        }
-    
-        // UNIFIED NAVIGATION
-        function navigateEpisode(epNumber) {
-            const currentLang = window.location.hash || '#EN';
-            window.location.href = `reader.html${currentLang}`;
-        }
-        
-    </script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+</script>
 
     <div id="lightbox-overlay" onclick="closeLightbox()">
     <img id="lightbox-img" src="" alt="Full Size View">
