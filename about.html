@@ -124,11 +124,12 @@
             document.querySelector('.nav-link-comics').innerText = page.navComics;
             document.getElementById('current-lang-label').innerText = lang;
             
-            // Helper to format text (Bold & Italic)
+            // Helper to format text (Bold, Italic, and Line Breaks)
             const formatText = (rawText) => {
                 return rawText
-                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em class="text-gray-500 italic">$1</em>');
+                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') // Bold
+                    .replace(/\*(.*?)\*/g, '<em class="text-gray-500 italic">$1</em>')  // Italic
+                    .replace(/\n/g, '<br>'); // Converts new lines to HTML breaks
             };
             
             // Inject formatted content
