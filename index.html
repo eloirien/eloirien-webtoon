@@ -246,19 +246,11 @@
         let isReversed = false;
 
         function setLanguage(lang) {
+            // 1. ADD THIS LINE: Save choice to browser memory
+            localStorage.setItem('preferredLang', lang);
+        
             const dict = siteContent[lang] || siteContent.EN;
-            document.querySelector('.nav-link-comics').innerText = dict.navComics;
-            document.querySelector('.nav-link-about').innerText = dict.navAbout;
-            document.querySelector('.series-status-tag').innerText = dict.status;
-            document.getElementById('current-lang-label').innerText = lang;
-            document.getElementById('dynamic-synopsis').innerHTML = dict.synopsisHTML;
             
-            const tabBtns = document.querySelectorAll('.tab-button');
-            tabBtns.forEach((btn, i) => btn.innerText = dict.tabs[i]);
-
-            const genreTags = document.querySelectorAll('.genre-tag');
-            genreTags.forEach((tag, i) => { if (dict.genres[i]) tag.innerText = dict.genres[i]; });
-
             const container = document.getElementById('episode-list');
             container.innerHTML = '';
             const list = isReversed ? [...dict.episodes].reverse() : dict.episodes;
@@ -269,13 +261,16 @@
                     <div class="ml-4 flex-grow"><h4 class="text-sm font-bold text-white uppercase">${ep.title}</h4><p class="text-[10px] text-gray-500 uppercase">${ep.date}</p></div>
                     <a href="${ep.link}" class="btn-read btn-action-size bg-blue-600 text-white text-[10px] rounded font-bold uppercase tracking-wider flex items-center justify-center">Read</a>
                 </div>`;
-            });
+                });
             container.innerHTML += `<div class="episode-card card-coming-soon flex items-center p-4 rounded-xl opacity-80 cursor-default">
                 <div class="w-24 h-14 md:w-32 md:h-20 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700"><span class="text-[10px] font-bold text-zinc-500 tracking-widest">EP 07</span></div>
                 <div class="ml-4 flex-grow"><h4 class="text-sm font-bold text-zinc-400 uppercase">02 - Friend (Part 2)</h4><p class="text-[10px] text-amber-500 font-bold uppercase tracking-widest">${dict.comingSoon}</p></div>
                 <button class="btn-notify btn-action-size text-[10px] rounded font-black uppercase flex items-center justify-center">Notify</button>
             </div>`;
-        }
+            }
+
+        document.getElementById('current-lang-label').innerText = lang;
+        window.location.hash = lang;
 
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
@@ -301,7 +296,15 @@
         icon.style.transform = isDescending ? 'rotate(0deg)' : 'rotate(180deg)';
         }
 
-        window.onload = () => setLanguage('EN');
+        window.onload = () => {
+        // Check memory first, then URL hash, otherwise default to 'EN'
+        const savedLang = localStorage.getItem('preferredLang');
+        const hashLang = window.location.hash.replace('#', '');
+        const finalLang = hashLang || savedLang || 'EN';
+        
+        setLanguage(finalLang);
+        };
+        
         document.addEventListener('contextmenu', e => e.preventDefault());
 
         function openLightbox(src) {
