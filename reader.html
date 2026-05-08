@@ -144,33 +144,40 @@
     }
 
     function populateMenus(lang) {
-        const list = document.getElementById('drawer-list');
-        const dropdownList = document.getElementById('ep-dropdown-list');
-        list.innerHTML = '';
-        dropdownList.innerHTML = '';
-        const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
+    const list = document.getElementById('drawer-list');
+    const dropdownList = document.getElementById('ep-dropdown-list');
+    list.innerHTML = '';
+    dropdownList.innerHTML = '';
+    const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
+    
+    keys.forEach(id => {
+        const ep = LUMINUS_DB.library[id];
+        const isActive = (parseInt(id) === currentEp); 
+        const isUpcoming = ep.status === 'upcoming';
+        const title = ep.name[lang];
         
-        keys.forEach(id => {
-            const ep = LUMINUS_DB.library[id];
-            const isActive = (parseInt(id) === currentEp); // Strict Sync
-            const isUpcoming = ep.status === 'upcoming';
-            const title = ep.name[lang];
-            
-            // Sync Dropdown Active State
-            if (isUpcoming) {
-                dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed uppercase">${ep.dateLabel} - UPCOMING</div>`;
-            } else {
-                dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${id})">${title}</div>`;
-            }
-            
-            list.innerHTML += `
-                <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'} ${isUpcoming ? 'opacity-30 cursor-not-allowed' : ''}" 
-                     onclick="${isUpcoming ? '' : `changeEpisode(${id})`}">
-                    <img src="${isUpcoming ? 'images/placeholders/coming_soon.webp' : ep.thumb}" 
-                         class="rounded-md border-2 ${isActive ? 'border-blue-500' : 'border-transparent group-hover:border-zinc-500'} transition shadow-lg aspect-[16/9] object-cover">
-                    <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold truncate">${isUpcoming ? ep.dateLabel : title}</p>
-                </div>`;
-        });
+        // 1. Dropdown Sync Logic
+        if (isUpcoming) {
+            dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed uppercase">${ep.dateLabel} - UPCOMING</div>`;
+        } else {
+            dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${id})">${title}</div>`;
+        }
+        
+        // 2. CSS-Based Thumbnail Placeholder
+        const thumbContent = isUpcoming 
+            ? `<div class="rounded-md border-2 border-zinc-800 bg-zinc-900 aspect-[16/9] flex items-center justify-center shadow-lg group-hover:border-zinc-700 transition">
+                 <span class="text-[8px] font-bold text-zinc-700 uppercase tracking-widest">${ep.dateLabel}</span>
+               </div>`
+            : `<img src="${ep.thumb}" class="rounded-md border-2 ${isActive ? 'border-blue-500' : 'border-transparent group-hover:border-zinc-500'} transition shadow-lg aspect-[16/9] object-cover">`;
+
+        // 3. Render Drawer Item
+        list.innerHTML += `
+            <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'} ${isUpcoming ? 'opacity-30 cursor-not-allowed' : ''}" 
+                 onclick="${isUpcoming ? '' : `changeEpisode(${id})`}">
+                ${thumbContent}
+                <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold truncate">${isUpcoming ? ep.dateLabel : title}</p>
+            </div>`;
+    });
     }
 
     function updateNavButtons() {
