@@ -11,28 +11,28 @@
         body, html { height: 100%; margin: 0; background-color: #0a0a0a; color: #d1d5db; font-family: 'Inter', sans-serif; user-select: none; }
         #global-click-zone { min-height: 100vh; width: 100%; cursor: pointer; position: relative; z-index: 10; }
         
+        /* Immersive UI Logic */
         .immersive-ui { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; opacity: 0; pointer-events: none; z-index: 50; }
         .top-ui { transform: translateY(-100%); }
         .bottom-ui { transform: translateY(100%); }
         .ui-active { transform: translateY(0) !important; opacity: 1 !important; pointer-events: auto !important; }
         
+        /* Dropdowns */
         .custom-lang-dropdown, .custom-ep-dropdown { position: relative; display: inline-block; }
         .lang-trigger, .ep-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
         .ep-trigger { background-color: transparent; border: none; color: white; padding: 6px 12px; }
-        
         .lang-menu, .ep-menu { position: absolute; top: 100%; padding-top: 10px; display: none; flex-direction: column; z-index: 100; }
         .lang-menu { right: 0; width: 180px; }
         .ep-menu { left: 50%; transform: translateX(-50%); width: 220px; max-height: 50vh; overflow-y: auto; }
-        
         .lang-menu-content, .ep-menu-content { background-color: #1a1a1a; border: 1px solid #333; border-radius: 6px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
         .lang-item, .ep-item { padding: 10px 12px; font-size: 11px; display: flex; align-items: center; gap: 10px; color: #E0E0E0; border-bottom: 1px solid #1f1f1f; transition: background 0.2s; cursor: pointer; }
         .ep-item { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
         .lang-item:hover, .ep-item:hover { background-color: #2d2d2d; color: #3b82f6; }
         .ep-item.active-ep { background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-        
         .custom-lang-dropdown:hover .lang-menu, .custom-ep-dropdown:hover .ep-menu { display: flex; }
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
 
+        /* Horizontal Drawer */
         #episode-drawer { transform: translateY(100%); transition: transform 0.4s ease; z-index: 60; }
         #episode-drawer.open { transform: translateY(0); }
         .drawer-scroll { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; scrollbar-width: none; }
@@ -46,12 +46,12 @@
 </head>
 <body class="overflow-x-hidden">
 
-    <div id="global-click-zone" onclick="toggleUI()">
+    <div id="global-click-zone">
 
         <nav id="top-nav" class="immersive-ui top-ui fixed top-0 left-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center">
-            <a href="index.html" id="nav-home-text" class="text-blue-400 font-bold text-[10px] tracking-widest hover:text-white transition-colors uppercase btn-square px-3 py-1" onclick="event.stopPropagation();">EXIT</a>
+            <a href="index.html" id="nav-home-text" class="text-blue-400 font-bold text-[10px] tracking-widest hover:text-white transition-colors uppercase btn-square px-3 py-1">EXIT</a>
             
-            <div class="custom-ep-dropdown" onclick="event.stopPropagation();">
+            <div class="custom-ep-dropdown">
                 <div class="ep-trigger flex items-center gap-2">
                     <span id="ep-title" class="text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] truncate max-w-[150px] md:max-w-[300px]">LOADING...</span>
                     <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -61,7 +61,7 @@
                 </div>
             </div>
         
-            <div class="custom-lang-dropdown" onclick="event.stopPropagation();">
+            <div class="custom-lang-dropdown">
                 <div class="lang-trigger flex items-center gap-1.5">
                     <svg class="w-3 h-3 text-blue-400 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
@@ -79,18 +79,16 @@
             </div>
         </nav>
 
-        <main id="comic-container" class="webtoon-container"></main>
+        <main id="comic-container" class="webtoon-container" onclick="toggleUI()"></main>
 
         <nav id="bottom-nav" class="immersive-ui bottom-ui fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-gray-800 p-4">
             <div class="max-w-md mx-auto flex items-center justify-between px-2">
-                <button id="btn-prev" class="px-5 py-2 bg-blue-600/90 hover:bg-blue-500 btn-square text-[10px] font-bold text-white uppercase shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all" onclick="event.stopPropagation();">&larr; Prev</button>
-                
+                <button id="btn-prev" class="px-5 py-2 bg-blue-600/90 hover:bg-blue-500 btn-square text-[10px] font-bold text-white uppercase shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all">&larr; Prev</button>
                 <div class="text-center cursor-pointer group flex flex-col items-center gap-1" onclick="toggleDrawer(event)">
                     <svg class="w-6 h-6 text-gray-500 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     <span id="bottom-ep-number" class="text-[9px] font-bold text-gray-500 group-hover:text-blue-400 tracking-widest uppercase transition-colors">EP #1</span>
                 </div>
-                
-                <button id="btn-next" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 btn-square text-[10px] font-bold text-white uppercase shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all" onclick="event.stopPropagation();">Next &rarr;</button>
+                <button id="btn-next" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 btn-square text-[10px] font-bold text-white uppercase shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all">Next &rarr;</button>
             </div>
         </nav>
     </div>
@@ -113,6 +111,8 @@
     let currentEp = 1;
     let currentLang = 'EN';
     let uiVisible = false;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -126,13 +126,17 @@
         const ui = LUMINUS_DB.ui[lang];
         document.getElementById('nav-home-text').innerText = ui.home;
         document.getElementById('current-lang-label').innerText = lang;
-        const epData = LUMINUS_DB.library[currentEp];
-        if (epData) {
-            document.getElementById('ep-title').innerText = epData.name[lang];
-            document.getElementById('bottom-ep-number').innerText = "EP #" + currentEp;
-        }
+        syncEpisodeInfo();
         populateMenus(lang);
         loadPages(); 
+    }
+
+    function syncEpisodeInfo() {
+        const epData = LUMINUS_DB.library[currentEp];
+        if (epData) {
+            document.getElementById('ep-title').innerText = epData.name[currentLang];
+            document.getElementById('bottom-ep-number').innerText = "EP #" + currentEp;
+        }
     }
 
     function populateMenus(lang) {
@@ -166,11 +170,9 @@
         const nextBtn = document.getElementById('btn-next');
         const prevEp = currentEp - 1;
         const nextEp = currentEp + 1;
-        
         const hasPrev = LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released';
         const hasNext = LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released';
         
-        // Prev Button: Dims if no record exists
         if (hasPrev) {
             prevBtn.classList.remove('opacity-30', 'cursor-not-allowed');
             prevBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(prevEp); };
@@ -179,7 +181,6 @@
             prevBtn.onclick = (e) => { e.stopPropagation(); };
         }
         
-        // Next Button
         if (hasNext) {
             nextBtn.classList.remove('opacity-30', 'cursor-not-allowed');
             nextBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(nextEp); };
@@ -189,15 +190,18 @@
         }
     }
 
+    // SENTRY: "Rex Alice" Wait Logic
     function handleImageError(img) {
-        const container = document.getElementById('comic-container');
-        // SOLID SINGLE REX ALICE Logic
-        container.innerHTML = `
-            <div class="flex flex-col items-center justify-center py-24 px-10 text-center">
-                <img src="images/placeholders/chibi-alice.png" class="w-64 h-auto mb-8 shadow-2xl rounded-xl" alt="OH, NO! Alice got lost!">
-                <p class="text-[10px] font-bold tracking-[0.3em] text-gray-600 uppercase">OH, NO! Alice got lost!</p>
-                <button onclick="location.reload()" class="mt-8 text-[10px] text-blue-500 border border-blue-500/30 px-4 py-2 rounded-md uppercase font-bold">We're helping her find the way home...</button>
-            </div>`;
+        if (img.complete && img.naturalWidth === 0) {
+            const container = document.getElementById('comic-container');
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-24 px-10 text-center">
+                    <img src="images/placeholders/chibi-alice.png" class="w-64 h-auto mb-8 shadow-2xl rounded-xl" alt="OH, NO! Alice got lost!">
+                    <h2 class="text-white text-xs font-black uppercase tracking-[0.3em] mb-2">OH, NO! Alice got lost!</h2>
+                    <p class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">We're helping her find the way home...</p>
+                    <button onclick="location.reload()" class="mt-8 text-[10px] text-blue-500 border border-blue-500/30 px-4 py-2 rounded-md uppercase font-bold">Retry Transmission</button>
+                </div>`;
+        }
     }
 
     function loadPages() {
@@ -205,24 +209,20 @@
         container.innerHTML = '';
         const epData = LUMINUS_DB.library[currentEp];
         if (!epData || epData.status !== 'released') return;
-
-        // TL Placeholders for JP/KR
         if (currentLang === 'JP' || currentLang === 'KR') {
             const path = (currentLang === 'JP') ? 'images/tl-JP.webp' : 'images/tl-KR.webp';
             container.innerHTML = `<div class="comic-page"><img src="${path}" alt="Awaiting Translation"></div>`;
             return;
         }
-
-        // Logic & Steel Pathing: ep1/ep1_01_EN.webp
-        // Starting at 01 for the loop
         for (let i = 1; i <= epData.panels; i++) {
             const pageNum = i.toString().padStart(2, '0');
             const imgPath = `images/episodes/ep${currentEp}/ep${currentEp}_${pageNum}_${currentLang}.webp`;
-            container.innerHTML += `<div class="comic-page"><img src="${imgPath}" alt="Record Panel ${pageNum}" loading="lazy" onerror="handleImageError(this)"></div>`;
+            container.innerHTML += `<div class="comic-page"><img src="${imgPath}" alt="Record Panel ${pageNum}" loading="lazy" onload="this.style.opacity=1" style="opacity:0; transition: opacity 0.5s;" onerror="handleImageError(this)"></div>`;
         }
     }
 
     function changeEpisode(newEp) { window.location.href = `reader.html?ep=${newEp}#${currentLang}`; }
+    
     function toggleUI() {
         uiVisible = !uiVisible;
         document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
@@ -231,6 +231,28 @@
         if (uiVisible && window.scrollY > 800) btn.classList.add('show-btn');
         else btn.classList.remove('show-btn');
     }
+
+    // Mobile Swipe Sentry
+    function handleSwipe() {
+        const threshold = 100;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) { // Swipe Left -> Next
+                const nextEp = currentEp + 1;
+                if (LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released') changeEpisode(nextEp);
+            } else { // Swipe Right -> Prev
+                const prevEp = currentEp - 1;
+                if (LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released') changeEpisode(prevEp);
+            }
+        }
+    }
+
+    document.getElementById('global-click-zone').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    document.getElementById('global-click-zone').addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
     function toggleDrawer(e) { if(e) e.stopPropagation(); document.getElementById('episode-drawer').classList.toggle('open'); }
     function teleportToTop(e) { e.stopPropagation(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
