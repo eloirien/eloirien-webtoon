@@ -13,18 +13,16 @@
        
       /* Refined Stable Header Styling */
       /* Stable, Close-Proximity Header */
+     /* Stable "Caged" Header */
       #page-title {
           font-size: 10px;
           font-weight: 900;
           letter-spacing: 0.6em;
           color: rgba(255, 255, 255, 0.9);
           text-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-          
-          /* Removed: left, transform, and absolute logic */
           display: inline-block;
           position: relative;
-          margin: 0 auto; /* Natural centering */
-          text-align: center;
+          /* Removed: left: 50%, transform, and large margins */
       }
       
       #page-title::after {
@@ -124,10 +122,6 @@
    <body>
     <div class="bg-wrapper"><div class="bg-blur"></div></div>
 
-    <div class="w-full text-center pt-24 pb-4">
-    <h2 id="page-title" class="uppercase">COMIC</h2>
-   </div>
-
     <nav class="nav-container">
         <div class="nav-pill">
             <span class="text-white font-bold tracking-[0.2em] text-[10px] uppercase">E L O I R I E N</span>
@@ -150,7 +144,12 @@
     </nav>
 
     <main class="article-room shadow-2xl">
-        <a href="index.html" class="comic-card">
+       
+    <div class="w-full text-center mb-12">
+        <h2 id="page-title" class="uppercase">COMICS</h2>
+    </div>
+
+    <a href="index.html" class="comic-card">
             <img src="images/vertical-cover.webp" alt="Silverstring" class="comic-thumb">
             <div class="flex flex-col gap-4 items-center md:items-start"> 
                 <img src="images/logo.png" alt="Silverstring Logo" class="w-48 mx-auto md:mx-0">
