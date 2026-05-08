@@ -90,25 +90,25 @@ const LUMINUS_DB = {
             EN: {
                 navHome: "home", navComics: "comics",
                 creator: "**As a passionate storyteller with more than three years of experience creating digital comics and illustrations, my goal is to tell stories that touch souls and hearts for the glory of God.**\n\n*I'm truly inspired by the greatest storyteller of all time: Jesus Christ. For me, every brushstroke is a prayer. I hope my art will be a blessing to you as much as it is a blessing to me.*",
-                silverstring: "Silverstring is a Bible-inspired fantasy that delves into the struggle for identity and the weight of spiritual warfare.\n\n*Silverstring is a passion project that I do on the side, in my free time, and completely solo right now, so updates might be slow and irregular. Still, I'll do my best to continue working on it.*",
+                silverstring: "Silverstring is a Bible-inspired fantasy that delves into the struggle for identity and the weight of spiritual warfare.\n\n*\Silverstring is a passion project that I do on the side, in my free time, and completely solo right now, so updates might be slow and irregular. Still, I'll do my best to continue working on it.\*",
                 bethlehem: "Project Bethlehem serves as the creative umbrella for the independent intellectual properties developed by Eloirien."
             },
             ID: {
                 navHome: "home", navComics: "komik",
                 creator: "**Sebagai pencerita yang penuh dengan passion, dengan lebih dari tiga tahun pengalaman menciptakan komik digital dan ilustrasi, impian saya adalah menceritakan kisah yang menyentuh hati dan jiwa demi kemuliaan Tuhan.**\n\n*Saya sangat terinspirasi oleh pencerita terhebat sepanjang masa: Yesus Kristus. Bagi saya, setiap sapuan kuas adalah doa. Saya berharap karya saya menjadi berkat bagi Anda sebagaimana ia menjadi berkat bagi saya.*",
-                silverstring: "Silverstring adalah sebuah fantasi bertemakan Alkitab yang mendalami pergumulan identitas dan beratnya peperangan rohani.\n\n*Silverstring adalah passion project yang saya kerjakan sebagai sampingan di waktu luang. Saat ini saya mengerjakannya sepenuhnya sendirian, jadi jadwal updatenya mungkin terasa lambat dan tidak menentu. Meski begitu, saya akan berusaha sebaik mungkin untuk terus melanjutkan proyek ini!*",
+                silverstring: "Silverstring adalah sebuah fantasi bertemakan Alkitab yang mendalami pergumulan identitas dan beratnya peperangan rohani.\n\n*\Silverstring adalah passion project yang saya kerjakan sebagai sampingan di waktu luang. Saat ini saya mengerjakannya sepenuhnya sendirian, jadi jadwal updatenya mungkin terasa lambat dan tidak menentu. Meski begitu, saya akan berusaha sebaik mungkin untuk terus melanjutkan proyek ini!\*",
                 bethlehem: "Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien."
             },
             JP: {
                 navHome: "ホーム", navComics: "コミック",
                 creator: "**デジタルコミックやイラスト制作で3年以上の経験を持つストーリーテラーとして、私の目標は神の栄光のために魂と心に響く物語を伝えることです。**\n\n*私は史上最高のストーリーテラーであるイエス・キリストから真にインスピレーションを受けています。私にとって、すべての筆致は祈りです。私の作品が私にとっての祝福であるのと同じくらい、あなたにとっても祝福となることを願っています。*",
-                silverstring: "「Silverstring」は、聖書にインスパイアされたファンタジーであり、アイデンティティを懸けた葛藤と、霊的戦いの重みを深く描き出しています。\n\n*「Silverstring」は、私が空いた時間に個人で制作している情熱プロジェクト（パッションプロジェクト）です。現在はすべて一人で作業しているため、更新が遅れたり不定期になったりするかもしれません。それでも、描き続けられるよう精一杯頑張りますので、どうぞよろしくお願いいたします。*",
+                silverstring: "「Silverstring」は、聖書にインスパイアされたファンタジーであり、アイデンティティを懸けた葛藤と、霊的戦いの重みを深く描き出しています。\n\n*\「Silverstring」は、私が空いた時間に個人で制作している情熱プロジェクト（パッションプロジェクト）です。現在はすべて一人で作業しているため、更新が遅れたり不定期になったりするかもしれません。それでも、描き続けられるよう精一杯頑張りますので、どうぞよろしくお願いいたします。\*",
                 bethlehem: "プロジェクト・ベツレヘムは、Eloirienが展開するインディーIPのクリエイティブ・アンブレラ。"
             },
             KR: {
                 navHome: "홈", navComics: "코믹스",
                 creator: "**디지털 코믹스와 일러스트레이션 제작 분야에서 3년 이상의 경험을 쌓은 열정적인 스토리텔러로서, 제 목표는 하나님의 영광을 위해 영혼과 마음을 울리는 이야기를 전하는 것입니다.**\n\n*저는 역사상 위대한 스토리텔러인 예수 그리스도에게서 진정한 영감을 얻습니다. 저에게 모든 붓터치는 기도입니다. 제 예술이 저에게 축복인 만큼 여러분에게도 축복이 되기를 바랍니다.*",
-                silverstring: "「Silverstring」은 성경에서 영감을 받은 판타지물로, 자아 정체성을 찾기 위한 고뇌와 영적 전쟁의 무게를 심도 있게 다룹니다.\n\n*「Silverstring」은 제가 개인적인 시간에 틈틈이 작업하고 있는 열정 프로젝트(passion project)입니다. 현재는 모든 과정을 혼자서 진행하고 있어 업데이트가 다소 늦어지거나 불규칙할 수 있습니다. 그럼에도 최선을 다해 꾸준히 연재할 수 있도록 노력하겠습니다. 항상 감사드립니다.*",
+                silverstring: "「Silverstring」은 성경에서 영감을 받은 판타지물로, 자아 정체성을 찾기 위한 고뇌와 영적 전쟁의 무게를 심도 있게 다룹니다.\n\n*\「Silverstring」은 제가 개인적인 시간에 틈틈이 작업하고 있는 열정 프로젝트(passion project)입니다. 현재는 모든 과정을 혼자서 진행하고 있어 업데이트가 다소 늦어지거나 불규칙할 수 있습니다. 그럼에도 최선을 다해 꾸준히 연재할 수 있도록 노력하겠습니다. 항상 감사드립니다.\*",
                 bethlehem: "프로젝트 베들레헴은 Eloirien이 개발하는 독립 IP의 크리에이티브 우산입니다."
             }
         }
