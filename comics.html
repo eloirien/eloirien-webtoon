@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comics | Eloirien</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="content.js"></script>
+    
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
         
@@ -152,98 +155,52 @@
     </main>
 
     <script>
-      
-    const comicsContent = {
-        EN: {
-            navHome: "home",
-            navAbout: "about",
-            pageTitle: "Archived Records",
-            silverStatus: "Main Story In Progress",
-            specialsTitle: "Silverstring Specials",
-            specialsStatus: "Awaiting Transmission...",
-            genres: ["Fantasy", "Drama", "Action", "Slice of Life"],
-            labels: { thumb: "Specials" }
-        },
+ 
+        function setLanguage(lang) {
+            // 1. Memory Sentry: Simpan preferensi bahasa
+            localStorage.setItem('preferredLang', lang);
             
-        ID: {
-            navHome: "beranda",
-            navAbout: "tentang",
-            pageTitle: "Arsip Rekaman",
-            silverStatus: "Cerita Utama Sedang Berjalan",
-            specialsTitle: "Silverstring Spesial",
-            specialsStatus: "Menunggu Transmisi...",
-            genres: ["Fantasi", "Drama", "Aksi", "Slice of Life"],
-            labels: { thumb: "Spesial" }
-        },
+            // 2. Ambil data dari Universal Database
+            const ui = LUMINUS_DB.ui[lang];
+            const page = LUMINUS_DB.pages.index[lang]; // Mengambil genre dan label dari data index
             
-        JP: {
-            navHome: "ホーム",
-            navAbout: "著者について",
-            pageTitle: "アーカイブされた記録",
-            silverStatus: "本編連載中",
-            specialsTitle: "シルバーストリング・スペシャル",
-            specialsStatus: "データ待機中...",
-            genres: ["ファンタジー", "ドラマ", "アクション", "日常"],
-            labels: { thumb: "スペシャル" }
-        },
+            // 3. Update Navigation Pill
+            document.querySelector('.nav-link[href="index.html"]').innerText = ui.home;
+            document.querySelector('.nav-link[href="about.html"]').innerText = ui.about;
+            document.getElementById('current-lang-label').innerText = lang;
             
-        KR: {
-            navHome: "홈",
-            navAbout: "정보",
-            pageTitle: "보관된 기록",
-            silverStatus: "본편 연재 중",
-            specialsTitle: "실버스링 스페셜",
-            specialsStatus: "데이터 대기 중...",
-            genres: ["판타지", "드라마", "액션", "일상"],
-            labels: { thumb: "스페셜" }
+            // 4. Update Konten Halaman
+            document.getElementById('page-title').innerText = ui.comics; 
+            document.getElementById('status-silverstring').innerText = ui.status;
+            document.getElementById('status-specials').innerText = ui.comingSoon;
+            
+            // 5. Update Genre Tags (diambil dari data pusat)
+            document.getElementById('genre-fantasy').innerText = page.genres[0];
+            document.getElementById('genre-drama').innerText = page.genres[1];
+            document.getElementById('genre-action').innerText = page.genres[2];
+            
+            // Specials Genres
+            document.getElementById('genre-spec-fantasy').innerText = page.genres[0];
+            // Note: Pastikan "Slice of Life" ada di urutan genre database Anda jika ingin dinamis
+        
+            // 6. Update URL context
+            window.location.hash = lang;
         }
-    };
-
-    function setLanguage(lang) {
-        // 1. Memory Sentry: Save preference
-        localStorage.setItem('preferredLang', lang);
-        
-        const dict = comicsContent[lang] || comicsContent.EN;
-        
-        // 2. Update Navigation Pill
-        document.querySelector('.nav-link[href="index.html"]').innerText = dict.navHome;
-        document.querySelector('.nav-link[href="about.html"]').innerText = dict.navAbout;
-        document.getElementById('current-lang-label').innerText = lang;
-        
-        // 3. Update Page Content
-        document.getElementById('page-title').innerText = dict.pageTitle;
-        document.getElementById('status-silverstring').innerText = dict.silverStatus;
-        document.getElementById('label-specials-title').innerText = dict.specialsTitle;
-        document.getElementById('status-specials').innerText = dict.specialsStatus;
-        document.getElementById('label-specials-thumb').innerText = dict.labels.thumb;
-
-        // 4. Update Genre Tags
-        // Main Story Genres
-        document.getElementById('genre-fantasy').innerText = dict.genres[0];
-        document.getElementById('genre-drama').innerText = dict.genres[1];
-        document.getElementById('genre-action').innerText = dict.genres[2];
-        
-        // Specials Genres
-        document.getElementById('genre-spec-fantasy').innerText = dict.genres[0];
-        document.getElementById('genre-slice').innerText = dict.genres[3];
     
-        // 5. Update URL context
-        window.location.hash = lang;
-        }
-
-        // The Sentry on Load
-        window.onload = () => {
-            const savedLang = localStorage.getItem('preferredLang');
-            const hashLang = window.location.hash.replace('#', '');
-            const finalLang = hashLang || savedLang || 'EN';
-            
-            setLanguage(finalLang);
-        };
-    
-        // Art Protection
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('dragstart', e => e.preventDefault());
+            // The Sentry on Load
+            window.onload = () => {
+                const savedLang = localStorage.getItem('preferredLang');
+                const hashLang = window.location.hash.replace('#', '');
+                const finalLang = hashLang || savedLang || 'EN';
+                
+                setLanguage(finalLang);
+            };
         
-    </script>
+            // Art Protection
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('dragstart', e => e.preventDefault());
+        
+</script>
+    
 </body>
 </html>
