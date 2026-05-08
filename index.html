@@ -9,13 +9,10 @@
     <script src="content.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #E0E0E0; margin: 0; overflow-x: hidden; }
-        
-        /* Navigation & Lang Dropdown */
         .nav-container { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding-top: 2rem; padding-left: 15px; padding-right: 15px; pointer-events: none; }
         .nav-pill { pointer-events: auto; background-color: rgba(13, 13, 13, 0.95); backdrop-filter: blur(20px) saturate(180%); padding: 6px 16px; border-radius: 9999px; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 12px; height: 42px; margin: 0 auto; }
         .nav-link { color: #9ca3af; text-transform: uppercase; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; transition: color 0.3s; cursor: pointer; }
         .nav-link:hover { color: #3b82f6; }
-
         .custom-lang-dropdown { position: relative; display: flex; align-items: center; }
         .lang-trigger { background-color: rgba(31, 41, 55, 0.6); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
         .lang-menu { position: absolute; top: 100%; right: 0; padding-top: 15px; display: none; flex-direction: column; z-index: 2000; width: 200px; }
@@ -25,22 +22,18 @@
         .flag-icon { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
-        /* Unified Button Sizing & Glows */
         .btn-action-size { width: 90px; padding-top: 0.4rem; padding-bottom: 0.4rem; text-align: center; flex-shrink: 0; }
         @media (min-width: 768px) { .btn-action-size { width: 110px; padding-top: 0.5rem; padding-bottom: 0.5rem; } }
-        
         .btn-read { transition: all 0.3s ease; }
         .btn-read:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); transform: translateY(-1px); }
         .btn-notify { background-color: #f59e0b; color: #000; transition: all 0.3s ease; }
         .btn-notify:hover { background-color: #fbbf24; box-shadow: 0 0 15px rgba(245, 158, 11, 0.7); transform: translateY(-1px); }
 
-        /* Content Cards */
         .episode-card { background-color: #1a1a1a; border: 1px solid #2d2d2d; transition: all 0.2s; width: 100%; max-width: 42rem; }
         .episode-card:hover { transform: scale(1.01); border-color: #3b82f6; }
         .card-coming-soon { border-color: #2d2d2d; }
         .card-coming-soon:hover { border-color: #f59e0b !important; box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
 
-        /* Hero */
         .hero-wrapper { position: relative; background-color: #0d0d0d; overflow: hidden; width: 100%; }
         .hero-blur-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/cover.webp'); background-size: cover; filter: blur(10px) brightness(0.3); z-index: 1; }
         .hero-stage-fixed { position: relative; z-index: 2; width: 90%; max-width: 1100px; margin: 8rem auto 2.5rem auto; aspect-ratio: 2 / 1; background-image: url('images/cover.webp'); background-size: cover; border-radius: 16px; }
@@ -48,14 +41,6 @@
         .genre-tag { border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; padding: 4px 16px; color: white; font-size: 10px; font-weight: bold; text-transform: uppercase; }
 
         img { -webkit-user-drag: none; user-select: none; }
-        @keyframes pulse-slow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.9); } }
-        .animate-pulse-slow { animation: pulse-slow 3s infinite ease-in-out; }
-
-        /* Lightbox */
-        #lightbox-overlay { display: none; position: fixed; z-index: 5000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); justify-content: center; align-items: center; cursor: zoom-out; }
-        #lightbox-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 50px rgba(59, 130, 246, 0.2); transform: scale(0.9); transition: transform 0.3s ease; }
-        #lightbox-overlay.active #lightbox-img { transform: scale(1); }
-        #lightbox-overlay.active { display: flex; }
     </style>
 </head>
 <body>
@@ -68,8 +53,8 @@
             <a href="about.html" class="nav-link nav-link-about">about</a>
             <div class="custom-lang-dropdown">
                 <div class="lang-trigger flex items-center gap-1.5 px-2.5 py-1">
-                    <svg class="w-3 h-3 text-blue-400 fill-current animate-pulse-slow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
-                    <span id="current-lang-label" class="mt-[1px]">EN</span>
+                    <svg class="w-3 h-3 text-blue-400 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
+                    <span id="current-lang-label">EN</span>
                 </div>
                 <div class="lang-menu">
                     <div class="lang-menu-content">
@@ -99,9 +84,9 @@
 
     <div class="sticky top-0 bg-black/95 backdrop-blur-md border-b border-gray-800 z-40">
         <div class="max-w-screen-xl mx-auto flex justify-center">
-            <button onclick="switchTab('info')" id="tab-info" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-blue-600 text-white uppercase transition-colors">Info</button>
-            <button onclick="switchTab('episodes')" id="tab-episodes" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-colors">Episodes</button>
-            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-button px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-colors">Gallery</button>
+            <button onclick="switchTab('info')" id="tab-info" class="px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-blue-600 text-white uppercase transition-colors">Info</button>
+            <button onclick="switchTab('episodes')" id="tab-episodes" class="px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-colors">Episodes</button>
+            <button onclick="switchTab('gallery')" id="tab-gallery" class="px-6 py-4 text-xs font-bold tracking-widest border-b-2 border-transparent text-gray-500 hover:text-white uppercase transition-colors">Gallery</button>
         </div>
     </div>
 
@@ -125,13 +110,8 @@
         <section id="content-episodes" class="tab-content hidden w-full">
             <div class="flex flex-col items-center mt-8 px-4 w-full">
                 <div class="flex flex-row gap-3 justify-center w-full max-w-[400px]">
-                    <button id="btn-read-first" onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-lg truncate btn-read">
-                        Read First
-                    </button>
-                    
-                    <button id="btn-read-newest" onclick="navigateEpisode('newest')" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">
-                        Read Newest
-                    </button>
+                    <button id="btn-read-first" onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all shadow-lg truncate btn-read">Read First</button>
+                    <button id="btn-read-newest" onclick="navigateEpisode('newest')" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">Read Newest</button>
                 </div>
                 <div class="mt-8 mb-12">
                     <button id="main-flip-btn" onclick="toggleSort()" class="w-10 h-10 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800 flex items-center justify-center hover:border-blue-500 transition-all shadow-xl group">
@@ -139,8 +119,7 @@
                     </button>
                 </div>
             </div>
-            <div id="episode-list" class="flex flex-col items-center gap-6 mb-20 w-full">
-                </div>
+            <div id="episode-list" class="flex flex-col items-center gap-6 mb-20 w-full"></div>
         </section> 
         
         <section id="content-gallery" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto w-full">
@@ -158,24 +137,32 @@
     <div id="lightbox-overlay" onclick="closeLightbox()"><img id="lightbox-img" src="" alt="Full Size View"></div>
 
     <script>
-        // SENTRY: Default set to FIFO (Ascending)
+        // SENTRY: Set to FIFO (Ascending) by default
         let isDescending = false;
 
         function setLanguage(lang) {
             localStorage.setItem('preferredLang', lang);
             const ui = LUMINUS_DB.ui[lang];
             const page = LUMINUS_DB.pages.index[lang];
+            
             document.querySelector('.nav-link-comics').innerText = ui.comics;
             document.querySelector('.nav-link-about').innerText = ui.about;
             document.getElementById('current-lang-label').innerText = lang;
+            
+            // LOCALIZED BUTTONS
+            document.getElementById('btn-read-first').innerText = ui.readFirst;
+            document.getElementById('btn-read-newest').innerText = ui.readNewest;
+            
             document.getElementById('series-status').innerText = ui.status;
             document.getElementById('genre-fantasy').innerText = page.genres[0];
             document.getElementById('genre-drama').innerText = page.genres[1];
             document.getElementById('genre-action').innerText = page.genres[2];
             document.getElementById('dynamic-synopsis').innerHTML = page.synopsisHTML;
+            
             document.getElementById('tab-info').innerText = page.tabs[0];
             document.getElementById('tab-episodes').innerText = page.tabs[1];
             document.getElementById('tab-gallery').innerText = page.tabs[2];
+            
             renderEpisodes(lang);
             window.location.hash = lang;
         }
@@ -194,7 +181,6 @@
                 const dateStr = ep.date[lang];
                 
                 if (isUpcoming) {
-                    // SENTRY: Restored NOTIFY button to mobile
                     list.innerHTML += `
                         <div class="episode-card card-coming-soon flex flex-row items-center gap-3 p-3 md:gap-4 md:p-4 rounded-2xl opacity-70 cursor-not-allowed">
                             <div class="w-24 md:w-48 flex-shrink-0 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700 aspect-[16/9]">
@@ -209,7 +195,6 @@
                             </div>
                         </div>`;
                 } else {
-                    // SENTRY: Restored READ button to mobile
                     list.innerHTML += `
                         <a href="reader.html?ep=${key}#${lang}" class="episode-card group flex flex-row items-center gap-3 p-3 md:gap-4 md:p-4 rounded-2xl relative">
                             <div class="w-24 md:w-48 flex-shrink-0 overflow-hidden rounded-lg border border-gray-800">
@@ -220,7 +205,7 @@
                                 <p class="text-[8px] md:text-[10px] text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
                             </div>
                             <div class="flex items-center pr-1 md:pr-4">
-                                <div class="btn-action-size btn-read bg-blue-600 text-white rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center">READ</div>
+                                <div class="btn-action-size btn-read bg-blue-600 text-white rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center">${ui.read}</div>
                             </div>
                         </a>`;
                 }
@@ -229,29 +214,25 @@
 
         function toggleSort() {
             isDescending = !isDescending;
-            const icon = document.getElementById('sort-icon-hero');
-            icon.style.transform = isDescending ? 'rotate(180deg)' : 'rotate(0deg)';
+            document.getElementById('sort-icon-hero').style.transform = isDescending ? 'rotate(180deg)' : 'rotate(0deg)';
             const currentLang = window.location.hash.replace('#', '') || 'EN';
             renderEpisodes(currentLang);
         }
 
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(c => { c.classList.add('hidden'); c.classList.remove('flex'); });
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-button').forEach(b => { b.classList.remove('border-blue-600', 'text-white'); b.classList.add('border-transparent', 'text-gray-500'); });
-            const targetContent = document.getElementById(`content-${tabId}`);
-            targetContent.classList.remove('hidden');
-            if (tabId === 'info') targetContent.classList.add('flex'); 
-            const activeTab = document.getElementById(`tab-${tabId}`);
-            activeTab.classList.remove('border-transparent', 'text-gray-500');
-            activeTab.classList.add('border-blue-600', 'text-white');
+            const target = document.getElementById(`content-${tabId}`);
+            target.classList.remove('hidden');
+            if(tabId === 'info') target.classList.add('flex');
+            document.getElementById(`tab-${tabId}`).classList.add('border-blue-600', 'text-white');
         }
 
         function navigateEpisode(epNumber) {
             const currentLang = window.location.hash || '#EN';
             if (epNumber === 'newest') {
                 const releasedKeys = Object.keys(LUMINUS_DB.library).filter(k => LUMINUS_DB.library[k].status === 'released');
-                const sortedKeys = releasedKeys.map(Number).sort((a, b) => b - a);
-                epNumber = sortedKeys[0] || 1;
+                epNumber = Math.max(...releasedKeys.map(Number)) || 1;
             }
             window.location.href = `reader.html?ep=${epNumber}${currentLang}`;
         }
@@ -260,16 +241,9 @@
         function closeLightbox() { document.getElementById('lightbox-overlay').classList.remove('active'); }
 
         window.onload = () => {
-            const savedLang = localStorage.getItem('preferredLang');
-            const hashLang = window.location.hash.replace('#', '');
-            const finalLang = hashLang || savedLang || 'EN';
+            const finalLang = window.location.hash.replace('#', '') || localStorage.getItem('preferredLang') || 'EN';
             setLanguage(finalLang);
-            // Sync initial flip icon
-            document.getElementById('sort-icon-hero').style.transform = isDescending ? 'rotate(180deg)' : 'rotate(0deg)';
         };
-
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('dragstart', e => e.preventDefault());
     </script>
 </body>
 </html>
