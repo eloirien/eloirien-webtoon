@@ -1,4 +1,4 @@
-// UNIVERSAL LANGUAGE & EPISODE DATABASE
+// UNIVERSAL LANGUAGE & EPISODE DATABASE 
 const LUMINUS_DB = {
         ui: {
             EN: { 
