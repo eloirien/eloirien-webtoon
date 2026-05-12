@@ -53,7 +53,7 @@
             
             <div class="custom-ep-dropdown">
                 <div class="ep-trigger flex items-center gap-2">
-                    <span id="ep-title" class="text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] truncate max-w-[150px] md:max-w-[300px]">LOADING...</span>
+                    <h1 id="ep-title" class="text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] truncate max-w-[150px] md:max-w-[300px] inline-block">LOADING...</h1>
                     <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </div>
                 <div class="ep-menu">
@@ -132,6 +132,26 @@
         populateMenus(lang);
         loadPages(); 
     }
+
+        function initReader() {
+        const epParam = getQueryParam('ep');
+        currentEp = epParam ? parseInt(epParam) : 1;
+        
+        // THE SEO OVERHAUL: Update Page Metadata dynamically
+        const epData = LUMINUS_DB.library[currentEp];
+        if (epData) {
+            const pageTitle = `Silverstring Ep. ${currentEp}: ${epData.name[currentLang]} | Official Archive`;
+            document.title = pageTitle;
+            
+            // Update Meta Description (The snippet Google shows in search)
+            let metaDesc = document.querySelector('meta[name="description"]');
+            if (!metaDesc) {
+                metaDesc = document.createElement('meta');
+                metaDesc.name = "description";
+                document.head.appendChild(metaDesc);
+            }
+            metaDesc.content = `Read Silverstring Episode ${currentEp}. Join Archius and Alice in the Kingdom of Luminus. Official Lore and High-Res Webtoon Reader.`;
+        }
 
     function syncEpisodeInfo() {
         const epData = LUMINUS_DB.library[currentEp];
@@ -237,6 +257,14 @@
             const imgPath = `images/episodes/ep${currentEp}/ep${currentEp}_${pageNum}_${currentLang}.webp`;
             container.innerHTML += `<div class="comic-page"><img src="${imgPath}" alt="Record Panel ${pageNum}" loading="lazy" onload="this.style.opacity=1" style="opacity:0; transition: opacity 0.5s;" onerror="handleImageError(this)"></div>`;
         }
+        const altText = `Silverstring Episode ${currentEp} Page ${pageNum} - Art by Eloirien`;
+        container.innerHTML += `<div class="comic-page">
+            <img src="${imgPath}" 
+                 alt="${altText}" 
+                 loading="lazy" 
+                 style="opacity:0; transition: opacity 0.5s;" 
+                 onerror="handleImageError(this)">
+        </div>`;
     }
 
     function changeEpisode(newEp) { window.location.href = `reader.html?ep=${newEp}#${currentLang}`; }
