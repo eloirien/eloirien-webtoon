@@ -45,42 +45,42 @@ const LUMINUS_DB = {
             name: { EN: "Prologue: Storm", ID: "Prolog: Badai", JP: "プロローグ: 嵐", KR: "프롤로그: 폭풍" },
             date: { EN: "Nov 01, 2025", ID: "01 Nov 2025", JP: "2025年11月01日", KR: "2025년 11월 01일" },
             panels: 22,
-            thumb: "images/ep1-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep1-thumb.webp"
         },
         2: {
             status: "released",
             name: { EN: "Prologue: The King", ID: "Prolog: Sang Raja", JP: "プロローグ: 王", KR: "프롤로그: 왕" },
-            date: { EN: "Nov 29, 2025", ID: "29 Nov 2025", JP: "2025年11月29日", KR: "2025년 11월 29일" },
+            date: { EN: "Nov 29, 2025", ID: "29 Nov 2025", JP: "2025年11月29日", KR: "2025년 11월 29日" },
             panels: 17,
-            thumb: "images/ep2-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep2-thumb.webp"
         },
         3: {
             status: "released",
             name: { EN: "Prologue: The Cup", ID: "Prolog: Cawan", JP: "プロローグ: 杯", KR: "프롤로그: 잔" },
             date: { EN: "Jan 04, 2026", ID: "04 Jan 2026", JP: "2026年01月04日", KR: "2026년 01월 04일" },
             panels: 21,
-            thumb: "images/ep3-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep3-thumb.webp"
         },
         4: {
             status: "released",
             name: { EN: "01 - Who (Part 1)", ID: "01 - Siapa (Bagian 1)", JP: "01 - 誰 (前編)", KR: "01 - 누구 (1부)" },
             date: { EN: "Feb 07, 2026", ID: "07 Feb 2026", JP: "2026年02月07日", KR: "2026년 02월 07일" },
             panels: 15,
-            thumb: "images/ep4-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep4-thumb.webp"
         },
         5: {
             status: "released",
             name: { EN: "01 - Who (Part 2)", ID: "01 - Siapa (Bagian 2)", JP: "01 - 誰 (後編)", KR: "01 - 누구 (2부)" },
             date: { EN: "Mar 08, 2026", ID: "08 Mar 2026", JP: "2026年03月08日", KR: "2026년 03월 08일" },
             panels: 24,
-            thumb: "images/ep5-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep5-thumb.webp"
         },
         6: {
             status: "released",
             name: { EN: "02 - Friend (Part 1)", ID: "02 - Teman (Bagian 1)", JP: "02 - 友 (前編)", KR: "02 - 친구 (1부)" },
-            date: { EN: "Apr 23, 2026", ID: "23 Apr 2026", JP: "2026年04月23日", KR: "2026년 04월 23일" },
+            date: { EN: "Apr 23, 2026", ID: "23 Apr 2026", JP: "2026年04月23日", KR: "2026년 04월 23日" },
             panels: 23,
-            thumb: "images/ep6-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep6-thumb.webp" // Unified to .webp
         },
         7: {
             status: "upcoming",
