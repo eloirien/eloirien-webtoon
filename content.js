@@ -96,24 +96,28 @@ const LUMINUS_DB = {
             EN: { 
                 tabs: ["INFO", "EPISODES", "GALLERY"], 
                 genres: ["Fantasy", "Drama", "Action"], 
+                specialGenres: ["Fantasy", "Slice of Life"],
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."</em>` 
             },
             ID: { 
                 tabs: ["INFO", "EPISODE", "GALERI"], 
                 genres: ["Fantasi", "Drama", "Aksi"], 
+                specialGenres: ["Fantasi", "Kisah Sehari-hari"],    
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Baik Alicia maupun Archius harus menghadapi pergumulan identitas mereka sembari menjalankan tugas untuk menjaga kerajaan dari ancaman bangkitnya kuasa kegelapan. Bagaimanakah takdir mereka yang saling bertautan itu akan terungkap?</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Sebab, pertarungan itu bukanlah melawan darah dan daging, melainkan melawan penguasa-penguasa, melawan otoritas-otoritas, melawan penghulu dunia kegelapan, melawan roh-roh jahat di alam semesta."</em>` 
             },
             JP: { 
                 tabs: ["情報", "エピソード", "ギャラリー"], 
                 genres: ["ファンタジー", "ドラマ", "アクション"], 
+                specialGenres: ["ファンタジー", "日常"],
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">アリシアとアルキウスは、湧き上がる闇の勢力から王国を守るという使命を果たしながら、己のアイデンティティを懸けた闘いに身を投じていく。分かちがたく結ばれた二人の運命は、いかなる結末を迎えるのか。</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">我らの戦いは、血肉を相手にするものではなく、支配者、権威、この暗闇の世界の支配者たち、また、天にいる悪の霊に対する戦いである。</em>` 
             },
             KR: { 
                 tabs: ["정보", "에피소드", "갤러리"], 
                 genres: ["판타지", "드라마", "액션"], 
+                specialGenres: ["판타지", "일상"],
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">알리시아와 아르키우스는 깨어나는 어둠의 세력으로부터 왕국을 지켜야 하는 숙명 속에서, 각자의 정체성을 찾기 위한 치열한 사투를 벌인다. 서로의 운명이 얽히고설킨 두 사람의 앞날에는 과연 무엇이 기다리고 있을 것인가?</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">우리의 씨름은 혈과 육을 상대하는 것이 아니요 통치자들과 권세들과 이 어둠의 세상 주관자들과 하늘에 있는 악의 영들을 상대함이라.</em>` 
             }
