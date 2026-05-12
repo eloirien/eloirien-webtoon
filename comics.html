@@ -200,12 +200,15 @@
             document.getElementById('page-title').innerText = ui.comics; 
             document.getElementById('status-silverstring').innerText = ui.status;
             document.getElementById('status-specials').innerText = ui.comingSoon;
-            
-            // Update Genre Tags
+         
+            // Update Main Story Genres
             document.getElementById('genre-fantasy').innerText = page.genres[0];
             document.getElementById('genre-drama').innerText = page.genres[1];
             document.getElementById('genre-action').innerText = page.genres[2];
-            document.getElementById('genre-spec-fantasy').innerText = page.genres[0];
+            
+            // Update Specials Genres (New Logic)
+            document.getElementById('genre-spec-fantasy').innerText = page.specialGenres[0];
+            document.getElementById('genre-slice').innerText = page.specialGenres[1];
         
             window.location.hash = lang;
         }
