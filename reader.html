@@ -108,245 +108,166 @@
     </button>
 
     <script>
-    let currentEp = 1;
-    let currentLang = 'EN';
-    let uiVisible = false;
-    let touchStartX = 0;
-    let touchEndX = 0;
 
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
-
-    function setLanguage(lang) {
-        currentLang = lang;
-        localStorage.setItem('preferredLang', lang);
-        window.location.hash = lang;
-        const ui = LUMINUS_DB.ui[lang];
-        document.getElementById('nav-home-text').innerText = ui.home;
-        document.getElementById('current-lang-label').innerText = lang;
-    }     
-        // REINFORCED SYNC: Update both UI titles immediately
-        syncEpisodeInfo();
-        populateMenus(lang);
-        loadPages(); 
-    }
-
-        function initReader() {
-        const epParam = getQueryParam('ep');
-        currentEp = epParam ? parseInt(epParam) : 1;
+            let currentEp = 1;
+            let currentLang = 'EN';
+            let uiVisible = false;
+            let touchStartX = 0;
+            let touchEndX = 0;
         
-        // THE SEO OVERHAUL: Update Page Metadata dynamically
-        const epData = LUMINUS_DB.library[currentEp];
-        if (epData) {
-            const pageTitle = `Silverstring Ep. ${currentEp}: ${epData.name[currentLang]} | Official Archive`;
-            document.title = pageTitle;
-            
-            // Update Meta Description (The snippet Google shows in search)
-            let metaDesc = document.querySelector('meta[name="description"]');
-            if (!metaDesc) {
-                metaDesc = document.createElement('meta');
-                metaDesc.name = "description";
-                document.head.appendChild(metaDesc);
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
             }
-            metaDesc.content = `Read Silverstring Episode ${currentEp}. Join Archius and Alice in the Kingdom of Luminus. Official Lore and High-Res Webtoon Reader.`;
-            }
-            if (!LUMINUS_DB.library[currentEp]) currentEp = 1;
+        
+            function setLanguage(lang) {
+                currentLang = lang;
+                localStorage.setItem('preferredLang', lang);
+                window.location.hash = lang;
+                const ui = LUMINUS_DB.ui[lang];
+                document.getElementById('nav-home-text').innerText = ui.home;
+                document.getElementById('current-lang-label').innerText = lang;
+                
+                syncEpisodeInfo();
+                populateMenus(lang);
+                loadPages(); 
+                updateNavButtons();
+            }     
+        
+            function initReader() {
+                const epParam = getQueryParam('ep');
+                currentEp = epParam ? parseInt(epParam) : 1;
+                if (!LUMINUS_DB.library[currentEp]) currentEp = 1;
+        
+                // SEO OVERHAUL: Update Metadata
+                const epData = LUMINUS_DB.library[currentEp];
+                if (epData) {
+                    document.title = `Silverstring Ep. ${currentEp}: ${epData.name[currentLang]} | Official Archive`;
+                    let metaDesc = document.querySelector('meta[name="description"]');
+                    if (!metaDesc) {
+                        metaDesc = document.createElement('meta');
+                        metaDesc.name = "description";
+                        document.head.appendChild(metaDesc);
+                    }
+                    metaDesc.content = `Read Silverstring Episode ${currentEp}. Join Archius and Alice in the Kingdom of Luminus.`;
+                }
+        
                 const savedLang = localStorage.getItem('preferredLang');
                 const hashLang = window.location.hash.replace('#', '');
                 setLanguage(hashLang || savedLang || 'EN');
-                updateNavButtons();
             }
-            
-
-    function syncEpisodeInfo() {
-        const epData = LUMINUS_DB.library[currentEp];
-        if (epData) {
-            // SYNC TOP: Corrects the mismatch
-            document.getElementById('ep-title').innerText = epData.name[currentLang];
-            // SYNC BOTTOM:
-            document.getElementById('bottom-ep-number').innerText = "EP #" + currentEp;
-        }
-    }
-
-    function populateMenus(lang) {
-    const list = document.getElementById('drawer-list');
-    const dropdownList = document.getElementById('ep-dropdown-list');
-    list.innerHTML = '';
-    dropdownList.innerHTML = '';
-    const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
-    
-    keys.forEach(id => {
-        const ep = LUMINUS_DB.library[id];
-        const isActive = (parseInt(id) === currentEp); 
-        const isUpcoming = ep.status === 'upcoming';
-        const title = ep.name[lang];
         
-        // 1. Dropdown Sync Logic
-        if (isUpcoming) {
-            dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed uppercase">${ep.dateLabel} - UPCOMING</div>`;
-        } else {
-            dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${id})">${title}</div>`;
-        }
+            function syncEpisodeInfo() {
+                const epData = LUMINUS_DB.library[currentEp];
+                if (epData) {
+                    document.getElementById('ep-title').innerText = epData.name[currentLang];
+                    document.getElementById('bottom-ep-number').innerText = "EP #" + currentEp;
+                }
+            }
         
-        // 2. CSS-Based Thumbnail Placeholder
-        const thumbContent = isUpcoming 
-            ? `<div class="rounded-md border-2 border-zinc-800 bg-zinc-900 aspect-[16/9] flex items-center justify-center shadow-lg group-hover:border-zinc-700 transition">
-                 <span class="text-[8px] font-bold text-zinc-700 uppercase tracking-widest">${ep.dateLabel}</span>
-               </div>`
-            : `<img src="${ep.thumb}" class="rounded-md border-2 ${isActive ? 'border-blue-500' : 'border-transparent group-hover:border-zinc-500'} transition shadow-lg aspect-[16/9] object-cover">`;
-
-        // 3. Render Drawer Item
-        list.innerHTML += `
-            <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'} ${isUpcoming ? 'opacity-30 cursor-not-allowed' : ''}" 
-                 onclick="${isUpcoming ? '' : `changeEpisode(${id})`}">
-                ${thumbContent}
-                <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold truncate">${isUpcoming ? ep.dateLabel : title}</p>
-            </div>`;
-    });
-    }
-
-    function updateNavButtons() {
-        const prevBtn = document.getElementById('btn-prev');
-        const nextBtn = document.getElementById('btn-next');
-        const prevEp = currentEp - 1;
-        const nextEp = currentEp + 1;
-        const hasPrev = LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released';
-        const hasNext = LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released';
+            function populateMenus(lang) {
+                const list = document.getElementById('drawer-list');
+                const dropdownList = document.getElementById('ep-dropdown-list');
+                list.innerHTML = '';
+                dropdownList.innerHTML = '';
+                const keys = Object.keys(LUMINUS_DB.library).sort((a, b) => parseInt(a) - parseInt(b));
+                
+                keys.forEach(id => {
+                    const ep = LUMINUS_DB.library[id];
+                    const isActive = (parseInt(id) === currentEp); 
+                    const isUpcoming = ep.status === 'upcoming';
+                    const title = ep.name[lang];
+                    
+                    if (isUpcoming) {
+                        dropdownList.innerHTML += `<div class="ep-item opacity-40 cursor-not-allowed uppercase">${ep.dateLabel} - UPCOMING</div>`;
+                    } else {
+                        dropdownList.innerHTML += `<div class="ep-item ${isActive ? 'active-ep' : ''}" onclick="changeEpisode(${id})">${title}</div>`;
+                    }
+                    
+                    const thumbContent = isUpcoming 
+                        ? `<div class="rounded-md border-2 border-zinc-800 bg-zinc-900 aspect-[16/9] flex items-center justify-center shadow-lg"><span class="text-[8px] font-bold text-zinc-700 uppercase tracking-widest">${ep.dateLabel}</span></div>`
+                        : `<img src="${ep.thumb}" class="rounded-md border-2 ${isActive ? 'border-blue-500' : 'border-transparent group-hover:border-zinc-500'} transition shadow-lg aspect-[16/9] object-cover">`;
         
-        if (hasPrev) {
-            prevBtn.classList.remove('opacity-30', 'cursor-not-allowed');
-            prevBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(prevEp); };
-        } else {
-            prevBtn.classList.add('opacity-30', 'cursor-not-allowed');
-            prevBtn.onclick = (e) => { e.stopPropagation(); };
-        }
+                    list.innerHTML += `
+                        <div class="flex-shrink-0 w-32 group cursor-pointer ${isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'} ${isUpcoming ? 'opacity-30 cursor-not-allowed' : ''}" 
+                             onclick="${isUpcoming ? '' : `changeEpisode(${id})`}">
+                            ${thumbContent}
+                            <p class="text-[9px] mt-2 ${isActive ? 'text-blue-400' : 'text-gray-400'} uppercase font-bold truncate">${isUpcoming ? ep.dateLabel : title}</p>
+                        </div>`;
+                });
+            }
         
-        if (hasNext) {
-            nextBtn.classList.remove('opacity-30', 'cursor-not-allowed');
-            nextBtn.onclick = (e) => { e.stopPropagation(); changeEpisode(nextEp); };
-        } else {
-            nextBtn.classList.add('opacity-30', 'cursor-not-allowed');
-            nextBtn.onclick = (e) => { e.stopPropagation(); };
-        }
-    }
-
-    // REFINED REX ALICE TYPOGRAPHY
-    function handleImageError(img) {
-        if (img.complete && img.naturalWidth === 0) {
-            const container = document.getElementById('comic-container');
-            const ui = LUMINUS_DB.ui[currentLang];
-            container.innerHTML = `
-                <div class="flex flex-col items-center justify-center py-32 px-10 text-center animate-fade-in">
-                    <img src="images/placeholders/chibi-alice.png" class="w-64 h-auto mb-10 shadow-2xl rounded-xl" alt="Lost Alice">
-                    <h2 class="text-white text-sm font-black uppercase tracking-[0.4em] mb-4 leading-relaxed">${ui.errTitle}</h2>
-                    <p class="text-[11px] font-bold tracking-[0.2em] text-gray-500 uppercase max-w-xs leading-loose">${ui.errSub}</p>
-                    <button onclick="location.reload()" class="mt-12 text-[10px] text-blue-500 border border-blue-500/30 px-6 py-2 rounded-md uppercase font-black tracking-widest transition-all hover:bg-blue-500/10 hover:border-blue-500">
-                        ${ui.errRetry}
-                    </button>
-                </div>`;
-        }
-    }
-
-       function loadPages() {
-        const container = document.getElementById('comic-container');
-        container.innerHTML = '';
-        const epData = LUMINUS_DB.library[currentEp];
-        if (!epData || epData.status !== 'released') return;
-    
-        // Logic for "In Translation" announcements
-        if (currentLang === 'JP' || currentLang === 'KR') {
-            const statusPath = `images/episodes/announcements/silverstring-status-in-translation-${currentLang}.webp`;
-            container.innerHTML = `<div class="comic-page"><img src="${statusPath}" alt="Awaiting Translation"></div>`;
-            return;
-        }
-    
-        for (let i = 1; i <= epData.panels; i++) {
-            const pageNum = i.toString().padStart(2, '0');
-            const epNum = currentEp.toString().padStart(2, '0');
-            
-            // Matches your new format: silverstring-episode-06-01-ID.webp
-            const imgPath = `images/episodes/ep${currentEp}/silverstring-episode-${epNum}-${pageNum}-${currentLang}.webp`;
-            
-            // Descriptive alt text for Google Image Search
-            const altText = `Silverstring Episode ${currentEp} Page ${pageNum} - Art by Eloirien`;
-    
-            container.innerHTML += `
-                <div class="comic-page">
-                    <img src="${imgPath}" 
-                         alt="${altText}" 
-                         loading="lazy" 
-                         onload="this.style.opacity=1" 
-                         style="opacity:0; transition: opacity 0.5s;" 
-                         onerror="handleImageError(this)">
-                </div>`;
-        }
-    }
-
-    function changeEpisode(newEp) { window.location.href = `reader.html?ep=${newEp}#${currentLang}`; }
-    
-    function toggleUI() {
-        uiVisible = !uiVisible;
-        document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
-        document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
-        const btn = document.getElementById('back-to-top');
-        if (uiVisible && window.scrollY > 800) btn.classList.add('show-btn');
-        else btn.classList.remove('show-btn');
-    }
-
-    // CONNECTED MOBILE SWIPE
-    function handleSwipe() {
-        const threshold = 80;
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > threshold) {
-            if (diff > 0) { // Swipe Left -> NEXT
-                const nextEp = currentEp + 1;
-                if (LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released') changeEpisode(nextEp);
-            } else { // Swipe Right -> PREV
+            function updateNavButtons() {
+                const prevBtn = document.getElementById('btn-prev');
+                const nextBtn = document.getElementById('btn-next');
                 const prevEp = currentEp - 1;
-                if (LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released') changeEpisode(prevEp);
-            }
-        }
-    }
-
-    document.getElementById('global-click-zone').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
-    document.getElementById('global-click-zone').addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, {passive: true});
-
-    function toggleDrawer(e) { if(e) e.stopPropagation(); document.getElementById('episode-drawer').classList.toggle('open'); }
-    function teleportToTop(e) { e.stopPropagation(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
-    function initReader() {
-        const epParam = getQueryParam('ep');
-        currentEp = epParam ? parseInt(epParam) : 1;
+                const nextEp = currentEp + 1;
+                const hasPrev = LUMINUS_DB.library[prevEp] && LUMINUS_DB.library[prevEp].status === 'released';
+                const hasNext = LUMINUS_DB.library[nextEp] && LUMINUS_DB.library[nextEp].status === 'released';
+                
+                prevBtn.classList.toggle('opacity-30', !hasPrev);
+                prevBtn.classList.toggle('cursor-not-allowed', !hasPrev);
+                prevBtn.onclick = hasPrev ? (e) => { e.stopPropagation(); changeEpisode(prevEp); } : (e) => e.stopPropagation();
         
-        // THE SEO OVERHAUL: Update Metadata
-        const epData = LUMINUS_DB.library[currentEp];
-        if (epData) {
-            document.title = `Silverstring Ep. ${currentEp}: ${epData.name[currentLang]} | Official Archive`;
-            
-            let metaDesc = document.querySelector('meta[name="description"]');
-            if (!metaDesc) {
-                metaDesc = document.createElement('meta');
-                metaDesc.name = "description";
-                document.head.appendChild(metaDesc);
+                nextBtn.classList.toggle('opacity-30', !hasNext);
+                nextBtn.classList.toggle('cursor-not-allowed', !hasNext);
+                nextBtn.onclick = hasNext ? (e) => { e.stopPropagation(); changeEpisode(nextEp); } : (e) => e.stopPropagation();
             }
-            metaDesc.content = `Read Silverstring Episode ${currentEp}. Join Archius and Alice in the Kingdom of Luminus. Official Lore and High-Res Webtoon Reader.`;
-        }
-
-        if (!LUMINUS_DB.library[currentEp]) currentEp = 1;
-        const savedLang = localStorage.getItem('preferredLang');
-        const hashLang = window.location.hash.replace('#', '');
-        setLanguage(hashLang || savedLang || 'EN');
-        updateNavButtons();
-    }
-
-    window.onload = initReader;
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('dragstart', e => e.preventDefault());
+        
+            function loadPages() {
+                const container = document.getElementById('comic-container');
+                container.innerHTML = '';
+                const epData = LUMINUS_DB.library[currentEp];
+                if (!epData || epData.status !== 'released') return;
+            
+                if (currentLang === 'JP' || currentLang === 'KR') {
+                    const statusPath = `images/episodes/announcements/silverstring-status-in-translation-${currentLang}.webp`;
+                    container.innerHTML = `<div class="comic-page"><img src="${statusPath}" alt="Awaiting Translation"></div>`;
+                    return;
+                }
+            
+                for (let i = 1; i <= epData.panels; i++) {
+                    const pageNum = i.toString().padStart(2, '0');
+                    const epNum = currentEp.toString().padStart(2, '0');
+                    const imgPath = `images/episodes/ep${currentEp}/silverstring-episode-${epNum}-${pageNum}-${currentLang}.webp`;
+                    const altText = `Silverstring Episode ${currentEp} Page ${pageNum} - Art by Eloirien`;
+            
+                    container.innerHTML += `
+                        <div class="comic-page">
+                            <img src="${imgPath}" alt="${altText}" loading="lazy" 
+                                 onload="this.style.opacity=1" style="opacity:0; transition: opacity 0.5s;" 
+                                 onerror="handleImageError(this)">
+                        </div>`;
+                }
+            }
+        
+            function handleImageError(img) {
+                if (img.complete && img.naturalWidth === 0) {
+                    const container = document.getElementById('comic-container');
+                    const ui = LUMINUS_DB.ui[currentLang];
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center justify-center py-32 px-10 text-center">
+                            <img src="images/placeholders/chibi-alice.png" class="w-64 h-auto mb-10 shadow-2xl rounded-xl" alt="Lost Alice">
+                            <h2 class="text-white text-sm font-black uppercase tracking-[0.4em] mb-4">${ui.errTitle}</h2>
+                            <p class="text-[11px] font-bold text-gray-500 uppercase max-w-xs">${ui.errSub}</p>
+                            <button onclick="location.reload()" class="mt-12 text-[10px] text-blue-500 border border-blue-500/30 px-6 py-2 rounded-md uppercase font-black tracking-widest hover:bg-blue-500/10">${ui.errRetry}</button>
+                        </div>`;
+                }
+            }
+        
+            function changeEpisode(newEp) { window.location.href = `reader.html?ep=${newEp}#${currentLang}`; }
+            function toggleUI() {
+                uiVisible = !uiVisible;
+                document.getElementById('top-nav').classList.toggle('ui-active', uiVisible);
+                document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
+            }
+            function toggleDrawer(e) { if(e) e.stopPropagation(); document.getElementById('episode-drawer').classList.toggle('open'); }
+            function teleportToTop(e) { e.stopPropagation(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        
+            window.onload = initReader;
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('dragstart', e => e.preventDefault());
+        
     </script>
 </body>
 </html>
