@@ -285,6 +285,21 @@
             setLanguage(finalLang);
             document.getElementById('sort-icon-hero').style.transform = isDescending ? 'rotate(180deg)' : 'rotate(0deg)';
         };
+
+        window.addEventListener('scroll', () => {
+        const btn = document.getElementById('back-to-top');
+        if (window.scrollY > 400) {
+            btn.classList.add('show-btn');
+        } else {
+            btn.classList.remove('show-btn');
+        }
+    });
+    
+    function teleportToTop(e) {
+        if(e) e.stopPropagation();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+        
     </script>
 </body>
 </html>
