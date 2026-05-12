@@ -121,6 +121,19 @@
         .custom-lang-dropdown:hover .lang-menu { display: flex; }
 
         img { -webkit-user-drag: none; user-select: none; }
+
+         /* Teleport Button Logic */
+         #back-to-top {
+             bottom: -100px; /* Hidden by default */
+             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+             opacity: 0;
+         }
+         
+         #back-to-top.show-btn {
+             bottom: 30px; /* Slides up into view */
+             opacity: 1;
+         }
+       
     </style>
 </head>
 
@@ -182,6 +195,10 @@
         </div>
     </main>
 
+      <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-blue-600 hover:bg-blue-500 p-3 rounded-md shadow-[0_0_20px_rgba(59,130,246,0.4)] z-50 transition-colors">
+       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
+      </button>
+
     <script>
         function setLanguage(lang) {
             localStorage.setItem('preferredLang', lang);
@@ -222,6 +239,21 @@
         
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
+
+       window.addEventListener('scroll', () => {
+       const btn = document.getElementById('back-to-top');
+       if (window.scrollY > 400) {
+           btn.classList.add('show-btn');
+       } else {
+           btn.classList.remove('show-btn');
+       }
+   });
+   
+      function teleportToTop(e) {
+          if(e) e.stopPropagation();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+       
     </script>
 
          <footer class="w-full py-16 border-t border-gray-900 bg-black/50 backdrop-blur-md flex flex-col items-center">
