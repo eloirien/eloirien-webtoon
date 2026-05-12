@@ -48,6 +48,19 @@
         #lightbox-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 50px rgba(59, 130, 246, 0.2); transform: scale(0.9); transition: transform 0.3s ease; }
         #lightbox-overlay.active #lightbox-img { transform: scale(1); }
         #lightbox-overlay.active { display: flex; }
+
+        #back-to-top {
+            bottom: -100px; /* Hidden by default */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #back-to-top.show-btn {
+            bottom: 30px; 
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
     </style>
 </head>
 <body>
@@ -102,12 +115,12 @@
         <section id="content-info" class="tab-content w-full">
             <div class="flex flex-col items-center space-y-12">
                 <div class="w-64 md:w-80 rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
-                    <img src="images/branding/covers/silverstring-main-cover.webp" class="w-full h-auto">
+                    <img src="images/branding/covers/silverstring-main-cover.webp" alt="Silverstring webtoon cover: Princess Alicia smiling and gently cupping Crown Prince Archius's face with her hands, sharing a quiet moment against a warm sunset background. Alicia has long pink-white ombre hair and Archius has white-blue ombre hair with crimson eyes." class="w-full h-auto">
                 </div>
                 <div class="max-w-2xl text-center space-y-8">
                     <div id="dynamic-synopsis"></div>
                     <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left flex items-center space-x-4">
-                        <img src="images/creator/eloirien-author-pfp-2026.webp" class="w-12 h-12 rounded-full border border-gray-700 object-cover">
+                        <img src="images/creator/eloirien-author-pfp-2026.webp" alt="Professional avatar of Eloirien, the illustrator and comic artist behind Silverstring." class="w-12 h-12 rounded-full border border-gray-700 object-cover">
                         <div>
                             <p class="font-bold text-white uppercase text-xs tracking-widest">Eloirien</p>
                             <p class="text-[10px] text-blue-400">Illustrator & Comic Artist</p>
@@ -135,7 +148,7 @@
         <section id="content-gallery" class="tab-content hidden w-full">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto w-full">
                 <div class="relative overflow-hidden border border-gray-800 rounded-xl aspect-square bg-zinc-900 group cursor-zoom-in" onclick="openLightbox('images/gallery/gallery-eden.webp')">
-                    <img src="images/gallery/gallery-eden.webp" class="w-full h-full object-cover">
+                    <img src="images/gallery/gallery-eden.webp" alt="Silverstring Gallery: Princess Alicia visiting Esvath at the 'Eden' greenhouse during a warm afternoon. Alicia, with her pink-white ombre hair, is smiling as she holds a freshly picked flower branch, while Esvath opens the greenhouse door for her. The scene is filled with lush flowers and bathed in a soft orange and green sunlight palette." class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-all z-20"><p class="text-[10px] font-bold text-white uppercase tracking-widest">Eden</p></div>
                 </div>
             </div>
@@ -147,6 +160,10 @@
     </footer>
 
     <div id="lightbox-overlay" onclick="closeLightbox()"><img id="lightbox-img" src="" alt="Full Size View"></div>
+    
+    <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-blue-600 hover:bg-blue-500 p-3 rounded-md shadow-[0_0_20px_rgba(59,130,246,0.4)] z-50 transition-colors">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
 
     <script>
         let isDescending = false;
