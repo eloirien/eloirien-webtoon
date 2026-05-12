@@ -46,6 +46,19 @@
         img { width: 100%; display: block; -webkit-user-drag: none; background-color: #0a0a0a; }
 
         .btn-square { border-radius: 6px; transition: all 0.3s ease; }
+
+        #back-to-top {
+        bottom: -100px; /* Hidden by default */
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        pointer-events: none;
+        }
+        #back-to-top.show-btn {
+            bottom: 30px; 
+            opacity: 1;
+            pointer-events: auto;
+        }
+            
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -266,11 +279,24 @@
                 document.getElementById('bottom-nav').classList.toggle('ui-active', uiVisible);
             }
             function toggleDrawer(e) { if(e) e.stopPropagation(); document.getElementById('episode-drawer').classList.toggle('open'); }
-            function teleportToTop(e) { e.stopPropagation(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-        
+                   
             window.onload = initReader;
             document.addEventListener('contextmenu', e => e.preventDefault());
             document.addEventListener('dragstart', e => e.preventDefault());
+
+            window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if (window.scrollY > 400) {
+                btn.classList.add('show-btn');
+            } else {
+                btn.classList.remove('show-btn');
+            }
+            });
+        
+            function teleportToTop(e) {
+                if(e) e.stopPropagation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         
     </script>
 </body>
