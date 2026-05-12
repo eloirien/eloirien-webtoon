@@ -1,4 +1,4 @@
-// UNIVERSAL LANGUAGE & EPISODE DATABASE
+// UNIVERSAL LANGUAGE & EPISODE DATABASE 
 const LUMINUS_DB = {
         ui: {
             EN: { 
@@ -45,42 +45,42 @@ const LUMINUS_DB = {
             name: { EN: "Prologue: Storm", ID: "Prolog: Badai", JP: "プロローグ: 嵐", KR: "프롤로그: 폭풍" },
             date: { EN: "Nov 01, 2025", ID: "01 Nov 2025", JP: "2025年11月01日", KR: "2025년 11월 01일" },
             panels: 22,
-            thumb: "images/ep1-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep1-thumb.webp"
         },
         2: {
             status: "released",
             name: { EN: "Prologue: The King", ID: "Prolog: Sang Raja", JP: "プロローグ: 王", KR: "프롤로그: 왕" },
-            date: { EN: "Nov 29, 2025", ID: "29 Nov 2025", JP: "2025年11月29日", KR: "2025년 11월 29일" },
+            date: { EN: "Nov 29, 2025", ID: "29 Nov 2025", JP: "2025年11月29日", KR: "2025년 11월 29日" },
             panels: 17,
-            thumb: "images/ep2-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep2-thumb.webp"
         },
         3: {
             status: "released",
             name: { EN: "Prologue: The Cup", ID: "Prolog: Cawan", JP: "プロローグ: 杯", KR: "프롤로그: 잔" },
             date: { EN: "Jan 04, 2026", ID: "04 Jan 2026", JP: "2026年01月04日", KR: "2026년 01월 04일" },
             panels: 21,
-            thumb: "images/ep3-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep3-thumb.webp"
         },
         4: {
             status: "released",
             name: { EN: "01 - Who (Part 1)", ID: "01 - Siapa (Bagian 1)", JP: "01 - 誰 (前編)", KR: "01 - 누구 (1부)" },
             date: { EN: "Feb 07, 2026", ID: "07 Feb 2026", JP: "2026年02月07日", KR: "2026년 02월 07일" },
             panels: 15,
-            thumb: "images/ep4-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep4-thumb.webp"
         },
         5: {
             status: "released",
             name: { EN: "01 - Who (Part 2)", ID: "01 - Siapa (Bagian 2)", JP: "01 - 誰 (後編)", KR: "01 - 누구 (2부)" },
             date: { EN: "Mar 08, 2026", ID: "08 Mar 2026", JP: "2026年03月08日", KR: "2026년 03월 08일" },
             panels: 24,
-            thumb: "images/ep5-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep5-thumb.webp"
         },
         6: {
             status: "released",
             name: { EN: "02 - Friend (Part 1)", ID: "02 - Teman (Bagian 1)", JP: "02 - 友 (前編)", KR: "02 - 친구 (1부)" },
-            date: { EN: "Apr 23, 2026", ID: "23 Apr 2026", JP: "2026年04月23日", KR: "2026년 04월 23일" },
+            date: { EN: "Apr 23, 2026", ID: "23 Apr 2026", JP: "2026年04月23日", KR: "2026년 04월 23日" },
             panels: 23,
-            thumb: "images/ep6-thumb.webp"
+            thumb: "images/episodes/thumbnails/ep6-thumb.webp" // Unified to .webp
         },
         7: {
             status: "upcoming",
@@ -96,24 +96,28 @@ const LUMINUS_DB = {
             EN: { 
                 tabs: ["INFO", "EPISODES", "GALLERY"], 
                 genres: ["Fantasy", "Drama", "Action"], 
+                specialGenres: ["Fantasy", "Slice of Life"],
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Both Alicia and Archius have to fight for their identity while fulfilling their duty to protect the kingdom from an emerging power of darkness. How will their intertwined destinies be revealed?</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"For we are not fighting against flesh-and-blood enemies, but against evil rulers and authorities of the unseen world, against mighty powers in this dark world, and against evil spirits in the heavenly places."</em>` 
             },
             ID: { 
                 tabs: ["INFO", "EPISODE", "GALERI"], 
                 genres: ["Fantasi", "Drama", "Aksi"], 
+                specialGenres: ["Fantasi", "Kisah Sehari-hari"],    
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Baik Alicia maupun Archius harus menghadapi pergumulan identitas mereka sembari menjalankan tugas untuk menjaga kerajaan dari ancaman bangkitnya kuasa kegelapan. Bagaimanakah takdir mereka yang saling bertautan itu akan terungkap?</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Sebab, pertarungan itu bukanlah melawan darah dan daging, melainkan melawan penguasa-penguasa, melawan otoritas-otoritas, melawan penghulu dunia kegelapan, melawan roh-roh jahat di alam semesta."</em>` 
             },
             JP: { 
                 tabs: ["情報", "エピソード", "ギャラリー"], 
                 genres: ["ファンタジー", "ドラマ", "アクション"], 
+                specialGenres: ["ファンタジー", "日常"],
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">アリシアとアルキウスは、湧き上がる闇の勢力から王国を守るという使命を果たしながら、己のアイデンティティを懸けた闘いに身を投じていく。分かちがたく結ばれた二人の運命は、いかなる結末を迎えるのか。</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">我らの戦いは、血肉を相手にするものではなく、支配者、権威、この暗闇の世界の支配者たち、また、天にいる悪の霊に対する戦いである。</em>` 
             },
             KR: { 
                 tabs: ["정보", "에피소드", "갤러리"], 
                 genres: ["판타지", "드라마", "액션"], 
+                specialGenres: ["판타지", "일상"],
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">알리시아와 아르키우스는 깨어나는 어둠의 세력으로부터 왕국을 지켜야 하는 숙명 속에서, 각자의 정체성을 찾기 위한 치열한 사투를 벌인다. 서로의 운명이 얽히고설킨 두 사람의 앞날에는 과연 무엇이 기다리고 있을 것인가?</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">우리의 씨름은 혈과 육을 상대하는 것이 아니요 통치자들과 권세들과 이 어둠의 세상 주관자들과 하늘에 있는 악의 영들을 상대함이라.</em>` 
             }
