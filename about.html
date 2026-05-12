@@ -56,6 +56,19 @@
         .justified-text { text-align: justify; text-justify: inter-word; }
 
         img { -webkit-user-drag: none; user-select: none; }
+        
+        #back-to-top {
+            bottom: -100px; /* Hidden by default */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #back-to-top.show-btn {
+            bottom: 30px; 
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
     </style>
 </head>
 <body>
@@ -85,7 +98,7 @@
 
     <main class="article-room shadow-2xl">
         <section class="flex flex-col items-center text-center">
-            <img src="images/creator/eloirien-author-pfp-2026.webp" class="w-32 h-32 rounded-full border-2 border-blue-500/50 object-cover shadow-lg mb-6">
+            <img src="images/creator/eloirien-author-pfp-2026.webp" alt="Professional avatar of Eloirien, the illustrator and comic artist behind Silverstring." class="w-32 h-32 rounded-full border-2 border-blue-500/50 object-cover shadow-lg mb-6">
             <div>
                 <h2 class="text-2xl font-black text-white uppercase tracking-tighter">Eloirien</h2>
                 <p class="text-blue-400 text-xs font-bold uppercase tracking-widest mb-8">Illustrator & Comic Artist</p>
@@ -112,6 +125,10 @@
 
      
     </main>
+
+        <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-blue-600 hover:bg-blue-500 p-3 rounded-md shadow-[0_0_20px_rgba(59,130,246,0.4)] z-50 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </button>
 
         <script>
            function setLanguage(lang) {
@@ -154,6 +171,20 @@
         // Art Protection 
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => e.preventDefault());
+
+            window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if (window.scrollY > 400) {
+                btn.classList.add('show-btn');
+            } else {
+                btn.classList.remove('show-btn');
+            }
+        });
+        
+            function teleportToTop(e) {
+                if(e) e.stopPropagation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         
         </script>
 
