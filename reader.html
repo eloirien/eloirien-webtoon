@@ -126,7 +126,7 @@
         const ui = LUMINUS_DB.ui[lang];
         document.getElementById('nav-home-text').innerText = ui.home;
         document.getElementById('current-lang-label').innerText = lang;
-        
+    }     
         // REINFORCED SYNC: Update both UI titles immediately
         syncEpisodeInfo();
         populateMenus(lang);
@@ -243,29 +243,35 @@
     }
 
     function loadPages() {
-        const container = document.getElementById('comic-container');
-        container.innerHTML = '';
-        const epData = LUMINUS_DB.library[currentEp];
-        if (!epData || epData.status !== 'released') return;
-        if (currentLang === 'JP' || currentLang === 'KR') {
-            const path = (currentLang === 'JP') ? 'images/tl-JP.webp' : 'images/tl-KR.webp';
-            container.innerHTML = `<div class="comic-page"><img src="${path}" alt="Awaiting Translation"></div>`;
-            return;
+            const container = document.getElementById('comic-container');
+            container.innerHTML = '';
+            const epData = LUMINUS_DB.library[currentEp];
+            if (!epData || epData.status !== 'released') return;
+    
+            if (currentLang === 'JP' || currentLang === 'KR') {
+                const path = (currentLang === 'JP') ? 'images/tl-JP.webp' : 'images/tl-KR.webp';
+                container.innerHTML = `<div class="comic-page"><img src="${path}" alt="Awaiting Translation"></div>`;
+                return;
+            }
+    
+            for (let i = 1; i <= epData.panels; i++) {
+                const pageNum = i.toString().padStart(2, '0');
+                const imgPath = `images/episodes/ep${currentEp}/ep${currentEp}_${pageNum}_${currentLang}.webp`;
+                
+                // THE SEO OVERHAUL: Descriptive alt text for every panel
+                const altText = `Silverstring Episode ${currentEp} Page ${pageNum} - Art by Eloirien`;
+    
+                container.innerHTML += `
+                    <div class="comic-page">
+                        <img src="${imgPath}" 
+                             alt="${altText}" 
+                             loading="lazy" 
+                             onload="this.style.opacity=1" 
+                             style="opacity:0; transition: opacity 0.5s;" 
+                             onerror="handleImageError(this)">
+                    </div>`;
+            }
         }
-        for (let i = 1; i <= epData.panels; i++) {
-            const pageNum = i.toString().padStart(2, '0');
-            const imgPath = `images/episodes/ep${currentEp}/ep${currentEp}_${pageNum}_${currentLang}.webp`;
-            container.innerHTML += `<div class="comic-page"><img src="${imgPath}" alt="Record Panel ${pageNum}" loading="lazy" onload="this.style.opacity=1" style="opacity:0; transition: opacity 0.5s;" onerror="handleImageError(this)"></div>`;
-        }
-        const altText = `Silverstring Episode ${currentEp} Page ${pageNum} - Art by Eloirien`;
-        container.innerHTML += `<div class="comic-page">
-            <img src="${imgPath}" 
-                 alt="${altText}" 
-                 loading="lazy" 
-                 style="opacity:0; transition: opacity 0.5s;" 
-                 onerror="handleImageError(this)">
-        </div>`;
-    }
 
     function changeEpisode(newEp) { window.location.href = `reader.html?ep=${newEp}#${currentLang}`; }
     
@@ -305,6 +311,21 @@
     function initReader() {
         const epParam = getQueryParam('ep');
         currentEp = epParam ? parseInt(epParam) : 1;
+        
+        // THE SEO OVERHAUL: Update Metadata
+        const epData = LUMINUS_DB.library[currentEp];
+        if (epData) {
+            document.title = `Silverstring Ep. ${currentEp}: ${epData.name[currentLang]} | Official Archive`;
+            
+            let metaDesc = document.querySelector('meta[name="description"]');
+            if (!metaDesc) {
+                metaDesc = document.createElement('meta');
+                metaDesc.name = "description";
+                document.head.appendChild(metaDesc);
+            }
+            metaDesc.content = `Read Silverstring Episode ${currentEp}. Join Archius and Alice in the Kingdom of Luminus. Official Lore and High-Res Webtoon Reader.`;
+        }
+
         if (!LUMINUS_DB.library[currentEp]) currentEp = 1;
         const savedLang = localStorage.getItem('preferredLang');
         const hashLang = window.location.hash.replace('#', '');
