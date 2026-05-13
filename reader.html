@@ -138,9 +138,9 @@
             }
         
             function setLanguage(lang) {
+                document.documentElement.lang = lang.toLowerCase();
                 currentLang = lang;
                 localStorage.setItem('preferredLang', lang);
-                document.documentElement.lang = lang.toLowerCase();
                 window.location.hash = lang;
                 const ui = LUMINUS_DB.ui[lang];
                 document.getElementById('nav-home-text').innerText = ui.home;
