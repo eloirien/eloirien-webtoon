@@ -19,7 +19,7 @@ const LUMINUS_DB = {
                 errSub: "Kami sedang membantunya menemukan jalan pulang...",
                 errRetry: "Luncurkan Misi Penyelamatan"
             },
-            JP: { 
+            JA: { 
                 home: "ホーム", comics: "コミック", about: "概要", status: "連載中", 
                 comingSoon: "近日公開", notify: "通知を受け取る", episodes: "エピソード",
                 readFirst: "最初から読む", readNewest: "最新話を読む", read: "読む",
@@ -28,7 +28,7 @@ const LUMINUS_DB = {
                 errSub: "帰り道を探してあげているところです...",
                 errRetry: "救出作戦を開始する"
             },
-            KR: { 
+            KO: { 
                 home: "홈", comics: "코믹스", about: "정보", status: "연재 중", 
                 comingSoon: "곧 공개", notify: "알림 받기", episodes: "에피소드",
                 readFirst: "첫 회 보기", readNewest: "최신 회 보기", read: "읽기",
@@ -42,51 +42,51 @@ const LUMINUS_DB = {
     library: {
         1: {
             status: "released",
-            name: { EN: "Prologue: Storm", ID: "Prolog: Badai", JP: "プロローグ: 嵐", KR: "프롤로그: 폭풍" },
-            date: { EN: "Nov 01, 2025", ID: "01 Nov 2025", JP: "2025年11月01日", KR: "2025년 11월 01일" },
+            name: { EN: "Prologue: Storm", ID: "Prolog: Badai", JA: "プロローグ: 嵐", KO: "프롤로그: 폭풍" },
+            date: { EN: "Nov 01, 2025", ID: "01 Nov 2025", JA: "2025年11月01日", KO: "2025년 11월 01일" },
             panels: 22,
             thumb: "images/episodes/thumbnails/ep1-thumb.webp"
         },
         2: {
             status: "released",
-            name: { EN: "Prologue: The King", ID: "Prolog: Sang Raja", JP: "プロローグ: 王", KR: "프롤로그: 왕" },
-            date: { EN: "Nov 29, 2025", ID: "29 Nov 2025", JP: "2025年11月29日", KR: "2025년 11월 29日" },
+            name: { EN: "Prologue: The King", ID: "Prolog: Sang Raja", JA: "プロローグ: 王", KO: "프롤로그: 왕" },
+            date: { EN: "Nov 29, 2025", ID: "29 Nov 2025", JA: "2025年11月29日", KO: "2025년 11월 29日" },
             panels: 17,
             thumb: "images/episodes/thumbnails/ep2-thumb.webp"
         },
         3: {
             status: "released",
-            name: { EN: "Prologue: The Cup", ID: "Prolog: Cawan", JP: "プロローグ: 杯", KR: "프롤로그: 잔" },
-            date: { EN: "Jan 04, 2026", ID: "04 Jan 2026", JP: "2026年01月04日", KR: "2026년 01월 04일" },
+            name: { EN: "Prologue: The Cup", ID: "Prolog: Cawan", JA: "プロローグ: 杯", KO: "프롤로그: 잔" },
+            date: { EN: "Jan 04, 2026", ID: "04 Jan 2026", JA: "2026年01月04日", KO: "2026년 01월 04일" },
             panels: 21,
             thumb: "images/episodes/thumbnails/ep3-thumb.webp"
         },
         4: {
             status: "released",
-            name: { EN: "01 - Who (Part 1)", ID: "01 - Siapa (Bagian 1)", JP: "01 - 誰 (前編)", KR: "01 - 누구 (1부)" },
-            date: { EN: "Feb 07, 2026", ID: "07 Feb 2026", JP: "2026年02月07日", KR: "2026년 02월 07일" },
+            name: { EN: "01 - Who (Part 1)", ID: "01 - Siapa (Bagian 1)", JA: "01 - 誰 (前編)", KO: "01 - 누구 (1부)" },
+            date: { EN: "Feb 07, 2026", ID: "07 Feb 2026", JA: "2026年02月07日", KO: "2026년 02월 07일" },
             panels: 15,
             thumb: "images/episodes/thumbnails/ep4-thumb.webp"
         },
         5: {
             status: "released",
-            name: { EN: "01 - Who (Part 2)", ID: "01 - Siapa (Bagian 2)", JP: "01 - 誰 (後編)", KR: "01 - 누구 (2부)" },
-            date: { EN: "Mar 08, 2026", ID: "08 Mar 2026", JP: "2026年03月08日", KR: "2026년 03월 08일" },
+            name: { EN: "01 - Who (Part 2)", ID: "01 - Siapa (Bagian 2)", JA: "01 - 誰 (後編)", KO: "01 - 누구 (2부)" },
+            date: { EN: "Mar 08, 2026", ID: "08 Mar 2026", JA: "2026年03月08日", KO: "2026년 03월 08일" },
             panels: 24,
             thumb: "images/episodes/thumbnails/ep5-thumb.webp"
         },
         6: {
             status: "released",
-            name: { EN: "02 - Friend (Part 1)", ID: "02 - Teman (Bagian 1)", JP: "02 - 友 (前編)", KR: "02 - 친구 (1부)" },
-            date: { EN: "Apr 23, 2026", ID: "23 Apr 2026", JP: "2026年04月23日", KR: "2026년 04월 23日" },
+            name: { EN: "02 - Friend (Part 1)", ID: "02 - Teman (Bagian 1)", JA: "02 - 友 (前編)", KO: "02 - 친구 (1부)" },
+            date: { EN: "Apr 23, 2026", ID: "23 Apr 2026", JA: "2026年04月23日", KO: "2026년 04월 23日" },
             panels: 23,
             thumb: "images/episodes/thumbnails/ep6-thumb.webp" // Unified to .webp
         },
         7: {
             status: "upcoming",
-            name: { EN: "02 - Friend (Part 2)", ID: "02 - Teman (Bagian 2)", JP: "02 - 友達 (後編)", KR: "02 - 친구 (후편)" },
+            name: { EN: "02 - Friend (Part 2)", ID: "02 - Teman (Bagian 2)", JA: "02 - 友達 (後編)", KO: "02 - 친구 (후편)" },
             dateLabel: "EP 07",
-            date: { EN: "COMING SOON", ID: "SEGERA HADIR", JP: "近日公開", KR: "곧 공개" },
+            date: { EN: "COMING SOON", ID: "SEGERA HADIR", JA: "近日公開", KO: "곧 공개" },
             thumb: "" 
         }
     },
@@ -107,14 +107,14 @@ const LUMINUS_DB = {
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">Baik Alicia maupun Archius harus menghadapi pergumulan identitas mereka sembari menjalankan tugas untuk menjaga kerajaan dari ancaman bangkitnya kuasa kegelapan. Bagaimanakah takdir mereka yang saling bertautan itu akan terungkap?</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">"Sebab, pertarungan itu bukanlah melawan darah dan daging, melainkan melawan penguasa-penguasa, melawan otoritas-otoritas, melawan penghulu dunia kegelapan, melawan roh-roh jahat di alam semesta."</em>` 
             },
-            JP: { 
+            JA: { 
                 tabs: ["情報", "エピソード", "ギャラリー"], 
                 genres: ["ファンタジー", "ドラマ", "アクション"], 
                 specialGenres: ["ファンタジー", "日常"],
                 synopsisHTML: `<p class="text-sm leading-relaxed text-gray-400 text-left mb-4">アリシアとアルキウスは、湧き上がる闇の勢力から王国を守るという使命を果たしながら、己のアイデンティティを懸けた闘いに身を投じていく。分かちがたく結ばれた二人の運命は、いかなる結末を迎えるのか。</p>
                 <em class="text-xs italic border-l-2 border-blue-600 pl-3 block mt-2 text-left text-gray-500">我らの戦いは、血肉を相手にするものではなく、支配者、権威、この暗闇の世界の支配者たち、また、天にいる悪の霊に対する戦いである。</em>` 
             },
-            KR: { 
+            KO: { 
                 tabs: ["정보", "에피소드", "갤러리"], 
                 genres: ["판타지", "드라마", "액션"], 
                 specialGenres: ["판타지", "일상"],
@@ -132,17 +132,17 @@ const LUMINUS_DB = {
             },
             ID: {
                 navHome: "home", navComics: "komik",
-                creator: "**Sebagai pencerita yang penuh dengan passion, dengan lebih dari tiga tahun pengalaman menciptakan komik digital dan ilustrasi, impian Eloirien adalah menceritakan kisah yang menyentuh hati dan jiwa demi kemuliaan Tuhan.**\n\n*Saya sangat terinspirasi oleh pencerita terhebat sepanjang masa: Yesus Kristus. Bagi saya, setiap sapuan kuas adalah doa. Saya berharap karya saya menjadi berkat bagi Anda sebagaimana ia menjadi berkat bagi saya.*",
+                creator: "**Sebagai pencerita yang penuh dengan passion, dengan lebih dari tiga tahun pengalaman menciptakan komik digital dan ilustrasi, impian Eloirien adalah menceritakan kisah yang menyentuh hati dan jiwa demi kemuliaan Tuhan.**\n\n*Saya sangat terinspirasi oleh pencerita terhebat sepanjang masa: Yesus KOistus. Bagi saya, setiap sapuan kuas adalah doa. Saya berharap karya saya menjadi berkat bagi Anda sebagaimana ia menjadi berkat bagi saya.*",
                 silverstring: "**Silverstring adalah sebuah fantasi bertemakan Alkitab yang mendalami pergumulan identitas dan beratnya peperangan rohani.**\n\n*Silverstring adalah passion project yang saya kerjakan sebagai sampingan di waktu luang. Saat ini saya mengerjakannya sepenuhnya sendirian, jadi jadwal updatenya mungkin terasa lambat dan tidak menentu. Meski begitu, saya akan berusaha sebaik mungkin untuk terus melanjutkan proyek ini!*",
-                bethlehem: "**Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien.**"
+                bethlehem: "**Project Bethlehem berfungsi sebagai payung KOeatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien.**"
             },
-            JP: {
+            JA: {
                 navHome: "ホーム", navComics: "コミック",
                 creator: "**デジタルコミックやイラスト制作で3年以上の経験を持つストーリーテラーとして、Eloirienの目標は神の栄光のために魂と心に響く物語を伝えることです。**\n\n*私は史上最高のストーリーテラーであるイエス・キリストから真にインスピレーションを受けています。私にとって、すべての筆致は祈りです。私の作品が私にとっての祝福であるのと同じくらい、あなたにとっても祝福となることを願っています。*",
                 silverstring: "**「Silverstring」は、聖書にインスパイアされたファンタジーであり、アイデンティティを懸けた葛藤と、霊的戦いの重みを深く描き出しています。**\n\n*「Silverstring」は、私が空いた時間に個人で制作している情熱プロジェクト（パッションプロジェクト）です。現在はすべて一人で作業しているため、更新が遅れたり不定期になったりするかもしれません。それでも、描き続けられるよう精一杯頑張りますので、どうぞよろしくお願いいたします。*",
                 bethlehem: "**プロジェクト・ベツレヘムは、Eloirienが展開するインディーIPのクリエイティブ・アンブレラ。**"
             },
-            KR: {
+            KO: {
                 navHome: "홈", navComics: "코믹스",
                 creator: "**디지털 코믹스와 일러스트레이션 제작 분야에서 3년 이상의 경험을 쌓은 열정적인 스토리텔러로서, Eloirien의 목표는 하나님의 영광을 위해 영혼과 마음을 울리는 이야기를 전하는 것입니다**\n\n*저는 역사상 위대한 스토리텔러인 예수 그리스도에게서 진정한 영감을 얻습니다. 저에게 모든 붓터치는 기도입니다. 제 예술이 저에게 축복인 만큼 여러분에게도 축복이 되기를 바랍니다.*",
                 silverstring: "**「Silverstring」은 성경에서 영감을 받은 판타지물로, 자아 정체성을 찾기 위한 고뇌와 영적 전쟁의 무게를 심도 있게 다룹니다.**\n\n*「Silverstring」은 제가 개인적인 시간에 틈틈이 작업하고 있는 열정 프로젝트(passion project)입니다. 현재는 모든 과정을 혼자서 진행하고 있어 업데이트가 다소 늦어지거나 불규칙할 수 있습니다. 그럼에도 최선을 다해 꾸준히 연재할 수 있도록 노력하겠습니다. 항상 감사드립니다.*",

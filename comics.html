@@ -153,8 +153,8 @@
                     <div class="lang-menu-content">
                         <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
                         <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
+                        <div class="lang-item" onclick="setLanguage('JA')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KO')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
                     </div>
                 </div>
             </div>
@@ -184,7 +184,7 @@
     
         <div class="comic-card opacity-80 cursor-default">
            <img src="images/branding/covers/silverstring-special-cover.webp" alt="Silverstring Specials cover: Princess Alicia visiting Esvath at the 'Eden' greenhouse during a warm afternoon. Alicia, with her pink-white ombre hair, is smiling as she holds a freshly picked flower branch, while Esvath opens the greenhouse door for her. The scene is filled with lush flowers and bathed in a soft orange and green sunlight palette." class="comic-thumb">
-            <div class="flex flex-col gap-4 items-center md:items-start"> 
+            <div class="flex flex-col gap-4 items-center text-center"> 
                 <img src="images/branding/logo/silverstring-special-logo.png" alt="Official Special Episode of Silverstring webtoon logo - A Project Bethlehem IP created by Eloirien" class="w-48 mx-auto md:mx-0">
                <div class="flex flex-wrap justify-center gap-2">
                     <span id="genre-spec-fantasy" class="genre-tag">Fantasy</span>
@@ -201,6 +201,8 @@
 
     <script>
         function setLanguage(lang) {
+            document.documentElement.lang = lang.toLowerCase();
+           
             localStorage.setItem('preferredLang', lang);
             
             // Fetch from Universal Database
