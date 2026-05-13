@@ -89,8 +89,8 @@
                     <div class="lang-menu-content">
                         <div class="lang-item" onclick="setLanguage('EN')"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</div>
                         <div class="lang-item" onclick="setLanguage('ID')"><img src="https://flagcdn.com/id.svg" class="flag-icon"> Bahasa Indonesia</div>
-                        <div class="lang-item" onclick="setLanguage('JP')"><img src="https://flagcdn.com/jp.svg" class="flag-icon"> 日本語</div>
-                        <div class="lang-item" onclick="setLanguage('KR')"><img src="https://flagcdn.com/kr.svg" class="flag-icon"> 한국어</div>
+                        <div class="lang-item" onclick="setLanguage('JA')"><img src="https://flagcdn.com/JA.svg" class="flag-icon"> 日本語</div>
+                        <div class="lang-item" onclick="setLanguage('KO')"><img src="https://flagcdn.com/KO.svg" class="flag-icon"> 한국어</div>
                     </div>
                 </div>
             </div>
@@ -237,7 +237,7 @@
                 const epData = LUMINUS_DB.library[currentEp];
                 if (!epData || epData.status !== 'released') return;
             
-                if (currentLang === 'JP' || currentLang === 'KR') {
+                if (currentLang === 'JA' || currentLang === 'KO') {
                     const statusPath = `images/episodes/announcements/silverstring-status-in-translation-${currentLang}.webp`;
                     container.innerHTML = `<div class="comic-page"><img src="${statusPath}" alt="Awaiting Translation"></div>`;
                     return;
