@@ -243,7 +243,7 @@
                     container.innerHTML = `<div class="comic-page"><img src="${statusPath}" alt="Awaiting Translation"></div>`;
                     return;
                 }
-            
+            }
                 for (let i = 1; i <= epData.panels; i++) {
                     const pageNum = i.toString().padStart(2, '0');
                     const epNum = currentEp.toString().padStart(2, '0');
