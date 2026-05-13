@@ -133,6 +133,7 @@
         <script>
            function setLanguage(lang) {
             localStorage.setItem('preferredLang', lang);
+            document.documentElement.lang = lang.toLowerCase();   
             
             // Fetch from LUMINUS_DB
             const ui = LUMINUS_DB.ui[lang];
