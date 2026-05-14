@@ -132,10 +132,18 @@
             let touchStartX = 0;
             let touchEndX = 0;
         
-            function getQueryParam(param) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(param);
+            const urlEpisode = getQueryParam('ep');
+            let currentEpisode;
+            
+            if (urlEpisode) {
+                // Priority 1: If the link has a number, use it!
+                currentEpisode = parseInt(urlEpisode);
+            } else {
+                // Priority 2: If no number in link, check memory. Fallback to 1.
+                currentEpisode = parseInt(localStorage.getItem('lastVisitedEpisode')) || 1;
             }
+            
+            // Now proceed to load currentEpisode...
         
             function setLanguage(lang) {
                 document.documentElement.lang = lang.toLowerCase();
