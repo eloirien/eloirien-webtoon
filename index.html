@@ -150,8 +150,10 @@
                 </div>
                 <div class="max-w-2xl text-center space-y-8">
                     <div id="dynamic-synopsis"></div>
-                    <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left flex items-center space-x-4">
-                        <img src="images/creator/eloirien-author-pfp-2026.webp" alt="Professional avatar of Eloirien, the illustrator and comic artist behind Silverstring." class="w-12 h-12  border border-gray-700 object-cover">
+                    <div class="bg-gray-900/50 p-6 rounded-full border border-gray-800 text-left flex items-center space-x-4">
+                        <img src="images/creator/eloirien-author-pfp-2026.webp" 
+                         alt="Professional avatar of Eloirien, the illustrator and comic artist behind Silverstring." 
+                         class="w-12 h-12 rounded-full border border-gray-700 object-cover">
                         <div>
                             <p class="font-bold text-white uppercase text-xs tracking-widest">Eloirien</p>
                             <p class="text-[10px] text-blue-400">Illustrator & Comic Artist</p>
@@ -164,8 +166,8 @@
         <section id="content-episodes" class="tab-content hidden w-full">
             <div class="flex flex-col items-center mt-8 px-4 w-full">
                 <div class="flex flex-row gap-3 justify-center w-full max-w-[400px]">
-                    <button id="btn-read-first" onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em]  transition-all shadow-lg truncate btn-read">Read First</button>
-                    <button id="btn-read-newest" onclick="navigateEpisode('newest')" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all truncate">Read Newest</button>
+                    <button id="btn-read-first" onclick="navigateEpisode(1)" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-md px-6 py-3 transition-all shadow-lg truncate btn-read">Read First</button>
+                    <button id="btn-read-newest" onclick="navigateEpisode('newest')" class="flex-1 py-3 bg-transparent border-2 border-white/20 hover:border-blue-500 hover:text-blue-400 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-md px-6 py-3 transition-all truncate">Read Newest</button>
                 </div>
                 <div class="mt-8 mb-12">
                     <button id="main-flip-btn" onclick="toggleSort()" class="w-10 h-10 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800 flex items-center justify-center hover:border-blue-500 transition-all shadow-xl group">
@@ -254,7 +256,7 @@
                                 <p class="text-[8px] md:text-[10px] text-gray-600 mt-1 uppercase tracking-widest">${dateStr}</p>
                             </div>
                             <div class="flex items-center pr-1 md:pr-4">
-                                <button class="btn-action-size btn-notify rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">${ui.notify || "NOTIFY"}</button>
+                                <button class="btn-action-size btn-notify rounded-md text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">${ui.notify || "NOTIFY"}</button>
                             </div>
                         </div>`;
                 } else {
@@ -268,7 +270,7 @@
                                 <p class="text-[8px] md:text-[10px] text-blue-400/80 mt-1 uppercase tracking-widest">${dateStr}</p>
                             </div>
                             <div class="flex items-center pr-1 md:pr-4">
-                                <div class="btn-action-size btn-read bg-blue-600 text-white rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center">${ui.read || "READ"}</div>
+                                <div class="btn-action-size btn-read bg-blue-600 text-white rounded-md text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center">${ui.read || "READ"}</div>
                             </div>
                         </a>`;
                 }
