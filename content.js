@@ -8,7 +8,9 @@ const LUMINUS_DB = {
                 prev: "Prev", next: "Next", selectRecord: "Select Record",
                 errTitle: "OH, NO! Alice got lost!",
                 errSub: "We're helping her find the way home...",
-                errRetry: "Launch Rescue Mission"
+                errRetry: "Launch Rescue Mission",
+                    connectCreator: "Connect with the Creator",
+                    webtoonLink: "https://www.webtoons.com/p/community/en/u/eloirien"
             },
             ID: { 
                 home: "beranda", comics: "komik", about: "tentang", status: "Cerita Utama Berjalan", 
@@ -17,7 +19,9 @@ const LUMINUS_DB = {
                 prev: "Sblm", next: "Slnjt", selectRecord: "Pilih Rekaman",
                 errTitle: "OH, TIDAK! Alice tersesat!",
                 errSub: "Kami sedang membantunya menemukan jalan pulang...",
-                errRetry: "Luncurkan Misi Penyelamatan"
+                errRetry: "Luncurkan Misi Penyelamatan",
+                    connectCreator: "Terhubung dengan Kreator",
+                    webtoonLink: "https://www.webtoons.com/p/community/id/u/eloirien"
             },
             JA: { 
                 home: "ホーム", comics: "コミック", about: "概要", status: "連載中", 
@@ -26,7 +30,9 @@ const LUMINUS_DB = {
                 prev: "前へ", next: "次へ", selectRecord: "記録を選択",
                 errTitle: "大変！アリスが迷子になっちゃった！",
                 errSub: "帰り道を探してあげているところです...",
-                errRetry: "救出作戦を開始する"
+                errRetry: "救出作戦を開始する",
+                    connectCreator: "クリエイターとつながる",
+                    webtoonLink: ""
             },
             KO: { 
                 home: "홈", comics: "코믹스", about: "정보", status: "연재 중", 
@@ -35,7 +41,9 @@ const LUMINUS_DB = {
                 prev: "이전", next: "다음", selectRecord: "기록 선택",
                 errTitle: "이런! 앨리스가 길을 잃었어요!",
                 errSub: "집으로 돌아갈 수 있도록 돕는 중입니다...",
-                errRetry: "구조 작전 개시"
+                errRetry: "구조 작전 개시",
+                    connectCreator: "크리에이터와 소통하기",
+                    webtoonLink: ""
             }
         },
 
@@ -134,7 +142,7 @@ const LUMINUS_DB = {
                 navHome: "home", navComics: "komik",
                 creator: "**Sebagai pencerita yang penuh dengan passion, dengan lebih dari tiga tahun pengalaman menciptakan komik digital dan ilustrasi, impian Eloirien adalah menceritakan kisah yang menyentuh hati dan jiwa demi kemuliaan Tuhan.**\n\n*Saya sangat terinspirasi oleh pencerita terhebat sepanjang masa: Yesus KOistus. Bagi saya, setiap sapuan kuas adalah doa. Saya berharap karya saya menjadi berkat bagi Anda sebagaimana ia menjadi berkat bagi saya.*",
                 silverstring: "**Silverstring adalah sebuah fantasi bertemakan Alkitab yang mendalami pergumulan identitas dan beratnya peperangan rohani.**\n\n*Silverstring adalah passion project yang saya kerjakan sebagai sampingan di waktu luang. Saat ini saya mengerjakannya sepenuhnya sendirian, jadi jadwal updatenya mungkin terasa lambat dan tidak menentu. Meski begitu, saya akan berusaha sebaik mungkin untuk terus melanjutkan proyek ini!*",
-                bethlehem: "**Project Bethlehem berfungsi sebagai payung KOeatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien.**"
+                bethlehem: "**Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien.**"
             },
             JA: {
                 navHome: "ホーム", navComics: "コミック",
@@ -150,4 +158,62 @@ const LUMINUS_DB = {
             }
         }
     }
-};
+}; // <--- 1. KUNCI DI SINI! Objek LUMINUS_DB WAJIB ditutup resmi di sini.
+
+// =========================================================================
+// SEKARANG FUNGSI INI BERDIRI BEBAS DI LUAR DENGAN AMAN DAN LEGAL
+// =========================================================================
+function injectSocialMedia(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const currentLang = window.location.hash.replace('#', '').toUpperCase() || localStorage.getItem('preferredLang') || 'EN';
+    
+    const labelText = (LUMINUS_DB.ui[currentLang] && LUMINUS_DB.ui[currentLang].connectCreator) 
+                      ? LUMINUS_DB.ui[currentLang].connectCreator 
+                      : "Connect with the Creator";
+
+    const defaultWebtoonLink = "https://www.webtoons.com/p/community/en/u/eloirien";
+    let activeWebtoonLink = defaultWebtoonLink;
+
+    if (LUMINUS_DB.ui[currentLang] && LUMINUS_DB.ui[currentLang].webtoonLink) {
+        const regionalLink = LUMINUS_DB.ui[currentLang].webtoonLink.trim();
+        if (regionalLink !== "" && regionalLink !== "#") {
+            activeWebtoonLink = regionalLink;
+        }
+    }
+
+    container.innerHTML = `
+        <div class="mt-12 flex flex-col items-center space-y-4">
+            <p id="social-connect-text" class="text-[9px] font-bold tracking-[0.3em] text-gray-500 uppercase">${labelText}</p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                
+                <a href="https://www.instagram.com/eloirien" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-pink-500 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
+                    <svg class="w-4 h-4 text-gray-500 group-hover:text-pink-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span class="tracking-wider">Instagram</span>
+                </a>
+
+                <a href="https://x.com/eloirien" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-blue-400 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
+                    <svg class="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                    </svg>
+                    <span class="tracking-wider">X / Twitter</span>
+                </a>
+
+                <a href="${activeWebtoonLink}" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-green-500 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
+                    <img src="images/branding/logo/webtoon-logo.png" alt="WEBTOON Logo" class="w-4 h-4 object-contain opacity-50 group-hover:opacity-100 transition-opacity">
+                    <span class="tracking-wider">Webtoon Profile</span>
+                </a>
+
+            </div>
+        </div>
+    `;
+} // <--- 2. CUKUP TUTUP DENGAN KURUNG KURAWAL BIASA TANPA TITIK KOMA DI LUAR!
