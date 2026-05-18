@@ -8,7 +8,9 @@ const LUMINUS_DB = {
                 prev: "Prev", next: "Next", selectRecord: "Select Record",
                 errTitle: "OH, NO! Alice got lost!",
                 errSub: "We're helping her find the way home...",
-                errRetry: "Launch Rescue Mission"
+                errRetry: "Launch Rescue Mission",
+                    connectCreator: "Connect with the Creator",
+                    webtoonLink: "https://www.webtoons.com/p/community/en/u/eloirien"
             },
             ID: { 
                 home: "beranda", comics: "komik", about: "tentang", status: "Cerita Utama Berjalan", 
@@ -17,7 +19,9 @@ const LUMINUS_DB = {
                 prev: "Sblm", next: "Slnjt", selectRecord: "Pilih Rekaman",
                 errTitle: "OH, TIDAK! Alice tersesat!",
                 errSub: "Kami sedang membantunya menemukan jalan pulang...",
-                errRetry: "Luncurkan Misi Penyelamatan"
+                errRetry: "Luncurkan Misi Penyelamatan",
+                    connectCreator: "Terhubung dengan Kreator",
+                    webtoonLink: "https://www.webtoons.com/p/community/id/u/eloirien"
             },
             JA: { 
                 home: "ホーム", comics: "コミック", about: "概要", status: "連載中", 
@@ -26,7 +30,9 @@ const LUMINUS_DB = {
                 prev: "前へ", next: "次へ", selectRecord: "記録を選択",
                 errTitle: "大変！アリスが迷子になっちゃった！",
                 errSub: "帰り道を探してあげているところです...",
-                errRetry: "救出作戦を開始する"
+                errRetry: "救出作戦を開始する",
+                    connectCreator: "クリエイターとつながる",
+                    webtoonLink: ""
             },
             KO: { 
                 home: "홈", comics: "코믹스", about: "정보", status: "연재 중", 
@@ -35,7 +41,9 @@ const LUMINUS_DB = {
                 prev: "이전", next: "다음", selectRecord: "기록 선택",
                 errTitle: "이런! 앨리스가 길을 잃었어요!",
                 errSub: "집으로 돌아갈 수 있도록 돕는 중입니다...",
-                errRetry: "구조 작전 개시"
+                errRetry: "구조 작전 개시",
+                    connectCreator: "크리에이터와 소통하기",
+                    webtoonLink: ""
             }
         },
 
