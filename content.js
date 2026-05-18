@@ -158,31 +158,26 @@ const LUMINUS_DB = {
             }
         }
     }
+}; // <--- 1. KUNCI DI SINI! Objek LUMINUS_DB WAJIB ditutup resmi di sini.
 
 // =========================================================================
-// PASTE KODE INI DI BAGIAN PALING BAWAH FILE content.js (DI LUAR OBJEK LUMINUS_DB)
+// SEKARANG FUNGSI INI BERDIRI BEBAS DI LUAR DENGAN AMAN DAN LEGAL
 // =========================================================================
-
 function injectSocialMedia(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Ambil bahasa aktif dari hash URL, jika kosong ambil dari localStorage atau default ke EN
     const currentLang = window.location.hash.replace('#', '').toUpperCase() || localStorage.getItem('preferredLang') || 'EN';
     
-    // 1. Ambil teks label dinamis dari DB
     const labelText = (LUMINUS_DB.ui[currentLang] && LUMINUS_DB.ui[currentLang].connectCreator) 
                       ? LUMINUS_DB.ui[currentLang].connectCreator 
                       : "Connect with the Creator";
 
-    // Jaring pengaman link default (English) jika regional lock
     const defaultWebtoonLink = "https://www.webtoons.com/p/community/en/u/eloirien";
     let activeWebtoonLink = defaultWebtoonLink;
 
-    // 2. Ambil LINK Webtoon secara dinamis dengan proteksi region lock
     if (LUMINUS_DB.ui[currentLang] && LUMINUS_DB.ui[currentLang].webtoonLink) {
         const regionalLink = LUMINUS_DB.ui[currentLang].webtoonLink.trim();
-        // Jika link regional tidak kosong atau bukan tanda pagar, maka pakai link tersebut
         if (regionalLink !== "" && regionalLink !== "#") {
             activeWebtoonLink = regionalLink;
         }
@@ -221,5 +216,4 @@ function injectSocialMedia(containerId) {
             </div>
         </div>
     `;
-}
-};
+} // <--- 2. CUKUP TUTUP DENGAN KURUNG KURAWAL BIASA TANPA TITIK KOMA DI LUAR!
