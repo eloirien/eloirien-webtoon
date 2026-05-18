@@ -52,7 +52,17 @@
 
         /* Infinity Blur Background - 25px */
         .bg-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
-        .bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/branding/banner/silverstring-main-banner.webp'); background-size: cover; background-position: center; filter: blur(25px) brightness(0.2); transform: scale(1.1); }
+        .bg-blur {position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-image: url('images/branding/banner/silverstring-main-banner.webp'); 
+            background-size: cover; 
+            background-position: center; 
+            filter: blur(30px) brightness(0.15) saturate(100%); /* Kecerahan dinaikkan ke 45% dan warna diperkuat */
+            transform: scale(1.05); 
+        }
 
         /* Responsive Article Room */
         .article-room { 
@@ -162,38 +172,51 @@
         </div>
     </nav>
 
-    <main class="article-room shadow-2xl">
+    <main class="w-full max-w-4xl mx-auto mt-32 mb-16 px-4 flex flex-col gap-8 relative z-10">
        
-    <div class="w-full text-center mb-12">
-        <h2 id="page-title" class="uppercase">COMICS</h2>
-    </div>
+        <div class="w-full text-center mb-6">
+            <h2 id="page-title" class="uppercase">COMICS</h2>
+        </div>
 
-    <a href="index.html" class="comic-card">
-            <img src="images/branding/covers/silverstring-main-cover.webp" alt="Silverstring webtoon cover: Princess Alicia smiling and gently cupping Crown Prince Archius's face with her hands, sharing a quiet moment against a warm sunset background. Alicia has long pink-white ombre hair and Archius has white-blue ombre hair with crimson eyes." class="comic-thumb">
+        <a href="index.html" class="w-full p-6 md:p-8 rounded-[32px] md:rounded-[40px] border border-white/20 bg-black/60 shadow-2xl flex flex-col md:flex-row items-center gap-8 opacity-90 transition-all duration-300 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] hover:-translate-y-1 group relative overflow-hidden">
+            
+            <div class="absolute inset-0 -z-10 w-full h-full opacity-30 pointer-events-none filter blur-2xl scale-125">
+                <img src="images/branding/covers/silverstring-main-cover.webp" alt="" class="w-full h-full object-cover object-center">
+            </div>
+
+            <img src="images/branding/covers/silverstring-main-cover.webp" alt="Silverstring webtoon cover" class="w-36 h-auto rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex-shrink-0">
             <div class="flex flex-col gap-4 items-center text-center">
-                <img src="images/branding/logo/silverstring-logo.png" alt="Official Silverstring webtoon logo - A Project Bethlehem IP created by Eloirien" class="w-48 mx-auto md:mx-0">
-                <div class="flex flex-wrap justify-center gap-2">
-                    <span id="genre-fantasy" class="genre-tag">Fantasy</span>
-                    <span id="genre-drama" class="genre-tag">Drama</span>
-                    <span id="genre-action" class="genre-tag">Action</span>
+                <img src="images/branding/logo/silverstring-logo.png" alt="Official Silverstring webtoon logo" class="w-48 mx-auto md:mx-0">
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span id="genre-fantasy" class="border border-white/20 rounded-[6px] px-3 py-1 text-white/90 text-[8px] font-bold uppercase tracking-wider bg-white/5">Fantasy</span>
+                    <span id="genre-drama" class="border border-white/20 rounded-[6px] px-3 py-1 text-white/90 text-[8px] font-bold uppercase tracking-wider bg-white/5">Drama</span>
+                    <span id="genre-action" class="border border-white/20 rounded-[6px] px-3 py-1 text-white/90 text-[8px] font-bold uppercase tracking-wider bg-white/5">Action</span>
                 </div>
                 <p id="status-silverstring" class="text-[9px] text-blue-400 font-bold uppercase tracking-widest">Main Story In Progress</p>
             </div>
         </a>
     
-        <div class="section-divider"></div>
+        <div class="section-divider my-2"></div>
     
-        <div class="comic-card opacity-80 cursor-default">
-           <img src="images/branding/covers/silverstring-special-cover.webp" alt="Silverstring Specials cover: Princess Alicia visiting Esvath at the 'Eden' greenhouse during a warm afternoon. Alicia, with her pink-white ombre hair, is smiling as she holds a freshly picked flower branch, while Esvath opens the greenhouse door for her. The scene is filled with lush flowers and bathed in a soft orange and green sunlight palette." class="comic-thumb">
+        <div class="w-full p-6 md:p-8 rounded-[32px] md:rounded-[40px] border border-white/20 bg-black/60 shadow-2xl flex flex-col md:flex-row items-center gap-8 opacity-90 transition-all duration-300 hover:border-amber-500/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.15)] hover:-translate-y-1 relative overflow-hidden">
+            
+            <div class="absolute inset-0 -z-10 w-full h-full opacity-35 pointer-events-none filter blur-2xl scale-125">
+                <img src="images/branding/covers/silverstring-special-cover.webp" alt="" class="w-full h-full object-cover object-center">
+            </div>
+
+            <img src="images/branding/covers/silverstring-special-cover.webp" alt="Silverstring Specials cover" class="w-36 h-auto rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex-shrink-0">
             <div class="flex flex-col gap-4 items-center text-center"> 
-                <img src="images/branding/logo/silverstring-special-logo.png" alt="Official Special Episode of Silverstring webtoon logo - A Project Bethlehem IP created by Eloirien" class="w-48 mx-auto md:mx-0">
-               <div class="flex flex-wrap justify-center gap-2">
-                    <span id="genre-spec-fantasy" class="genre-tag">Fantasy</span>
-                    <span id="genre-slice" class="genre-tag">Slice of Life</span>
+                <img src="images/branding/logo/silverstring-special-logo.png" alt="Official Special Episode logo" class="w-48 mx-auto md:mx-0">
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span id="genre-spec-fantasy" class="border border-white/20 rounded-[6px] px-3 py-1 text-white/90 text-[8px] font-bold uppercase tracking-wider bg-white/5">Fantasy</span>
+                    <span id="genre-slice" class="border border-white/20 rounded-[6px] px-3 py-1 text-white/90 text-[8px] font-bold uppercase tracking-wider bg-white/5">Slice of Life</span>
                 </div>
-                <p id="status-specials" class="text-[9px] text-gray-500 font-bold uppercase tracking-widest">Coming Soon</p>
+                <p id="status-specials" class="text-[9px] text-amber-500 font-bold uppercase tracking-widest flex items-center gap-1">
+                    <span>Coming Soon</span>
+                </p>
             </div>
         </div>
+        
     </main>
 
       <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-blue-600 hover:bg-blue-500 p-3 rounded-md shadow-[0_0_20px_rgba(59,130,246,0.4)] z-50 transition-colors">

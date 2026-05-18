@@ -134,7 +134,7 @@ const LUMINUS_DB = {
         about: {
             EN: {
                 navHome: "home", navComics: "comics",
-                creator: "**As a passionate storyteller with more than three years of experience creating digital comics and illustrations, Eloirien's goal is to tell stories that touch souls and hearts for the glory of God.**\n\n*I'm truly inspired by the greatest storyteller of all time: Jesus Christ. For me, every brushstroke is a prayer. I hope my art will be a blessing to you as much as it is a blessing to me.*",
+                creator: "**As a passionate storyteller with more than three years of experience in creating digital comics and illustrations, Eloirien's goal is to tell stories that touch souls and hearts for the glory of God.**\n\n*I'm truly inspired by the greatest storyteller of all time: Jesus Christ. For me, every brushstroke is a prayer. I hope my art will be a blessing to you as much as it is a blessing to me.*",
                 silverstring: "**Silverstring is a Bible-inspired fantasy that delves into the struggle for identity and the weight of spiritual warfare.**\n\n*Silverstring is a passion project that I do on the side, in my free time, and completely solo right now, so updates might be slow and irregular. Still, I'll do my best to continue working on it.*",
                 bethlehem: "**Project Bethlehem serves as the creative umbrella for the independent intellectual properties developed by Eloirien.**"
             },
