@@ -158,4 +158,68 @@ const LUMINUS_DB = {
             }
         }
     }
+
+        // =========================================================================
+// PASTE KODE INI DI BAGIAN PALING BAWAH FILE content.js (DI LUAR OBJEK LUMINUS_DB)
+// =========================================================================
+
+function injectSocialMedia(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Ambil bahasa aktif dari hash URL, jika kosong ambil dari localStorage atau default ke EN
+    const currentLang = window.location.hash.replace('#', '').toUpperCase() || localStorage.getItem('preferredLang') || 'EN';
+    
+    // 1. Ambil teks label dinamis dari DB
+    const labelText = (LUMINUS_DB.ui[currentLang] && LUMINUS_DB.ui[currentLang].connectCreator) 
+                      ? LUMINUS_DB.ui[currentLang].connectCreator 
+                      : "Connect with the Creator";
+
+    // Jaring pengaman link default (English) jika regional lock
+    const defaultWebtoonLink = "https://www.webtoons.com/p/community/en/u/eloirien";
+    let activeWebtoonLink = defaultWebtoonLink;
+
+    // 2. Ambil LINK Webtoon secara dinamis dengan proteksi region lock
+    if (LUMINUS_DB.ui[currentLang] && LUMINUS_DB.ui[currentLang].webtoonLink) {
+        const regionalLink = LUMINUS_DB.ui[currentLang].webtoonLink.trim();
+        // Jika link regional tidak kosong atau bukan tanda pagar, maka pakai link tersebut
+        if (regionalLink !== "" && regionalLink !== "#") {
+            activeWebtoonLink = regionalLink;
+        }
+    }
+
+    container.innerHTML = `
+        <div class="mt-12 flex flex-col items-center space-y-4">
+            <p id="social-connect-text" class="text-[9px] font-bold tracking-[0.3em] text-gray-500 uppercase">${labelText}</p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                
+                <a href="https://instagram.com/username_kamu" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-pink-500 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
+                    <svg class="w-4 h-4 text-gray-500 group-hover:text-pink-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span class="tracking-wider">Instagram</span>
+                </a>
+
+                <a href="https://x.com/username_kamu" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-blue-400 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
+                    <svg class="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                    </svg>
+                    <span class="tracking-wider">X / Twitter</span>
+                </a>
+
+                <a href="${activeWebtoonLink}" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-green-500 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
+                    <img src="images/branding/logo/webtoon-icon.png" alt="WEBTOON Logo" class="w-4 h-4 object-contain opacity-50 group-hover:opacity-100 transition-opacity">
+                    <span class="tracking-wider">Webtoon Profile</span>
+                </a>
+
+            </div>
+        </div>
+    `;
+}
 };
