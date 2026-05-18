@@ -159,7 +159,7 @@ const LUMINUS_DB = {
         }
     }
 
-        // =========================================================================
+// =========================================================================
 // PASTE KODE INI DI BAGIAN PALING BAWAH FILE content.js (DI LUAR OBJEK LUMINUS_DB)
 // =========================================================================
 
@@ -194,7 +194,7 @@ function injectSocialMedia(containerId) {
             
             <div class="flex flex-wrap justify-center gap-4">
                 
-                <a href="https://instagram.com/username_kamu" target="_blank" rel="noopener noreferrer" 
+                <a href="https://www.instagram.com/eloirien" target="_blank" rel="noopener noreferrer" 
                    class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-pink-500 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
                     <svg class="w-4 h-4 text-gray-500 group-hover:text-pink-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -204,7 +204,7 @@ function injectSocialMedia(containerId) {
                     <span class="tracking-wider">Instagram</span>
                 </a>
 
-                <a href="https://x.com/username_kamu" target="_blank" rel="noopener noreferrer" 
+                <a href="https://x.com/eloirien" target="_blank" rel="noopener noreferrer" 
                    class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-blue-400 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
                     <svg class="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
@@ -214,7 +214,7 @@ function injectSocialMedia(containerId) {
 
                 <a href="${activeWebtoonLink}" target="_blank" rel="noopener noreferrer" 
                    class="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-gray-800 hover:border-green-500 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-all duration-300 shadow-md group">
-                    <img src="images/branding/logo/webtoon-icon.png" alt="WEBTOON Logo" class="w-4 h-4 object-contain opacity-50 group-hover:opacity-100 transition-opacity">
+                    <img src="images/branding/logo/webtoon-logo.png" alt="WEBTOON Logo" class="w-4 h-4 object-contain opacity-50 group-hover:opacity-100 transition-opacity">
                     <span class="tracking-wider">Webtoon Profile</span>
                 </a>
 
