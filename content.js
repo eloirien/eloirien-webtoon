@@ -142,7 +142,7 @@ const LUMINUS_DB = {
                 navHome: "home", navComics: "komik",
                 creator: "**Sebagai pencerita yang penuh dengan passion, dengan lebih dari tiga tahun pengalaman menciptakan komik digital dan ilustrasi, impian Eloirien adalah menceritakan kisah yang menyentuh hati dan jiwa demi kemuliaan Tuhan.**\n\n*Saya sangat terinspirasi oleh pencerita terhebat sepanjang masa: Yesus KOistus. Bagi saya, setiap sapuan kuas adalah doa. Saya berharap karya saya menjadi berkat bagi Anda sebagaimana ia menjadi berkat bagi saya.*",
                 silverstring: "**Silverstring adalah sebuah fantasi bertemakan Alkitab yang mendalami pergumulan identitas dan beratnya peperangan rohani.**\n\n*Silverstring adalah passion project yang saya kerjakan sebagai sampingan di waktu luang. Saat ini saya mengerjakannya sepenuhnya sendirian, jadi jadwal updatenya mungkin terasa lambat dan tidak menentu. Meski begitu, saya akan berusaha sebaik mungkin untuk terus melanjutkan proyek ini!*",
-                bethlehem: "**Project Bethlehem berfungsi sebagai payung KOeatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien.**"
+                bethlehem: "**Project Bethlehem berfungsi sebagai payung kreatif untuk kekayaan intelektual independen yang dikembangkan oleh Eloirien.**"
             },
             JA: {
                 navHome: "ホーム", navComics: "コミック",
