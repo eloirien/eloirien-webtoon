@@ -124,7 +124,9 @@
                 </div>
         </section>
 
-     
+        <div class="section-divider"></div>
+        <div id="social-media-container"></div>
+        
     </main>
 
         <button id="back-to-top" onclick="teleportToTop(event)" class="fixed right-6 bg-blue-600 hover:bg-blue-500 p-3 rounded-md shadow-[0_0_20px_rgba(59,130,246,0.4)] z-50 transition-colors">
@@ -158,6 +160,8 @@
             document.getElementById('text-creator').innerHTML = formatText(page.creator);
             document.getElementById('text-silverstring').innerHTML = formatText(page.silverstring);
             document.getElementById('text-bethlehem').innerHTML = formatText(page.bethlehem);
+
+               injectSocialMedia('social-media-container');
         
             window.location.hash = lang;
             }
