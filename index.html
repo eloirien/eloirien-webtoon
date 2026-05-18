@@ -416,6 +416,13 @@
         if(e) e.stopPropagation();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+        // ==================== ART PROTECTION SYSTEM ====================
+        // Menahan klik kanan agar tidak muncul menu "Save Image As"
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        
+        // Menahan klik kiri tahan + seret (drag) gambar agar tidak bisa ditarik ke desktop
+        document.addEventListener('dragstart', e => e.preventDefault());
         
     </script>
 </body>
