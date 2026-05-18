@@ -167,7 +167,7 @@ function injectSocialMedia(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const currentLang = window.location.hash.replace('#', '').toUpperCase() || localStorage.getItem('preferredLang') || 'EN';
+    const currentLang = (localStorage.getItem('preferredLang') || window.location.hash.replace('#', '') || 'EN').toUpperCase();
     
     const labelText = (LUMINUS_DB.ui[currentLang] && LUMINUS_DB.ui[currentLang].connectCreator) 
                       ? LUMINUS_DB.ui[currentLang].connectCreator 
